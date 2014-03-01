@@ -14,6 +14,13 @@
  * @license GPLv2+
  */
 
+/**
+ * Module constants.
+ *
+ * @since 1.0.0
+ */
+require_once dirname( __FILE__ ) . '/includes/constants.php';
+
 if ( is_admin() ) {
 
 	/**
@@ -21,5 +28,5 @@ if ( is_admin() ) {
 	 *
 	 * @since 1.0.0
 	 */
-	require_once dirname( __FILE__ ) . '/admin/admin.php';
+	require_once WORDPOINTSORG_DIR . '/admin/admin.php';
 }
