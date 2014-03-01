@@ -5,12 +5,12 @@
  * Author:      WordPoints
  * Author URI:  http://wordpoints.org/
  * Plugin URI:  http://wordpoints.org/
- * Version:     1.0.0
+ * Version:     1.0.0-alpha
  * License:     GPLv2+
  * Description: Install and update modules from WordPoints.org through your admin panel.
  *
  * @package WordPointsOrg
- * @version 1.0.0
+ * @version 1.0.0-alpha
  * @license GPLv2+
  */
 
