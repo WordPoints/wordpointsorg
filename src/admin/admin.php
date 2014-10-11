@@ -8,6 +8,101 @@
  */
 
 /**
+ * Automatically load the upgrade and installer classes when needed.
+ *
+ * @since 1.0.0
+ *
+ * @param string $class The name of a class that needs to be loaded.
+ */
+function wordpointsorg_upgrader_class_autoloader( $class ) {
+
+	if ( $class{0} !== 'W' || substr( $class, 0, 13 ) !== 'WordPointsOrg' ) {
+		return;
+	}
+
+	$class = substr( $class, 14 );
+
+	switch ( $class ) {
+
+		case 'Bulk_Module_Upgrader_Skin':
+		case 'Module_Upgrader':
+		case 'Module_Upgrader_Skin':
+			$file = strtolower( str_replace( '_', '-', $class ) );
+			include( WORDPOINTSORG_DIR . '/admin/includes/class-' . $file . '.php' );
+		break;
+	}
+}
+spl_autoload_register( 'wordpointsorg_upgrader_class_autoloader' );
+
+/**
+ * Set up for the Module Install administration screen.
+ *
+ * @since 1.0.0
+ */
+function wordpointsorg_module_install_admin_screen_load() {
+
+	if ( ! current_user_can( 'install_wordpoints_modules' ) ) {
+		wp_die( __( 'You do not have sufficient permissions to install WordPoints modules on this site.', 'wordpoints' ) );
+	}
+
+	if ( is_multisite() && ! is_network_admin() ) {
+		wp_redirect( network_admin_url( 'admin.php?page=wordpoints_install_modules' ) );
+		exit();
+	}
+
+	$screen = get_current_screen();
+
+	$screen->add_help_tab(
+		array(
+			'id'		=> 'adding-modules',
+			'title'		=> __( 'Adding Modules', 'wordpoints' ),
+			'content'	=>
+				'<p>' . __( 'If you know what you&#8217;re looking for, Search is your best bet.', 'wordpoints' ) . '</p>' .
+				'<p>' . __( 'If you just want to get an idea of what&#8217;s available, you can browse the Newest modules by using the link in the upper left of the screen. This section rotates regularly.', 'wordpoints' ) . '</p>' .
+				'<p>' . __( 'If you want to install a module that you&#8217;ve downloaded elsewhere, click the Upload link in the upper left. You will be prompted to upload the .zip package, and once uploaded, you can activate the new module.', 'wordpoints' ) . '</p>'
+		)
+	);
+
+	$screen->set_help_sidebar(
+		'<p><strong>' . __( 'For more information:', 'wordpoints' ) . '</strong></p>' .
+		'<p>' . sprintf( __( '<a href="%s" target="_blank">Developer Documentation</a>', 'wordpoints' ), 'http://wordpoints.org/developer-guide/modules/' ) . '</p>' .
+		'<p>' . sprintf( __( '<a href="%s" target="_blank">Support Forums</a>', 'wordpoints' ), 'http://wordpress.org/support/plugin/wordpoints' ) . '</p>'
+	);
+
+	add_screen_option(
+		'per_page'
+		, array(
+			'label'   => _x( 'Modules', 'modules per page (screen options)', 'wordpoints' ),
+			'default' => 999,
+			'option'  =>'wordpoints_install_modules_per_page',
+		)
+	);
+var_log( $screen->get_option( 'per_page' ) );
+	register_column_headers(
+		$screen
+		, array(
+			'name'        => _x( 'Name', 'module name', 'wordpoints' ),
+			'version'     => __( 'Version', 'wordpoints' ),
+			'description' => __( 'Description', 'wordpoints' ),
+		)
+	);
+}
+add_action( 'load-admin_page_wordpoints_install_modules', 'wordpointsorg_module_install_admin_screen_load' );
+
+/**
+ * Save the screen option value.
+ *
+ * @since 1.0.0
+ */
+function wordpointsorg_module_install_set_screen_option( $status, $option, $value ) {
+
+	if ( 'wordpoints_install_modules_per_page' === $option ) {
+		return absint( $value );
+	}
+}
+add_filter( 'set-screen-option', 'wordpointsorg_module_install_set_screen_option', 10, 3 );
+
+/**
  * Handle module update requests on update.php.
  *
  * @since 1.0.0
@@ -17,7 +112,7 @@
 function wordpointsorg_update_modules() {
 
 	if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ) );
+		wp_die( esc_html__( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ) );
 	}
 
 	check_admin_referer( 'bulk-update-modules' );
@@ -186,52 +281,6 @@ function wordpointsorg_update_selected_modules() {
 add_action( 'wordpoints_modules_screen-update-selected', 'wordpointsorg_update_selected_modules' );
 
 /**
- * Run when the modules page is being loaded.
- *
- * @since 1.0.0
- *
- * @action {@todo}
- */
-function wordpoints_admin_modules_screen_pre() {
-
-	$tab = wordpoints_admin_get_current_tab();
-
-	// TODO route this pages via a specific iframe handler instead of the do_action below
-	if ( ! defined( 'IFRAME_REQUEST' ) && 'module-information' == $tab )
-		define( 'IFRAME_REQUEST', true );
-
-	if ( ! current_user_can( 'install_plugins' ) )
-		wp_die( __( 'You do not have sufficient permissions to install WordPoints modules on this site.', 'wordpoints' ) );
-
-	if ( is_multisite() && ! is_network_admin() ) {
-
-		// TODO
-		wp_redirect( network_admin_url( 'plugin-install.php' ) );
-		exit();
-	}
-
-	wp_enqueue_script( 'plugin-install' );
-
-	if ( 'module-information' != $tab )
-		add_thickbox();
-
-	$screen = get_current_screen();
-	// TODO filter this somehow?
-	$screen->add_help_tab(
-		array(
-			'id'		=> 'adding-modules',
-			'title'		=> __( 'Adding Modules', 'wordpoints' ),
-			'content'	=>
-				'<p>' . __( 'If you know what you&#8217;re looking for, Search is your best bet. The Search screen has options to search the WordPoints.org Module Directory for a particular Term, Author, or Tag. You can also search the directory by selecting popular tags. Tags in larger type mean more modules have been labeled with that tag.', 'wordpoints' ) . '</p>' .
-				'<p>' . __( 'If you just want to get an idea of what&#8217;s available, you can browse Featured, Popular, and Newest modules by using the links in the upper left of the screen. These sections rotate regularly.', 'wordpoints' ) . '</p>' .
-				'<p>' . __( 'You can also browse a user&#8217;s favorite modules, by using the Favorites link in the upper left of the screen and entering their WordPoints.org username.', 'wordpoints' ) . '</p>' .
-				'<p>' . __( 'If you want to install a module that you&#8217;ve downloaded elsewhere, click the Upload link in the upper left. You will be prompted to upload the .zip package, and once uploaded, you can activate the new module.', 'wordpoints' ) . '</p>'
-		)
-	);
-}
-add_action( 'load-toplevel_page_wordpoints_modules', 'wordpoints_admin_modules_screen_pre' );
-
-/**
  * Add the 'upgrade' module status to the reconginzed module statuses.
  *
  * @since 1.0.0
@@ -305,9 +354,9 @@ add_filter( 'wordpoints_modules_list_table_items', 'wordpointsorg_add_upgrade_mo
  *
  * @return string The text for the upgrades filter link.
  */
-function wordpointsorg_module_upgrades_filter_link( $text $count ) {
+function wordpointsorg_module_upgrades_filter_link( $text, $count ) {
 
-	return _n( 'Update Available <span class="count">(%s)</span>', 'Update Available <span class="count">(%s)</span>', $count );
+	return _n( 'Update Available <span class="count">(%s)</span>', 'Update Available <span class="count">(%s)</span>', (int) $count );
 }
 add_filter( 'wordpoints_modules_status_link_text-upgrade', 'wordpointsorg_module_upgrades_filter_link' );
 
@@ -330,7 +379,7 @@ function wordpointsorg_module_upgrade_bulk_action_link( $actions ) {
 
 	return $actions;
 }
-add_filter( 'wordpoints_module_bulk_actions', 'wordpointsorg_module_upgrade_action_link' );
+add_filter( 'wordpoints_module_bulk_actions', 'wordpointsorg_module_upgrade_bulk_action_link' );
 
 /**
  * Add the 'update' class to modules in the list table that have an update available.
@@ -355,3 +404,77 @@ function wordpointsorg_module_row_update_class( $class, $module_file, $module_da
 }
 add_filter( 'wordpoints_module_list_row_class', 'wordpointsorg_module_row_update_class', 10, 3 );
 
+/**
+ * Set up the list table and display the view tabs of the module install screen.
+ *
+ * @since 1.0.0
+ */
+function wordpointsorg_install_modules_screen() {
+
+	global $wp_list_table;
+
+	require_once( WORDPOINTSORG_DIR . '/admin/includes/class-module-install-list-table.php' );
+
+	$wp_list_table = new WordPoints_Module_Install_List_Table();
+	$wp_list_table->prepare_items();
+
+	if ( 'upload' !== $_GET['tab'] ) {
+		wordpointsorg_module_install_search_form();
+	}
+
+	$wp_list_table->views();
+}
+add_action( 'wordpoints_install_modules_screen', 'wordpointsorg_install_modules_screen' );
+
+/**
+ * Display search form for searching modules.
+ *
+ * @since 1.0.0
+ */
+function wordpointsorg_module_install_search_form() {
+
+	$term = isset( $_REQUEST['s'] ) ? wp_unslash( $_REQUEST['s'] ) : '';
+
+	?>
+
+	<form method="post" style="float: right;">
+		<input type="hidden" name="tab" value="search" />
+		<label>
+			<span class="screen-reader-text"><?php esc_html_e( 'Search Modules', 'wordpointsorg' ); ?></span>
+			<input type="search" name="s" value="<?php echo esc_attr( $term ); ?>" placeholder="<?php esc_attr__( 'Search Modules', 'wordpointsorg' ); ?>" />
+		</label>
+		<?php submit_button( __( 'Search Modules' ), 'button', false, false, array( 'id' => 'search-submit' ) ); ?>
+	</form>
+
+	<?php
+}
+
+/**
+ * Display the module install dashboard.
+ *
+ * @since 1.0.0
+ */
+function wordpointsorg_module_install_dashboard() {
+
+	?>
+	<p><?php esc_html_e( 'Here you can browse and the available modules on WordPoints.org. The newest modules are displayed below. If you already know what you are a looking for, you can use the search box. If you already have a module package to upload, click on the &#8220;Upload&#8221; tab above.' ); ?></p>
+	<?php
+}
+add_action( 'wordpoints_install_modules-dashboard', 'wordpointsorg_module_install_dashboard' );
+
+/**
+ * Display the module install list table content.
+ *
+ * @since 1.0.0
+ */
+function wordpointsorg_display_module_install_table() {
+
+	global $wp_list_table;
+
+	$wp_list_table->display();
+}
+add_action( 'wordpoints_install_modules-search',  'wordpointsorg_display_module_install_table' );
+add_action( 'wordpoints_install_modules-new',     'wordpointsorg_display_module_install_table' );
+add_action( 'wordpoints_install_modules-dashboard', 'wordpointsorg_display_module_install_table' );
+
+// EOF

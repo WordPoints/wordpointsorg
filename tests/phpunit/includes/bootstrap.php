@@ -112,3 +112,19 @@ require_once WORDPOINTSORG_TESTS_DIR . '/library/plugin-uninstall/bootstrap.php'
  * @since 1.0.0
  */
 require_once WORDPOINTSORG_TESTS_DIR . '/library/module-uninstall/bootstrap.php';
+
+/**
+ * A parent test case for tests involving HTTP requests.
+ *
+ * @since 1.0.0
+ */
+require_once( WORDPOINTSORG_TESTS_DIR . '/includes/testcase-http.php' );
+
+/**
+ * A parent test case for tests involving the module upgrader.
+ *
+ * @since 1.0.0
+ */
+require_once( WORDPOINTSORG_TESTS_DIR . '/includes/testcase-module-upgrader.php' );
+
+// EOF
