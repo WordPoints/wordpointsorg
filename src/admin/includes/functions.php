@@ -292,7 +292,7 @@ function wordpointsorg_upgrade_module() {
 
 	check_admin_referer( 'upgrade-module_' . $module );
 
-	$title = __( 'Update Module' );
+	$title = __( 'Update Module', 'wordpointsorg' );
 	$parent_file = 'admin.php';
 
 	require_once( ABSPATH . 'wp-admin/admin-header.php' );
@@ -346,7 +346,7 @@ function wordpointsorg_update_selected_modules() {
 	?>
 
 	<div class="wrap">
-		<h2><?php esc_html__( 'Update Modules', 'wordpoints' ); ?></h2>
+		<h2><?php esc_html__( 'Update Modules', 'wordpointsorg' ); ?></h2>
 
 		<iframe src="<?php echo esc_attr( $url ); ?>" style="width: 100%; height:100%; min-height:850px;"></iframe>
 	</div>
@@ -448,7 +448,7 @@ add_filter( 'wordpoints_modules_list_table_items', 'wordpointsorg_add_upgrade_mo
  */
 function wordpointsorg_module_upgrades_filter_link( $text, $count ) {
 
-	return _n( 'Update Available <span class="count">(%s)</span>', 'Update Available <span class="count">(%s)</span>', (int) $count );
+	return _n( 'Update Available <span class="count">(%s)</span>', 'Update Available <span class="count">(%s)</span>', (int) $count, 'wordpointsorg' );
 }
 add_filter( 'wordpoints_modules_status_link_text-upgrade', 'wordpointsorg_module_upgrades_filter_link', 10, 2 );
 
@@ -575,7 +575,7 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 					if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
 						printf(
 							wp_kses(
-								__( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a>.' )
+								__( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a>.', 'wordpointsorg' )
 								, array( 'a' => array( 'href' => array(), 'class' => array(), 'title' => array() ) )
 							)
 							, wp_kses( $module_data['name'], $modules_allowed_tags )
@@ -586,7 +586,7 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 					} else {
 						printf(
 							wp_kses(
-								__( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a> or <a href="%5$s">update now</a>.' )
+								__( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a> or <a href="%5$s">update now</a>.', 'wordpointsorg' )
 								, array( 'a' => array( 'href' => array(), 'class' => array(), 'title' => array() ) )
 							)
 							, wp_kses( $module_data['name'], $modules_allowed_tags )

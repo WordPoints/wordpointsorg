@@ -63,17 +63,17 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	private function upgrade_strings() {
 
 		$upgrade_strings = array(
-			'up_to_date'          => __( 'The module is at the latest version.', 'wordpoints' ),
-			'no_package'          => __( 'Update package not available.', 'wordpoints' ),
-			'no_channel'          => __( 'That module cannot be updated, because there is no channel specified to receive updates through.', 'wordpoints' ),
-			'api_not_found'       => __( 'That module cannot be updated, because there is no API installed that can communicate with that channel.', 'wordpoints' ),
-			'downloading_package' => __( 'Downloading update from <span class="code">%s</span>&#8230;', 'wordpoints' ),
-			'unpack_package'      => __( 'Unpacking the update&#8230;', 'wordpoints' ),
-			'remove_old'          => __( 'Removing the old version of the module&#8230;', 'wordpoints' ),
-			'remove_old_failed'   => __( 'Could not remove the old module.', 'wordpoints' ),
-			'process_failed'      => __( 'Module update failed.', 'wordpoints' ),
-			'process_success'     => __( 'Module updated successfully.', 'wordpoints' ),
-			'not_installed'       => __( 'That module cannot be updated, because it is not installed.', '' ),
+			'up_to_date'          => __( 'The module is at the latest version.', 'wordpointsorg' ),
+			'no_package'          => __( 'Update package not available.', 'wordpointsorg' ),
+			'no_channel'          => __( 'That module cannot be updated, because there is no channel specified to receive updates through.', 'wordpointsorg' ),
+			'api_not_found'       => __( 'That module cannot be updated, because there is no API installed that can communicate with that channel.', 'wordpointsorg' ),
+			'downloading_package' => __( 'Downloading update from <span class="code">%s</span>&#8230;', 'wordpointsorg' ),
+			'unpack_package'      => __( 'Unpacking the update&#8230;', 'wordpointsorg' ),
+			'remove_old'          => __( 'Removing the old version of the module&#8230;', 'wordpointsorg' ),
+			'remove_old_failed'   => __( 'Could not remove the old module.', 'wordpointsorg' ),
+			'process_failed'      => __( 'Module update failed.', 'wordpointsorg' ),
+			'process_success'     => __( 'Module updated successfully.', 'wordpointsorg' ),
+			'not_installed'       => __( 'That module cannot be updated, because it is not installed.', 'wordpointsorg' ),
 		);
 
 		$this->strings = array_merge( $this->strings, $upgrade_strings );
@@ -87,13 +87,13 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	private function install_strings() {
 
 		$install_strings = array(
-			'no_package'          => __( 'Install package not available.', 'wordpoints' ),
-			'downloading_package' => __( 'Downloading install package from <span class="code">%s</span>&#8230;', 'wordpoints' ),
-			'unpack_package'      => __( 'Unpacking the package&#8230;', 'wordpoints' ),
-			'installing_package'  => __( 'Installing the module&#8230;', 'wordpoints' ),
-			'no_files'            => __( 'The module contains no files.', 'wordpoints' ),
-			'process_failed'      => __( 'Module install failed.', 'wordpoints' ),
-			'process_success'     => __( 'Module installed successfully.', 'wordpoints' ),
+			'no_package'          => __( 'Install package not available.', 'wordpointsorg' ),
+			'downloading_package' => __( 'Downloading install package from <span class="code">%s</span>&#8230;', 'wordpointsorg' ),
+			'unpack_package'      => __( 'Unpacking the package&#8230;', 'wordpointsorg' ),
+			'installing_package'  => __( 'Installing the module&#8230;', 'wordpointsorg' ),
+			'no_files'            => __( 'The module contains no files.', 'wordpointsorg' ),
+			'process_failed'      => __( 'Module install failed.', 'wordpointsorg' ),
+			'process_success'     => __( 'Module installed successfully.', 'wordpointsorg' ),
 		);
 
 		$this->strings = array_merge( $this->strings, $install_strings );
@@ -456,7 +456,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 			return new WP_Error(
 				'incompatible_archive_no_modules'
 				, $this->strings['incompatible_archive']
-				, __( 'No valid modules were found.', 'wordpoints' )
+				, __( 'No valid modules were found.', 'wordpointsorg' )
 			);
 		}
 

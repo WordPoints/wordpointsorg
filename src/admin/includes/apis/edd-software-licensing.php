@@ -195,11 +195,11 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				$result = $this->activate_license( $channel, $module );
 
 				if ( false === $result ) {
-					wordpoints_show_admin_error( esc_html__( 'There was an error while trying to activate the license. Please try again.' ) );
+					wordpoints_show_admin_error( esc_html__( 'There was an error while trying to activate the license. Please try again.', 'wordpointsorg' ) );
 				} elseif ( 'invalid' === $result ) {
-					wordpoints_show_admin_error( esc_html__( 'That license key is invalid.' ) );
+					wordpoints_show_admin_error( esc_html__( 'That license key is invalid.', 'wordpointsorg' ) );
 				} else {
-					wordpoints_show_admin_message( esc_html__( 'License activated.' ) );
+					wordpoints_show_admin_message( esc_html__( 'License activated.', 'wordpointsorg' ) );
 				}
 
 			} elseif (
@@ -210,11 +210,11 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				$result = $this->deactivate_license( $channel, $module );
 
 				if ( false === $result ) {
-					wordpoints_show_admin_error( esc_html__( 'There was an error while trying to activate the license. Please try again.' ) );
+					wordpoints_show_admin_error( esc_html__( 'There was an error while trying to activate the license. Please try again.', 'wordpointsorg' ) );
 				} elseif ( 'failed' === $result ) {
-					wordpoints_show_admin_error( esc_html__( 'There was an error while trying to activate the license. Your license may be expired or invalid, or may already be deactivated.' ) );
+					wordpoints_show_admin_error( esc_html__( 'There was an error while trying to activate the license. Your license may be expired or invalid, or may already be deactivated.', 'wordpointsorg' ) );
 				} else {
-					wordpoints_show_admin_message( esc_html__( 'License deactivated.' ) );
+					wordpoints_show_admin_message( esc_html__( 'License deactivated.', 'wordpointsorg' ) );
 				}
 			}
 		}
@@ -252,7 +252,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 		<tr>
 			<td colspan="<?php echo (int) WordPoints_Modules_List_Table::instance()->get_column_count(); ?>" style="border-bottom: 1px solid #ddd;" class="colspanchange">
 				<label class="description" for="license_key-<?php echo esc_attr( $module_data['ID'] ); ?>">
-					<?php esc_html_e( 'License key' ); ?>
+					<?php esc_html_e( 'License key', 'wordpointsorg' ); ?>
 				</label>
 				<input
 					id="license_key-<?php echo esc_attr( $channel->url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>"
@@ -263,12 +263,12 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 					value="<?php echo esc_attr( $license ); ?>"
 				/>
 				<?php if ( $status !== false && 'valid' === $status ) : ?>
-					<span style="color:green;"><?php esc_html_e( 'active' ); ?></span>
+					<span style="color:green;"><?php esc_html_e( 'active', 'wordpointsorg' ); ?></span>
 					<?php wp_nonce_field( "wordpoints_deactivate_license_key-{$module_data['ID']}", "wordpoints_deactivate_license_key-{$module_data['ID']}" ); ?>
-					<input type="submit" name="edd-deactivate-license" class="button-secondary" value="<?php esc_attr_e( 'Deactivate License' ); ?>" />
+					<input type="submit" name="edd-deactivate-license" class="button-secondary" value="<?php esc_attr_e( 'Deactivate License', 'wordpointsorg' ); ?>" />
 				<?php else : ?>
 					<?php wp_nonce_field( "wordpoints_activate_license_key-{$module_data['ID']}", "wordpoints_activate_license_key-{$module_data['ID']}" ); ?>
-					<input type="submit"name="edd-activate-license"  class="button-secondary" value="<?php esc_attr_e( 'Activate License' ); ?>" />
+					<input type="submit"name="edd-activate-license"  class="button-secondary" value="<?php esc_attr_e( 'Activate License', 'wordpointsorg' ); ?>" />
 				<?php endif; ?>
 			</td>
 		</tr>
