@@ -159,7 +159,7 @@ abstract class WordPointsOrg_Module_Upgrader_UnitTestCase extends WordPointsOrg_
 
 	public function http_responder( $request, $url ) {
 
-		if ( 'HEAD' === $request['method'] && 'wordpoints.org' === $url ) {
+		if ( 'HEAD' === $request['method'] && 'https://wordpoints.org' === $url ) {
 
 			return array(
 				'headers' => array(
