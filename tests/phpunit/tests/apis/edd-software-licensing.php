@@ -85,8 +85,6 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 		$this->assertTrue( isset( $request['body']['is_free_supported'] ) );
 
 		return $this->simulate_response( $request );
-
-		var_log( $request, $url );
 	}
 
 	/**

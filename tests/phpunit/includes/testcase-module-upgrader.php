@@ -198,8 +198,6 @@ abstract class WordPointsOrg_Module_Upgrader_UnitTestCase extends WordPointsOrg_
 		if ( 0 === strpos( $url, 'https://api.wordpress.org/' ) ) {
 			return array();
 		}
-
-		var_log( $request, $url );
 	}
 }
 
