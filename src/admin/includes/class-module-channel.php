@@ -248,7 +248,7 @@ final class WordPoints_Module_Channel  {
 	protected function get_api_header() {
 
 		$headers = wp_get_http_headers( $this->get_full_url() );
-var_log(wp_safe_remote_head( $this->get_full_url()), $headers );
+
 		if ( ! isset( $headers['x-wordpoints-module-api'] ) ) {
 			return false;
 		}
