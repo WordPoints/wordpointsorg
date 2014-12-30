@@ -24,6 +24,8 @@ setup-phpunit() {
 
     cp /tmp/wordpoints/phpcs.ruleset.xml .
 
+    export WORDPOINTS_TESTS_DIR=/tmp/wordpoints/tests/phpunit/
+
     mkdir /tmp/wordpress/wp-content/wordpoints-modules
     ln -s "$(pwd)/src" /tmp/wordpress/wp-content/wordpoints-modules/wordpointsorg
 }
