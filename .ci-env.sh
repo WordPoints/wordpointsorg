@@ -22,6 +22,8 @@ setup-phpunit() {
 	mkdir -p /tmp/wordpoints && curl -L https://github.com/WordPoints/archive/master.tar.gz | tar xvz --strip-components=1 -C /tmp/wordpoints
     ln -s /tmp/wordpoints/src /tmp/wordpress/wp-content/plugins/wordpoints
 
+    cp /tmp/wordpoints/phpcs.ruleset.xml .
+
     mkdir /tmp/wordpress/wp-content/wordpoints-modules
     ln -s "$(pwd)/src" /tmp/wordpress/wp-content/wordpoints-modules/wordpointsorg
 }
