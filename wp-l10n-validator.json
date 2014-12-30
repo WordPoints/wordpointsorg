@@ -1,0 +1,24 @@
+{
+	"textdomain": { "wordpointsorg": true },
+	"basedir": "./src",
+	"cache": "./tools/wp-l10n-validator/cache.json",
+	"ignores-cache": "./tools/wp-l10n-validator/ignores-cache.json",
+	"ignores-tolerance": 25,
+	"ignored-functions": {
+		"define": true,
+
+		"_deprecated_argument": true,
+		"_deprecated_file": true,
+		"_doing_it_wrong": true,
+		"add_site_option": true,
+
+		"wordpoints_get_array_option": true,
+
+		"wordpoints_get_modules_supporting": true,
+
+		"WordPoints_EDD_Software_Licensing_Module_API::get_module_information": true,
+		"WordPoints_EDD_Software_Licensing_Module_API::update_license_activation": true,
+		"WordPoints_Module_APIs::register": true,
+		"WordPointsOrg_Module_Upgrader::_bail_early": true
+	}
+}

@@ -1,0 +1,95 @@
+{
+    "\/admin\/includes\/apis\/edd-software-licensing.php": {
+        "edd-software-licensing": {
+            "20": false
+        },
+        "-": {
+            "258": false,
+            "259": false
+        }
+    },
+    "\/admin\/includes\/class-module-channel.php": {
+        "WordPoints_Module_Channel": {
+            "30": false
+        }
+    },
+    "\/admin\/includes\/class-module-upgrader.php": {
+        "install": {
+            "156": {
+                "name": "array",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 0,
+                "parentheses": 1
+            }
+        },
+        "update": {
+            "248": {
+                "name": "array",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 0,
+                "parentheses": 1
+            },
+            "405": {
+                "name": "array",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 0,
+                "parentheses": 1
+            }
+        }
+    },
+    "\/admin\/includes\/functions.php": {
+        "version": {
+            "167": {
+                "name": "wp_list_pluck",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 1,
+                "parentheses": 1
+            }
+        },
+        "bulk-update-modules": {
+            "266": {
+                "name": "array",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 0,
+                "parentheses": 1
+            }
+        },
+        "update.php?action=update-selected-wordpoints-modules&amp;modules=": {
+            "267": {
+                "name": "array",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 1,
+                "parentheses": 1
+            }
+        },
+        "update.php?action=wordpoints-upgrade-module&module=": {
+            "308": {
+                "name": "array",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 2,
+                "parentheses": 1
+            }
+        },
+        "channel": {
+            "369": false
+        },
+        "upgrade": {
+            "388": false
+        },
+        "update": {
+            "494": false
+        }
+    },
+    "\/includes\/functions.php": {
+        "default": {
+            "115": false
+        }
+    }
+}
