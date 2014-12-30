@@ -23,7 +23,7 @@ class WordPointsOrg_Module_Upgrader_Install_Test extends WordPointsOrg_Module_Up
 
 		parent::setUp();
 
-		set_site_transient( 'wordpointsorg_update_modules', array( 'test' ) );
+		set_site_transient( 'wordpoints_module_updates', array( 'test' ) );
 		wp_cache_set( 'wordpoints_modules', array( 'test' ), 'wordpoints_modules' );
 	}
 
@@ -57,7 +57,7 @@ class WordPointsOrg_Module_Upgrader_Install_Test extends WordPointsOrg_Module_Up
 		$this->assertFileExists( wordpoints_modules_dir() . '/module-6/module-6.php' );
 
 		// Check that the module updates cache is cleared.
-		$this->assertFalse( get_site_transient( 'wordpointsorg_update_modules' ) );
+		$this->assertFalse( get_site_transient( 'wordpoints_module_updates' ) );
 		$this->assertFalse( wp_cache_get( 'wordpoints_modules', 'wordpoints_modules' ) );
 
 		$this->assertCount( 0, $this->skin->errors );
@@ -82,7 +82,7 @@ class WordPointsOrg_Module_Upgrader_Install_Test extends WordPointsOrg_Module_Up
 		$this->assertFileExists( wordpoints_modules_dir() . '/module-6/module-6.php' );
 
 		// Check that the module updates cache is not cleared.
-		$this->assertEquals( array( 'test' ), get_site_transient( 'wordpointsorg_update_modules' ) );
+		$this->assertEquals( array( 'test' ), get_site_transient( 'wordpoints_module_updates' ) );
 
 		// The modules cache is still cleared though.
 		$this->assertFalse( wp_cache_get( 'wordpoints_modules', 'wordpoints_modules' ) );

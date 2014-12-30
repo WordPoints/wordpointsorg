@@ -8,7 +8,9 @@
  * Version:     1.0.1
  * License:     GPLv2+
  * Description: Description.
- * Update API:  wordpoints.org
+ * Channel:     wordpoints.org
+ * todo:
+ * channel:     wordpoints.org
  * ID:          7
  */
 

@@ -24,14 +24,10 @@ class WordPointsOrg_Module_Upgrader_Upgrade_Test extends WordPointsOrg_Module_Up
 		parent::setUp();
 
 		set_site_transient(
-			'wordpointsorg_update_modules'
+			'wordpoints_module_updates'
 			, array(
 				'response' => array(
-					'7' => array(
-						'ID' => '7',
-						'github_id' => 'WordPoints/module-7',
-						'version' => '1.0.1',
-					),
+					'module-7/module-7.php' => '1.0.1',
 				),
 			)
 		);
@@ -116,7 +112,7 @@ class WordPointsOrg_Module_Upgrader_Upgrade_Test extends WordPointsOrg_Module_Up
 		$this->assertTrue( $result );
 
 		// Check that the module updates cache is not cleared.
-		$this->assertArrayHasKey( 'response', get_site_transient( 'wordpointsorg_update_modules' ) );
+		$this->assertArrayHasKey( 'response', get_site_transient( 'wordpoints_module_updates' ) );
 
 		// The modules cache is still cleared though.
 		$this->assertFalse( wp_cache_get( 'wordpoints_modules', 'wordpoints_modules' ) );
@@ -154,8 +150,9 @@ class WordPointsOrg_Module_Upgrader_Upgrade_Test extends WordPointsOrg_Module_Up
 		);
 
 		$this->assertFalse( $result );
-		$this->assertCount( 1, $this->skin->errors );
-		$this->assertEquals( 'up_to_date', $this->skin->errors[0] );
+		$this->assertCount( 0, $this->skin->errors );
+		$this->assertCount( 2, $this->skin->feedback );
+		$this->assertEquals( 'up_to_date', $this->skin->feedback[0] );
 	}
 
 	//

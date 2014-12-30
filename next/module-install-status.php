@@ -24,8 +24,8 @@ class WordPointsOrg_Module_Install_Status_Test extends WP_UnitTestCase {
 		parent::setUp();
 
 		add_filter(
-			'pre_site_transient_wordpointsorg_update_modules'
-			, array( $this, 'filter_wordpointsorg_update_modules_site_transient' )
+			'pre_site_transient_wordpoints_module_updates'
+			, array( $this, 'filter_wordpoints_module_updates_site_transient' )
 		);
 	}
 
@@ -39,8 +39,8 @@ class WordPointsOrg_Module_Install_Status_Test extends WP_UnitTestCase {
 		parent::tearDown();
 
 		remove_filter(
-			'pre_site_transient_wordpointsorg_update_modules'
-			, array( $this, 'filter_wordpoints_update_modules_site_transient' )
+			'pre_site_transient_wordpoints_module_updates'
+			, array( $this, 'filter_wordpoints_module_updates_site_transient' )
 		);
 	}
 
@@ -151,9 +151,9 @@ class WordPointsOrg_Module_Install_Status_Test extends WP_UnitTestCase {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @WordPress\filter pre_site_transient_wordpointsorg_update_modules Added by self::setUp();
+	 * @WordPress\filter pre_site_transient_wordpoints_module_updates Added by self::setUp();
 	 */
-	public function filter_wordpointsorg_update_modules_site_transient() {
+	public function filter_wordpoints_module_updates_site_transient() {
 
 		return array(
 			'response' => array(

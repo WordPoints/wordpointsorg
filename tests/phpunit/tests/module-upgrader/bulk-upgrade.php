@@ -1,7 +1,7 @@
 <?php
 
 /**
- * A test case for the WordPoints.org modules upgrader class' bulk upgrader.
+ * A test case for the WordPoints.org modules upgrader class's bulk upgrader.
  *
  * @package WordPointsOrg\Tests
  * @since 1.0.0
@@ -12,7 +12,8 @@
  *
  * @since 1.0.0
  */
-class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test extends WordPointsOrg_Module_Upgrader_UnitTestCase {
+class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test
+	extends WordPointsOrg_Module_Upgrader_UnitTestCase {
 
 	/**
 	 * Set up for each test.
@@ -24,14 +25,10 @@ class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test extends WordPointsOrg_Modu
 		parent::setUp();
 
 		set_site_transient(
-			'wordpointsorg_update_modules'
+			'wordpoints_module_updates'
 			, array(
 				'response' => array(
-					'7' => array(
-						'ID' => '7',
-						'github_id' => 'WordPoints/module-7',
-						'version' => '1.0.1',
-					),
+					'module-7/module-7.php' => '1.0.1',
 				),
 			)
 		);
@@ -74,7 +71,9 @@ class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test extends WordPointsOrg_Modu
 			, 'module-7-update'
 		);
 
-		$this->assertEquals( array( 'module-7/module-7.php' => true ), $result );
+		$this->assertInternalType( 'array', $result );
+		$this->assertArrayHasKey( 'module-7/module-7.php', $result );
+		$this->assertInternalType( 'array', $result['module-7/module-7.php'] );
 
 		$this->assertCount( 0, $this->skin->errors );
 		$this->assertEquals( 1, $this->skin->header_shown );
@@ -94,11 +93,11 @@ class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test extends WordPointsOrg_Modu
 			'module-7/module-7.php'
 			, 'no-module'
 		);
-var_log( $this->skin->errors );
+
 		$this->assertInternalType( 'array', $result );
 		$this->assertArrayHasKey( 'module-7/module-7.php', $result );
 		$this->assertWPError( $result['module-7/module-7.php'] );
-		$this->assertEquals( 'incompatible_archive_no_modules', $result->get_error_code() );
+		$this->assertEquals( 'incompatible_archive_no_modules', $result['module-7/module-7.php']->get_error_code() );
 
 		$this->assertCount( 1, $this->skin->errors );
 	}
@@ -117,10 +116,12 @@ var_log( $this->skin->errors );
 			, array( 'clear_update_cache' => false )
 		);
 
-		$this->assertEquals( array( 'module-7/module-7.php' => true ), $result );
+		$this->assertInternalType( 'array', $result );
+		$this->assertArrayHasKey( 'module-7/module-7.php', $result );
+		$this->assertInternalType( 'array', $result['module-7/module-7.php'] );
 
 		// Check that the module updates cache is not cleared.
-		$this->assertArrayHasKey( 'response', get_site_transient( 'wordpointsorg_update_modules' ) );
+		$this->assertArrayHasKey( 'response', get_site_transient( 'wordpoints_module_updates' ) );
 
 		// The modules cache is still cleared though.
 		$this->assertFalse( wp_cache_get( 'wordpoints_modules', 'wordpoints_modules' ) );
@@ -159,7 +160,8 @@ var_log( $this->skin->errors );
 
 		$this->assertEquals( array( 'module-8/module-8.php' => true ), $result );
 		$this->assertCount( 0, $this->skin->errors );
-		$this->assertEquals( 'up_to_date', $this->skin->errors[0] );
+		$this->assertCount( 3, $this->skin->feedback );
+		$this->assertEquals( 'up_to_date', $this->skin->feedback[1] );
 	}
 
 	//

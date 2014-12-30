@@ -7,7 +7,7 @@
  * Plugin URI:  http://wordpoints.org/
  * Version:     1.0.0-alpha
  * License:     GPLv2+
- * Description: Install and update modules from WordPoints.org through your admin panel.
+ * Description: Update modules from WordPoints.org through your admin panel.
  *
  * @package WordPointsOrg
  * @version 1.0.0-alpha
@@ -27,6 +27,13 @@ require_once dirname( __FILE__ ) . '/includes/constants.php';
  * @since 1.0.0
  */
 require_once WORDPOINTSORG_DIR . '/includes/functions.php';
+
+/**
+ * Item container classes.
+ *
+ * @since 1.0.0
+ */
+require_once WORDPOINTSORG_DIR . '/includes/class-item-container.php';
 
 if ( is_admin() ) {
 

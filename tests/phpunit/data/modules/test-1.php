@@ -8,8 +8,10 @@
  * Version:     1.0.0
  * License:     GPLv2+
  * Description: Description.
- * Update API:  wordpoints.org
- * ID:          3
+ * todo:
+ * Channel:     github.com/WordPoints
+ * channel:     github.com/WordPoints
+ * ID:          test-1
  */
 
 // Code here.

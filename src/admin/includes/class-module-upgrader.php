@@ -20,7 +20,7 @@ include_once( WORDPOINTS_DIR . '/admin/includes/class-wordpoints-module-installe
 function wordpointsorg_clean_modules_cache( $clear_update_cache = true ) {
 
 	if ( $clear_update_cache ) {
-		delete_site_transient( 'wordpointsorg_update_modules' );
+		delete_site_transient( 'wordpoints_module_updates' );
 	}
 
 	wp_cache_delete( 'wordpoints_modules', 'wordpoints_modules' );
@@ -65,6 +65,8 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		$upgrade_strings = array(
 			'up_to_date'          => __( 'The module is at the latest version.', 'wordpoints' ),
 			'no_package'          => __( 'Update package not available.', 'wordpoints' ),
+			'no_channel'          => __( 'That module cannot be updated, because there is no channel specified to receive updates through.', 'wordpoints' ),
+			'api_not_found'       => __( 'That module cannot be updated, because there is no API installed that can communicate with that channel.', 'wordpoints' ),
 			'downloading_package' => __( 'Downloading update from <span class="code">%s</span>&#8230;', 'wordpoints' ),
 			'unpack_package'      => __( 'Unpacking the update&#8230;', 'wordpoints' ),
 			'remove_old'          => __( 'Removing the old version of the module&#8230;', 'wordpoints' ),
@@ -100,39 +102,6 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	//
 	// Public Methods.
 	//
-
-	/**
-	 * Build the URL for a package.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $module_data The response from the modules API for this module.
-	 *
-	 * @return string The URI for the zip package for this module.
-	 */
-	public function get_github_package_url( $module_data ) {
-
-		list( $github_user, $github_repo ) = explode( '/', $module_data['github_id'] );
-
-		$package_url = sprintf(
-			'http://github.com/%1$s/%2$s/releases/download/%3$s/%2$s.%3$s.zip'
-			, $github_user
-			, $github_repo
-			, $module_data['version']
-		);
-
-		/**
-		 * Filter the URL for a module package from GitHub.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param $package_url The URL of the package.
-		 * @param $github_user The GitHub username of the user the package is from.
-		 * @param $github_repo The GitHub name of the repo the package is from.
-		 * @param $version     The version of the module the package is for.
-		 */
-		return apply_filters( 'wordpointsorg_github_module_package_url', $package_url, $github_user, $github_repo, $module_data['version'] );
-	}
 
 	/**
 	 * Install a module.
@@ -194,8 +163,8 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $module The slug of the module to update.
-	 * @param array  $args {
+	 * @param string $module_file Basename path to the module file.
+	 * @param array  $args        {
 	 *        Optional arguments.
 	 *
 	 *        @type bool $clear_update_cache Whether the to clear the update cache.
@@ -204,7 +173,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 *
 	 * @return bool|WP_Error True on success, false or a WP_Error on failure.
 	 */
-	public function upgrade( $module, $args = array() ) {
+	public function upgrade( $module_file, $args = array() ) {
 
 		$args = wp_parse_args( $args, array( 'clear_update_cache' => true ) );
 
@@ -213,27 +182,33 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 
 		$modules = wordpoints_get_modules();
 
-		if ( ! isset( $modules[ $module ] ) ) {
-
-			$this->skin->before();
-			$this->skin->set_result( false );
-			$this->skin->error( 'not_installed' );
-			$this->skin->after();
-
+		if ( ! isset( $modules[ $module_file ] ) ) {
+			$this->_bail_early( 'not_installed' );
 			return false;
 		}
 
-		$module_data = $modules[ $module ];
+		$module_data = $modules[ $module_file ];
 
-		$current = get_site_transient( 'wordpointsorg_update_modules' );
+		$current = get_site_transient( 'wordpoints_module_updates' );
 
-		if ( ! isset( $current['response'][ $module_data['ID'] ] ) ) {
+		if ( ! isset( $current['response'][ $module_file ] ) ) {
+			$this->_bail_early( 'up_to_date', 'feedback' );
+			return false;
+		}
 
-			$this->skin->before();
-			$this->skin->set_result( false );
-			$this->skin->error( 'up_to_date' );
-			$this->skin->after();
+		$channel = wordpoints_get_channel_for_module( $module_data );
 
+		$channel = WordPoints_Module_Channels::get( $channel );
+
+		if ( ! $channel ) {
+			$this->_bail_early( 'no_channel' );
+			return false;
+		}
+
+		$api = $channel->get_api();
+
+		if ( false === $api ) {
+			$this->_bail_early( 'api_not_found' );
 			return false;
 		}
 
@@ -244,12 +219,12 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 
 		$result = $this->run(
 			array(
-				'package'           => $this->get_github_package_url( $current['response'][ $module_data['ID'] ] ),
+				'package'           => $api->get_package_url( $channel, $module_data ),
 				'destination'       => wordpoints_modules_dir(),
 				'clear_destination' => true,
 				'clear_working'     => true,
 				'hook_extra'        => array(
-					'wordpoints_module' => $module,
+					'wordpoints_module' => $module_file,
 				),
 			)
 		);
@@ -270,7 +245,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		/**
 		 * {@todo}
 		 */
-		do_action( 'upgrader_process_complete', $this, array( 'action' => 'update', 'type' => 'wordpoints_module' ), $module );
+		do_action( 'upgrader_process_complete', $this, array( 'action' => 'update', 'type' => 'wordpoints_module' ), $module_file );
 
 		return true;
 	}
@@ -296,7 +271,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		$this->bulk = true;
 		$this->upgrade_strings();
 
-		$current = get_site_transient( 'wordpointsorg_update_modules' );
+		$current = get_site_transient( 'wordpoints_module_updates' );
 
 		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ), 10, 4 );
 		add_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
@@ -347,10 +322,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 
 			if ( ! isset( $all_modules[ $module ] ) ) {
 
-				$this->skin->set_result( false );
-				$this->skin->before();
-				$this->skin->error( 'not_installed' );
-				$this->skin->after();
+				$this->_bail_early( 'not_installed' );
 				$results[ $module ] = false;
 
 				continue;
@@ -359,13 +331,34 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 			$this->skin->module = $module;
 			$this->skin->module_info = wordpoints_get_module_data( $module_root . $module );
 
-			if ( ! isset( $current->response[ $module ] ) ) {
+			if ( ! isset( $current['response'][ $module ] ) ) {
 
-				$this->skin->set_result( true );
-				$this->skin->before();
-				$this->skin->feedback( 'up_to_date' );
-				$this->skin->after();
+				$this->_bail_early( 'up_to_date', 'feedback' );
 				$results[ $module ] = true;
+
+				continue;
+			}
+
+			$channel = wordpoints_get_channel_for_module(
+				$all_modules[ $module ]
+			);
+
+			$channel = WordPoints_Module_Channels::get( $channel );
+
+			if ( ! $channel ) {
+
+				$this->_bail_early( 'no_channel' );
+				$results[ $module ] = false;
+
+				continue;
+			}
+
+			$api = $channel->get_api();
+
+			if ( false === $api ) {
+
+				$this->_bail_early( 'api_not_found' );
+				$results[ $module ] = false;
 
 				continue;
 			}
@@ -374,7 +367,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 
 			$result = $this->run(
 				array(
-					'package'           => $this->get_github_package_url( $current['response'][ $module ] ),
+					'package'           => $api->get_package_url( $channel, $all_modules[ $module ] ),
 					'destination'       => wordpoints_modules_dir(),
 					'clear_destination' => true,
 					'clear_working'     => true,
@@ -619,6 +612,32 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		}
 
 		return true;
+	}
+
+	//
+	// Private Functions.
+	//
+
+	/**
+	 * Bail early before finishing a a process normally.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $message Slug for the message to show the user.
+	 * @param string $type    The type of message, 'error' (default), or 'feedback'.
+	 */
+	private function _bail_early( $message, $type = 'error' ) {
+
+		$this->skin->before();
+		$this->skin->set_result( false );
+
+		if ( 'feedback' === $type ) {
+			$this->skin->feedback( $message );
+		} else {
+			$this->skin->error( $message );
+		}
+
+		$this->skin->after();
 	}
 
 } // class WordPoints_Module_Upgrader

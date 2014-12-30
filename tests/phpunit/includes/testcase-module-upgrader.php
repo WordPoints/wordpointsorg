@@ -36,6 +36,27 @@ abstract class WordPointsOrg_Module_Upgrader_UnitTestCase extends WordPointsOrg_
 		require_once( WORDPOINTS_DIR . '/admin/includes/class-wordpoints-module-installer-skin.php' );
 
 		/**
+		 * The module upgrader.
+		 *
+		 * @since 1.0.0
+		 */
+		require_once( WORDPOINTSORG_DIR . '/admin/includes/class-module-upgrader.php' );
+
+		/**
+		 * The module upgrader skin.
+		 *
+		 * @since 1.0.0
+		 */
+		require_once( WORDPOINTSORG_DIR . '/admin/includes/class-module-upgrader-skin.php' );
+
+		/**
+		 * The bulk module upgrader skin.
+		 *
+		 * @since 1.0.0
+		 */
+		require_once( WORDPOINTSORG_DIR . '/admin/includes/class-bulk-module-upgrader-skin.php' );
+
+		/**
 		 * A child class of the module installer skin to use in the tests.
 		 *
 		 * @since 1.0.0
@@ -55,6 +76,12 @@ abstract class WordPointsOrg_Module_Upgrader_UnitTestCase extends WordPointsOrg_
 		 * @since 1.0.0
 		 */
 		require_once( WORDPOINTSORG_TESTS_DIR . '/includes/module-bulk-upgrader-skin.php' );
+
+		// Initialize the modules API, because it is hooked to admin_init which
+		// doesn't fire before the tests run.
+		WordPoints_Module_APIs::init();
+
+		wordpoints_register_module_channels();
 	}
 
 	/**
@@ -68,10 +95,11 @@ abstract class WordPointsOrg_Module_Upgrader_UnitTestCase extends WordPointsOrg_
 
 		add_filter( 'filesystem_method', array( $this, 'use_direct_filesystem_method' ) );
 		add_filter( 'upgrader_pre_download', array( $this, 'module_package' ) );
-		add_filter( 'wordpointsorg_github_module_package_url', array( $this, 'module_package' ) );
 
-		set_site_transient( 'wordpointsorg_update_modules', array( 'test' ) );
+		set_site_transient( 'wordpoints_module_updates', array( 'test' ) );
 		wp_cache_set( 'wordpoints_modules', array( 'test' ), 'wordpoints_modules' );
+
+		$this->http_responder = array( $this, 'http_responder' );
 	}
 
 	/**
@@ -120,7 +148,58 @@ abstract class WordPointsOrg_Module_Upgrader_UnitTestCase extends WordPointsOrg_
 	 */
 	public function module_package() {
 
-		return WORDPOINTSORG_TESTS_DIR . '/data/module-packages/' . $this->package_name . '.zip';
+		$package_name = WORDPOINTSORG_TESTS_DIR . '/data/module-packages/' . $this->package_name;
+
+		if ( ! file_exists( $package_name . '.zip' ) ) {
+			copy( $package_name . '.bk.zip', $package_name  . '.zip' );
+		}
+
+		return $package_name . '.zip';
+	}
+
+	public function http_responder( $request, $url ) {
+
+		if ( 'HEAD' === $request['method'] && 'wordpoints.org' === $url ) {
+
+			return array(
+				'headers' => array(
+					'x-wordpoints-module-api' => 'edd-software-licensing'
+				)
+			);
+		}
+
+		if ( null === $request['body'] && 'https://wordpoints.org' === $url ) {
+			return array( 'response' => array( 'code' => 200 ) );
+		}
+
+		if ( isset( $request['body']['item_id'] ) && '7' === $request['body']['item_id'] ) {
+
+			return array(
+				'response' => array(
+					'body' => json_encode(
+						array(
+							'new_version'   => '1.0.1',
+							'name'          => 'Module 7',
+							'slug'          => 'module-7',
+							'url'           => 'https://wordpoints.org/modules/module-7/changelog/',
+							'homepage'      => 'https://wordpoints.org/modules/module-7/',
+							'package'       => 'https://wordpoints.org/?edd_action=package_download',
+							'download_link' => 'https://wordpoints.org/?edd_action=package_download',
+							'sections'      => array(
+								'description' => 'A module, from seventh heaven.',
+								'changelog'   => 'Things change.',
+							),
+						)
+					),
+				),
+			);
+		}
+
+		if ( 0 === strpos( $url, 'https://api.wordpress.org/' ) ) {
+			return array();
+		}
+
+		var_log( $request, $url );
 	}
 }
 

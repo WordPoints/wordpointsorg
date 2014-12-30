@@ -1,132 +1,199 @@
 <?php
 
 /**
- * A test case for wordpointsorg_check_for_module_updates().
+ * A test case for wordpoints_check_for_module_updates().
  *
  * @package WordPointsOrg\Tests
  * @since 1.0.0
  */
 
 /**
- * Test wordpointsorg_check_for_module_updates().
+ * Test wordpoints_check_for_module_updates().
  *
  * @since 1.0.0
  */
-class WordPointsOrg_Check_For_Module_Updates_Test extends WordPointsOrg_HTTP_UnitTestCase {
+class WordPoints_Check_For_Module_Updates_Test extends WordPointsOrg_HTTP_UnitTestCase {
 
 	/**
-	 * Test that request has the right data.
-	 *
 	 * @since 1.0.0
 	 */
-	public function test_request() {
+	public static function setUpBeforeClass() {
 
-		wordpointsorg_check_for_module_updates();
+		parent::setUpBeforeClass();
 
-		$this->assertCount( 1, $this->http_requests );
+		// Initialize the modules API, because it is hooked to admin_init which
+		// doesn't fire before the tests run.
+		WordPoints_Module_APIs::init();
 
-		$this->assertEquals( 'https://wordpoints.org/wp-json/modules/', $this->http_requests[0]['url'] );
-
-		$request = $this->http_requests[0]['request'];
-
-		$this->assertArrayHasKey( 'post__in', $request['body'] );
-		$this->assertCount( 2, $request['body']['post__in'] );
-		$this->assertContains( 3, $request['body']['post__in'] );
-		$this->assertContains( 4, $request['body']['post__in'] );
+		wordpoints_register_module_channels();
 	}
 
 	/**
-	 * Test that the response is handled properly.
-	 *
 	 * @since 1.0.0
 	 */
-	public function test_reponse_handling() {
+	public function setUp() {
 
-		$this->http_responder = array( $this, 'module_update_response' );
+		parent::setUp();
 
-		$before = time();
-		wordpointsorg_check_for_module_updates();
-		$after = time();
+		$this->wordpointsorg_modules = WordPoints_Module_Channels::get( 'wordpoints.org' )
+			->modules->get();
 
-		$updates = get_site_transient( 'wordpointsorg_update_modules' );
-
-		$this->assertInternalType( 'array', $updates );
-
-		$this->assertArrayHasKey( 'last_checked', $updates );
-		$this->assertInternalType( 'int', $updates['last_checked'] );
-		$this->assertGreaterThanOrEqual( $before, $updates['last_checked'] );
-		$this->assertLessThanOrEqual( $after, $updates['last_checked'] );
-
-		$this->assertArrayHasKey( 'response', $updates );
-		$this->assertInternalType( 'array', $updates['response'] );
-
-		$response = $this->module_update_response();
-		$this->assertEquals( json_decode( $response['body'], true ), $updates['response'] );
+		$this->http_responder = array( $this, 'respond_get_channel_api_header' );
 	}
 
-	//
-	// Helpers.
-	//
-
 	/**
-	 * Returns a mock response from the wordpoints.org module update API endpoint.
-	 *
 	 * @since 1.0.0
 	 */
-	protected function module_update_response() {
+	public function tearDown() {
 
-		return array(
-			'body' => '[
-					{
-						"ID":3,
-						"title":"Test 1",
-						"author":1,
-						"content":"<p>A test module.<\/p>\n",
-						"link":"http:\/\/wordpoints.local\/modules\/test-1\/",
-						"date":"2014-05-24T20:06:17+00:00",
-						"modified":"2014-05-24T21:23:34+00:00",
-						"slug":"test-1",
-						"guid":"http:\/\/wordpoints.local\/?post_type=wordpoints_module&#038;p=3",
-						"excerpt":"<p>A test module.<\/p>\n",
-						"date_tz":"UTC",
-						"date_gmt":"2014-05-24T20:06:17+00:00",
-						"modified_tz":"UTC",
-						"modified_gmt":"2014-05-24T21:23:34+00:00",
-						"version":"1.0.0",
-						"meta":{
-							"links":{
-								"self":"http:\/\/wordpoints.local\/wp-json\/modules\/3",
-								"author":"http:\/\/wordpoints.local\/wp-json\/users\/1",
-								"collection":"http:\/\/wordpoints.local\/wp-json\/modules"
-							}
-						}
-					},
-					{
-						"ID":4,
-						"title":"Test 2",
-						"author":1,
-						"content":"<p>A test module.<\/p>\n",
-						"link":"http:\/\/wordpoints.local\/modules\/test-2\/",
-						"date":"2014-05-24T20:06:17+00:00",
-						"modified":"2014-05-24T21:23:34+00:00",
-						"slug":"test-2",
-						"guid":"http:\/\/wordpoints.local\/?post_type=wordpoints_module&#038;p=4",
-						"excerpt":"<p>A test module.<\/p>\n",
-						"date_tz":"UTC",
-						"date_gmt":"2014-05-24T20:06:17+00:00",
-						"modified_tz":"UTC",
-						"modified_gmt":"2014-05-24T21:23:34+00:00",
-						"version":"1.1.0",
-						"meta":{
-							"links":{
-								"self":"http:\/\/wordpoints.local\/wp-json\/modules\/4",
-								"author":"http:\/\/wordpoints.local\/wp-json\/users\/1",
-								"collection":"http:\/\/wordpoints.local\/wp-json\/modules"
-							}
-						}
-					}
-				]',
+		$wordpoints_org = WordPoints_Module_Channels::get( 'wordpoints.org' );
+
+		foreach ( $wordpoints_org->modules->get() as $file => $module ) {
+
+			if ( ! isset( $this->wordpointsorg_modules[ $file ] ) ) {
+				$wordpoints_org->modules->remove( $file );
+			}
+		}
+
+		$to_add_back = array_diff_key(
+			$this->wordpointsorg_modules
+			, $wordpoints_org->modules->get()
 		);
+
+		foreach ( $to_add_back as $file => $module ) {
+			$wordpoints_org->modules->add( $file, $module );
+		}
+
+		parent::tearDown();
+	}
+
+	public function respond_get_channel_api_header( $request, $url ) {
+
+		if ( false !== strpos( $url, 'wordpoints.org' ) ) {
+
+			return array(
+				'headers' => array(
+					'x-wordpoints-module-api' => 'edd-software-licensing',
+				),
+			);
+		}
+	}
+
+	/**
+	 * Test that it returns false if there are no modules supporting updates.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_no_modules_supporting_updates() {
+
+		// Deregister the module that supports updates.
+		WordPoints_Module_Channels::get( 'wordpoints.org' )
+			->modules->remove( 'module-7/module-7.php' );
+
+		$this->assertFalse( wordpoints_check_for_module_updates() );
+	}
+
+	/**
+	 * Test that it bails out if recently checked and no module versions have changed.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_no_module_versions_changed() {
+
+		set_site_transient(
+			'wordpoints_module_updates'
+			, array(
+				'last_checked' => time(),
+				'checked' => array( 'module-7/module-7.php' => '1.0.0' ),
+			)
+		);
+
+		$this->assertFalse( wordpoints_check_for_module_updates() );
+	}
+
+	/**
+	 * Test that it doesn't bail out if recently checked and module versions have changed.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_module_versions_changed() {
+
+		set_site_transient(
+			'wordpoints_module_updates'
+			, array(
+				'last_checked' => time(),
+				'checked' => array( 'module-7/module-7.php' => '0.9.0' ),
+			)
+		);
+
+		$this->assertNull( wordpoints_check_for_module_updates() );
+	}
+
+	/**
+	 * Test that it doesn't bail out if recently checked and module been deleted.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_modules_deleted() {
+
+		set_site_transient(
+			'wordpoints_module_updates'
+			, array(
+				'last_checked' => time(),
+				'checked' => array( 'module-7/module-7.php' => '0.9.0' ),
+				'response' => array( 'module-34/module-34.php' => '0.5.5' ),
+			)
+		);
+
+		$this->assertNull( wordpoints_check_for_module_updates() );
+	}
+
+	/**
+	 * Test that it updates module updates cache.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_updates_module_updates_cache() {
+
+		$this->http_responder = array( $this, 'respond_get_version' );
+
+		$this->assertNull( wordpoints_check_for_module_updates() );
+
+		$cache = get_site_transient( 'wordpoints_module_updates' );
+
+		$this->assertInternalType( 'array', $cache );
+
+		$this->assertArrayHasKey( 'checked', $cache );
+		$this->assertInternalType( 'array', $cache['checked'] );
+		$this->assertArrayHasKey( 'module-7/module-7.php', $cache['checked'] );
+		$this->assertEquals( '1.0.0', $cache['checked']['module-7/module-7.php'] );
+
+		$this->assertArrayHasKey( 'response', $cache );
+		$this->assertInternalType( 'array', $cache['response'] );
+		$this->assertArrayHasKey( 'module-7/module-7.php', $cache['response'] );
+		$this->assertEquals( '1.1.0', $cache['response']['module-7/module-7.php'] );
+
+		$this->assertArrayHasKey( 'last_checked', $cache );
+		$this->assertInternalType( 'int', $cache['last_checked'] );
+		$this->assertLessThanOrEqual( time() + 1, $cache['last_checked'] );
+		$this->assertGreaterThanOrEqual( time() - 1, $cache['last_checked'] );
+	}
+
+	public function respond_get_version( $request, $url ) {
+
+		if (
+			isset( $request['body']['edd_action'] )
+			&& 'get_version' === $request['body']['edd_action']
+		) {
+
+			return array(
+				'body' => json_encode( array( 'new_version' => '1.1.0' ) )
+			);
+
+		} else {
+
+			return $this->respond_get_channel_api_header( $request, $url );
+		}
 	}
 }
 
