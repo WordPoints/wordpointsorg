@@ -7,6 +7,7 @@
  */
 
 // Include dependencies.
+require_once dirname( __FILE__ ) . '/includes/constants.php';
 require_once dirname( __FILE__ ) . '/includes/functions.php';
 
 $custom_caps = array_keys( wordpointsorg_get_custom_caps() );
