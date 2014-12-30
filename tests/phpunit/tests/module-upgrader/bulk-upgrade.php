@@ -184,9 +184,8 @@ class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test
 
 		$api = array_merge(
 			array(
-				'ID'        => 7,
-				'github_id' => 'WordPoints/test-module',
-				'version'   => '1.0.0',
+				'ID'      => 7,
+				'version' => '1.0.0',
 			)
 			, $api
 		);
