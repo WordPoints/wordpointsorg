@@ -89,7 +89,9 @@ class WordPoints_Container_Test extends WP_UnitTestCase {
 	}
 }
 
-class WordPoints_Container_Object_Test extends WordPoints_Container_Object {}
-class WordPoints_Container_Static_Test extends WordPoints_Container_Static {}
+if ( class_exists( 'WordPoints_Container_Object' ) ) {
+	class WordPoints_Container_Object_Test extends WordPoints_Container_Object {}
+	class WordPoints_Container_Static_Test extends WordPoints_Container_Static {}
+}
 
 // EOF
