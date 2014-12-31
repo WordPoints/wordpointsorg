@@ -24,8 +24,6 @@ setup-phpunit() {
         | tar xvz --strip-components=1 -C /tmp/wordpoints
     ln -s /tmp/wordpoints/src /tmp/wordpress/wp-content/plugins/wordpoints
 
-    cp /tmp/wordpoints/phpcs.ruleset.xml .
-
     export WORDPOINTS_TESTS_DIR=/tmp/wordpoints/tests/phpunit/
 
     mkdir /tmp/wordpress/wp-content/wordpoints-modules
@@ -44,6 +42,9 @@ setup-codesniff() {
     	| tar xvz --strip-components=1 -C "$WPCS_DIR"
 
     "$PHPCS_DIR/scripts/phpcs" --config-set installed_paths "$WPCS_DIR"
+
+    wget -O phpcs.ruleset.xml \
+        https://raw.githubusercontent.com/WordPoints/wordpoints/master/phpcs.ruleset.xml
 
     npm install -g jshint
 
