@@ -160,8 +160,7 @@ class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test
 
 		$this->assertEquals( array( 'module-8/module-8.php' => true ), $result );
 		$this->assertCount( 0, $this->skin->errors );
-		$this->assertCount( 3, $this->skin->feedback );
-		$this->assertEquals( 'up_to_date', $this->skin->feedback[1] );
+		$this->assertContains( 'up_to_date', $this->skin->feedback );
 	}
 
 	//
