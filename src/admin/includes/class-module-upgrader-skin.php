@@ -97,8 +97,30 @@ class WordPointsOrg_Module_Upgrader_Skin extends WP_Upgrader_Skin {
 
 		if ( ! empty( $this->module ) && ! is_wp_error( $this->result ) && $this->module_active ) {
 
-			echo '<iframe style="border:0;overflow:hidden" width="100%" height="170px" src="' . esc_attr( wp_nonce_url( 'admin.php?page=wordpoints_configure&tab=modules&action=activate-module&networkwide=' . $this->module_network_active . '&module=' . urlencode( $this->module ), "activate-module_{$this->module}" ) ) .'"></iframe>';
+			$url = wp_nonce_url( 'admin.php?page=wordpoints_configure&tab=modules&action=activate-module&networkwide=' . $this->module_network_active . '&module=' . urlencode( $this->module ), "activate-module_{$this->module}" );
+
+			?>
+
+			<iframe style="border: 0; overflow: hidden;" width="100%" height="170px" src="<?php echo esc_attr( $url ); ?>"></iframe>
+
+			<?php
 		}
+
+		$update_actions = $this->get_module_update_actions();
+
+		if ( ! empty( $update_actions ) ) {
+			$this->feedback( implode( ' | ', (array) $update_actions ) );
+		}
+	}
+
+	/**
+	 * Get the module update actions.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string[] The anchor elements for the actions links to display.
+	 */
+	public function get_module_update_actions() {
 
 		// TODO update modue links
 		$update_actions =  array(
@@ -128,13 +150,8 @@ class WordPointsOrg_Module_Upgrader_Skin extends WP_Upgrader_Skin {
 		 * }
 		 * @param string $module The basename path to the module file.
 		 */
-		$update_actions = apply_filters( 'wordpoints_update_module_complete_actions', $update_actions, $this->module );
-
-		if ( ! empty( $update_actions ) ) {
-			$this->feedback( implode( ' | ', (array) $update_actions ) );
-		}
-
-	} // function after()
+		return apply_filters( 'wordpoints_update_module_complete_actions', $update_actions, $this->module );
+	}
 
 } // class WordPoints_Module_Upgrader_Skin
 
