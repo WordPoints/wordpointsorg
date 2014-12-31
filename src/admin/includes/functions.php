@@ -244,12 +244,10 @@ function wordpointsorg_update_modules() {
 
 	check_admin_referer( 'bulk-update-modules' );
 
+	$modules = array();
+
 	if ( isset( $_GET['modules'] ) ) {
-		$modules = explode( ',', wp_unslash( $_GET['modules'] ) );
-	} elseif ( isset( $_POST['checked'] ) ) {
-		$modules = (array) $_POST['checked'];
-	} else {
-		$modules = array();
+		$modules = explode( ',', wp_unslash( sanitize_text_field( $_GET['modules'] ) ) );
 	}
 
 	$modules = array_map( 'urldecode', $modules );
@@ -326,6 +324,10 @@ add_action( 'update-custom_wordpoints-upgrade-module', 'wordpointsorg_upgrade_mo
  */
 function wordpointsorg_update_selected_modules() {
 
+	if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
+		wp_die( __( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ) );
+	}
+
 	check_admin_referer( 'bulk-modules' );
 
 	if ( isset( $_GET['modules'] ) ) {
@@ -381,7 +383,7 @@ add_filter( 'extra_module_headers', 'wordpointsorg_extra_module_headers' );
  *
  * @param array $statuses The module statuses.
  *
- * @return array The module statuses with 'upgrade' added.
+ * @return string[] The module statuses with 'upgrade' added.
  */
 function wordpointsorg_add_upgrade_module_status( $statuses ) {
 
@@ -482,11 +484,10 @@ add_filter( 'wordpoints_module_bulk_actions', 'wordpointsorg_module_upgrade_bulk
  *
  * @param string $class The class for the module's row in the table.
  * @param string $module_file The module's main file.
- * @param string $module_data The data for the module being displayed.
  *
  * @return string The class, with 'update' added if the moduel has an update.
  */
-function wordpointsorg_module_row_update_class( $class, $module_file, $module_data ) {
+function wordpointsorg_module_row_update_class( $class, $module_file ) {
 
 	$current = get_site_transient( 'wordpoints_module_updates' );
 
@@ -496,7 +497,7 @@ function wordpointsorg_module_row_update_class( $class, $module_file, $module_da
 
 	return $class;
 }
-add_filter( 'wordpoints_module_list_row_class', 'wordpointsorg_module_row_update_class', 10, 3 );
+add_filter( 'wordpoints_module_list_row_class', 'wordpointsorg_module_row_update_class', 10, 2 );
 
 /**
  * Set up the action hooks to display the module update rows.

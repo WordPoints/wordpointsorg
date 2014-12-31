@@ -470,7 +470,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return string|bool The module path or false on failure.
+	 * @return string|false The module path or false on failure.
 	 */
 	public function module_info() {
 
@@ -604,7 +604,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		if ( strpos( $data['wordpoints_module'], '/' ) && $this_module_dir !== $modules_dir ) {
 			$deleted = $wp_filesystem->delete( $this_module_dir, true );
 		} else {
-			$deleted = $wp_filesystem->delete( $moduless_dir . $data['wordpoints_module'] );
+			$deleted = $wp_filesystem->delete( $modules_dir . $data['wordpoints_module'] );
 		}
 
 		if ( ! $deleted ) {

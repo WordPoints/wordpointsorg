@@ -160,7 +160,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	public function hooks() {
 
 		add_action( 'wordpoints_modules_list_table_items', array( $this, 'wordpoints_modules_list_table_items' ) );
-		add_action( 'wordpoints_after_module_row', array( $this, 'wordpoints_after_module_row' ), 10, 3 );
+		add_action( 'wordpoints_after_module_row', array( $this, 'wordpoints_after_module_row' ), 10, 2 );
 	}
 
 	/**
@@ -210,9 +210,9 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				$result = $this->deactivate_license( $channel, $module );
 
 				if ( false === $result ) {
-					wordpoints_show_admin_error( esc_html__( 'There was an error while trying to activate the license. Please try again.', 'wordpointsorg' ) );
+					wordpoints_show_admin_error( esc_html__( 'There was an error while trying to deactivate the license. Please try again.', 'wordpointsorg' ) );
 				} elseif ( 'failed' === $result ) {
-					wordpoints_show_admin_error( esc_html__( 'There was an error while trying to activate the license. Your license may be expired or invalid, or may already be deactivated.', 'wordpointsorg' ) );
+					wordpoints_show_admin_error( esc_html__( 'There was an error while trying to deactivate the license. Your license may be expired or invalid, or may already be deactivated.', 'wordpointsorg' ) );
 				} else {
 					wordpoints_show_admin_message( esc_html__( 'License deactivated.', 'wordpointsorg' ) );
 				}
@@ -227,7 +227,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @since 1.0.0
 	 */
-	public function wordpoints_after_module_row( $module_file, $module_data, $status ) {
+	public function wordpoints_after_module_row( $module_file, $module_data ) {
 
 		$channel = wordpoints_get_channel_for_module( $module_data );
 		$channel = WordPoints_Module_Channels::get( $channel );
@@ -357,7 +357,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 * @param array                     $module  The module's data.
 	 * @param string                    $info    The piece of info to get.
 	 *
-	 * @return array The remote information for this module.
+	 * @return mixed The remote information for this module.
 	 */
 	protected function get_module_information( $channel, $module, $info = null ) {
 

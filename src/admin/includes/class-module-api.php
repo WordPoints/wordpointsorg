@@ -56,8 +56,8 @@ final class WordPoints_Module_APIs extends WordPoints_Container_Static {
 	 *
 	 * @see WordPoints_Container::_remove()
 	 */
-	public static function deregister( $slug, $item = null ) {
-		return self::$instance->_remove( $slug, $item );
+	public static function deregister( $slug) {
+		return self::$instance->_remove( $slug );
 	}
 
 	/**
@@ -155,7 +155,7 @@ abstract class WordPoints_Module_API {
 	 *
 	 * @param WordPoints_Module_Channel $channel The channel to check for updates on.
 	 *
-	 * @return TODO
+	 * @return string[] The new versions of modules needing updates, indexed by module file.
 	 */
 	abstract public function check_for_updates( $channel );
 

@@ -63,8 +63,8 @@ final class WordPoints_Module_Channels extends WordPoints_Container_Static {
 	 *
 	 * @see WordPoints_Container::_remove()
 	 */
-	public static function deregister( $slug, $item = null ) {
-		return self::$instance->_remove( $slug, $item );
+	public static function deregister( $slug ) {
+		return self::$instance->_remove( $slug );
 	}
 
 	/**
@@ -104,8 +104,8 @@ WordPoints_Module_Channels::init();
  *
  * @since 1.0.0
  *
- * @read-only $modules
- * @read-only $url
+ * @property-read $modules
+ * @property-read $url
  */
 final class WordPoints_Module_Channel  {
 
