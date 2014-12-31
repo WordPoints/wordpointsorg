@@ -51,6 +51,15 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 */
 	public $bulk = false;
 
+	/**
+	 * Whether the upgrade routine bailed out early.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var bool
+	 */
+	public $bailed_early = false;
+
 	//
 	// Private Methods.
 	//
@@ -180,54 +189,12 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		$this->init();
 		$this->upgrade_strings();
 
-		$modules = wordpoints_get_modules();
-
-		if ( ! isset( $modules[ $module_file ] ) ) {
-			$this->_bail_early( 'not_installed' );
-			return false;
-		}
-
-		$module_data = $modules[ $module_file ];
-
-		$current = get_site_transient( 'wordpoints_module_updates' );
-
-		if ( ! isset( $current['response'][ $module_file ] ) ) {
-			$this->_bail_early( 'up_to_date', 'feedback' );
-			return false;
-		}
-
-		$channel = wordpoints_get_channel_for_module( $module_data );
-
-		$channel = WordPoints_Module_Channels::get( $channel );
-
-		if ( ! $channel ) {
-			$this->_bail_early( 'no_channel' );
-			return false;
-		}
-
-		$api = $channel->get_api();
-
-		if ( false === $api ) {
-			$this->_bail_early( 'api_not_found' );
-			return false;
-		}
-
 		add_filter( 'upgrader_pre_install', array( $this, 'deactivate_module_before_upgrade' ), 10, 2 );
 		add_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
 		add_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ), 10, 3 );
 		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ), 10, 4 );
 
-		$result = $this->run(
-			array(
-				'package'           => $api->get_package_url( $channel, $module_data ),
-				'destination'       => wordpoints_modules_dir(),
-				'clear_destination' => true,
-				'clear_working'     => true,
-				'hook_extra'        => array(
-					'wordpoints_module' => $module_file,
-				),
-			)
-		);
+		$result = $this->_upgrade( $module_file );
 
 		// Cleanup our hooks, in case something else does a upgrade on this connection.
 		remove_filter( 'upgrader_pre_install', array( $this, 'deactivate_module_before_upgrade' ) );
@@ -310,8 +277,6 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		}
 
 		$results = array();
-		$module_root = wordpoints_modules_dir();
-		$all_modules = wordpoints_get_modules();
 
 		$this->update_count = count( $modules );
 		$this->update_current = 0;
@@ -320,72 +285,13 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 
 			$this->update_current++;
 
-			if ( ! isset( $all_modules[ $module ] ) ) {
-
-				$this->_bail_early( 'not_installed' );
-				$results[ $module ] = false;
-
-				continue;
-			}
-
-			$this->skin->module = $module;
-			$this->skin->module_info = wordpoints_get_module_data( $module_root . $module );
-
-			if ( ! isset( $current['response'][ $module ] ) ) {
-
-				$this->_bail_early( 'up_to_date', 'feedback' );
-				$results[ $module ] = true;
-
-				continue;
-			}
-
-			$channel = wordpoints_get_channel_for_module(
-				$all_modules[ $module ]
-			);
-
-			$channel = WordPoints_Module_Channels::get( $channel );
-
-			if ( ! $channel ) {
-
-				$this->_bail_early( 'no_channel' );
-				$results[ $module ] = false;
-
-				continue;
-			}
-
-			$api = $channel->get_api();
-
-			if ( false === $api ) {
-
-				$this->_bail_early( 'api_not_found' );
-				$results[ $module ] = false;
-
-				continue;
-			}
-
-			$this->skin->module_active = is_wordpoints_module_active( $module );
-
-			$result = $this->run(
-				array(
-					'package'           => $api->get_package_url( $channel, $all_modules[ $module ] ),
-					'destination'       => wordpoints_modules_dir(),
-					'clear_destination' => true,
-					'clear_working'     => true,
-					'is_multi'          => true,
-					'hook_extra'        => array(
-						'wordpoints_module' => $module
-					)
-				)
-			);
-
-			$results[ $module ] = $result;
+			$results[ $module ] = $this->_upgrade( $module );
 
 			// Prevent credentials auth screen from displaying multiple times.
-			if ( false === $result ) {
+			if ( false === $results[ $module ] && ! $this->bailed_early ) {
 				break;
 			}
-
-		} // foreach $modules
+		}
 
 		$this->maintenance_mode( false );
 
@@ -407,6 +313,71 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		return $results;
 
 	} // function bulk_upgrade()
+
+	/**
+	 * Upgrade a module.
+	 *
+	 * This is the real meat of upgrade functions.
+	 *
+	 * @since 1.0.0
+	 */
+	protected function _upgrade( $module_file ) {
+
+		$this->bailed_early = false;
+
+		$modules = wordpoints_get_modules();
+
+		if ( ! isset( $modules[ $module_file ] ) ) {
+			$this->_bail_early( 'not_installed' );
+			return false;
+		}
+
+		$module_data = $modules[ $module_file ];
+
+		if ( $this->bulk ) {
+
+			$this->skin->module = $module_file;
+			$this->skin->module_info = wordpoints_get_module_data(
+				wordpoints_modules_dir() . $module_file
+			);
+			$this->skin->module_active = is_wordpoints_module_active( $module_file );
+		}
+
+		$current = get_site_transient( 'wordpoints_module_updates' );
+
+		if ( ! isset( $current['response'][ $module_file ] ) ) {
+			$this->_bail_early( 'up_to_date', 'feedback' );
+			return true;
+		}
+
+		$channel = wordpoints_get_channel_for_module( $module_data );
+		$channel = WordPoints_Module_Channels::get( $channel );
+
+		if ( ! $channel ) {
+			$this->_bail_early( 'no_channel' );
+			return false;
+		}
+
+		$api = $channel->get_api();
+
+		if ( false === $api ) {
+			$this->_bail_early( 'api_not_found' );
+			return false;
+		}
+
+		return $this->run(
+			array(
+				'package'           => $api->get_package_url( $channel, $module_data ),
+				'destination'       => wordpoints_modules_dir(),
+				'clear_destination' => true,
+				'clear_working'     => true,
+				'is_multi'          => $this->bulk,
+				'hook_extra'        => array(
+					'wordpoints_module' => $module_file,
+				),
+			)
+		);
+	}
 
 	/**
 	 * Check if the source package actually contains a module.
@@ -627,6 +598,8 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 * @param string $type    The type of message, 'error' (default), or 'feedback'.
 	 */
 	private function _bail_early( $message, $type = 'error' ) {
+
+		$this->bailed_early = true;
 
 		$this->skin->before();
 		$this->skin->set_result( false );

@@ -149,7 +149,7 @@ class WordPointsOrg_Module_Upgrader_Upgrade_Test extends WordPointsOrg_Module_Up
 			, array( 'ID' => 8 )
 		);
 
-		$this->assertFalse( $result );
+		$this->assertTrue( $result );
 		$this->assertCount( 0, $this->skin->errors );
 		$this->assertCount( 2, $this->skin->feedback );
 		$this->assertEquals( 'up_to_date', $this->skin->feedback[0] );
