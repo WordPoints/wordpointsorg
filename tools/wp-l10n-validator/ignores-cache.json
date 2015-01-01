@@ -91,5 +91,71 @@
         "default": {
             "115": false
         }
+    },
+    "-": {
+        "259": false
+    },
+    "install": {
+        "165": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 0,
+            "parentheses": 1
+        }
+    },
+    "update": {
+        "382": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 0,
+            "parentheses": 1
+        }
+    },
+    "version": {
+        "166": {
+            "name": "wp_list_pluck",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 1,
+            "parentheses": 1
+        }
+    },
+    "bulk-update-modules": {
+        "263": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 0,
+            "parentheses": 1
+        }
+    },
+    "update.php?action=update-selected-wordpoints-modules&amp;modules=": {
+        "264": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 1,
+            "parentheses": 1
+        }
+    },
+    "update.php?action=wordpoints-upgrade-module&module=": {
+        "305": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 2,
+            "parentheses": 1
+        }
+    },
+    "channel": {
+        "370": false
+    },
+    "upgrade": {
+        "389": false
+    },
+    "default": {
+        "120": false
     }
 }

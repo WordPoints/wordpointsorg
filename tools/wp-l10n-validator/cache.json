@@ -5,38 +5,38 @@
         "errors": false
     },
     "\/admin\/includes\/apis\/edd-software-licensing.php": {
-        "size": 13735,
-        "hash": "1e8479f4a6f0780fb8bfd479c8c1a9d0",
+        "size": 13729,
+        "hash": "53e5b50ddf268f692c226bc423a3da7d",
         "errors": false
     },
     "\/admin\/includes\/class-bulk-module-upgrader-skin.php": {
-        "size": 2765,
-        "hash": "55961410040a056a0edb0cb7c49f67b9",
+        "size": 2764,
+        "hash": "a8cf2b511239d66d2e2853f6b9585fa7",
         "errors": false
     },
     "\/admin\/includes\/class-module-api.php": {
-        "size": 3918,
-        "hash": "44c9f28d971f6a7d6b27865f1850d5c3",
+        "size": 3969,
+        "hash": "297b32e0e857fafe0d49e3e55b85f5aa",
         "errors": false
     },
     "\/admin\/includes\/class-module-channel.php": {
-        "size": 5771,
-        "hash": "530e445572205b98a07a9b0c943d4361",
+        "size": 5758,
+        "hash": "00d77f17493515209612c61f468999a4",
         "errors": false
     },
     "\/admin\/includes\/class-module-upgrader-skin.php": {
-        "size": 3701,
-        "hash": "0988bd53afcb4d8fc3f4ae80c6803f23",
+        "size": 3959,
+        "hash": "bdd53005ff322c87726cb6529554b25d",
         "errors": false
     },
     "\/admin\/includes\/class-module-upgrader.php": {
-        "size": 17922,
-        "hash": "829b6fb4e3ff8e8e2596ceb413d172a4",
+        "size": 17658,
+        "hash": "5983ee2e0c476fe6e84328079a6fa062",
         "errors": false
     },
     "\/admin\/includes\/functions.php": {
-        "size": 16739,
-        "hash": "d53ee3946cf0e2ba208f78d858913d21",
+        "size": 16713,
+        "hash": "c78f57e466ca8ca97ca09e4d9e7041b9",
         "errors": false
     },
     "\/includes\/class-item-container.php": {
@@ -50,8 +50,8 @@
         "errors": false
     },
     "\/includes\/functions.php": {
-        "size": 2743,
-        "hash": "567d85b8109ceac9a7633567de2717ed",
+        "size": 2776,
+        "hash": "8204cfae6aa5396e1ea2ac253bc632e3",
         "errors": false
     },
     "\/install.php": {
