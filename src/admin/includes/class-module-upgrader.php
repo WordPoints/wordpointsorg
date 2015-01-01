@@ -76,7 +76,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 			'no_package'          => __( 'Update package not available.', 'wordpointsorg' ),
 			'no_channel'          => __( 'That module cannot be updated, because there is no channel specified to receive updates through.', 'wordpointsorg' ),
 			'api_not_found'       => __( 'That module cannot be updated, because there is no API installed that can communicate with that channel.', 'wordpointsorg' ),
-			'downloading_package' => __( 'Downloading update from <span class="code">%s</span>&#8230;', 'wordpointsorg' ),
+			'downloading_package' => sprintf( __( 'Downloading update from %s&#8230;', 'wordpointsorg' ), '<span class="code">%s</span>' ),
 			'unpack_package'      => __( 'Unpacking the update&#8230;', 'wordpointsorg' ),
 			'remove_old'          => __( 'Removing the old version of the module&#8230;', 'wordpointsorg' ),
 			'remove_old_failed'   => __( 'Could not remove the old module.', 'wordpointsorg' ),
@@ -97,7 +97,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 
 		$install_strings = array(
 			'no_package'          => __( 'Install package not available.', 'wordpointsorg' ),
-			'downloading_package' => __( 'Downloading install package from <span class="code">%s</span>&#8230;', 'wordpointsorg' ),
+			'downloading_package' => sprintf( __( 'Downloading install package from %s&#8230;', 'wordpointsorg' ), '<span class="code">%s</span>' ),
 			'unpack_package'      => __( 'Unpacking the package&#8230;', 'wordpointsorg' ),
 			'installing_package'  => __( 'Installing the module&#8230;', 'wordpointsorg' ),
 			'no_files'            => __( 'The module contains no files.', 'wordpointsorg' ),
