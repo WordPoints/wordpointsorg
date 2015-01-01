@@ -219,7 +219,7 @@ final class WordPoints_Module_Channel {
 		$transient = 'wrdpnts_' . md5( "module_channel_supports-{$this->url}" );
 
 		$api = get_site_transient( $transient );
-//if ( $this->url === 'wordpoints.local' )$api = false;
+
 		// If the transient has expired.
 		if ( false === $api ) {
 

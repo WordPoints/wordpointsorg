@@ -85,7 +85,7 @@ class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 
 		parent::bulk_footer();
 
-		$update_actions =  array(
+		$update_actions = array(
 			'modules_page' => '<a href="' . esc_attr( esc_url( self_admin_url( 'admin.php?page=wordpoints_modules' ) ) ) . '" target="_parent">' . esc_html__( 'Return to Modules page', 'wordpointsorg' ) . '</a>',
 			'updates_page' => '<a href="' . esc_attr( esc_url( self_admin_url( 'update-core.php' ) ) ) . '" target="_parent">' . esc_html__( 'Return to WordPress Updates', 'wordpointsorg' ) . '</a>'
 		);

@@ -184,7 +184,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			if ( isset( $_POST[ "license_key-{$url}-{$module['ID']}" ] ) ) {
 
 				$licenses = wordpoints_get_array_option( 'wordpoints_edd_sl_module_licenses', 'network' );
-				$licenses[ $channel->url ][ $module['ID'] ]['license'] = sanitize_key(  $_POST[ "license_key-{$url}-{$module['ID']}" ] );
+				$licenses[ $channel->url ][ $module['ID'] ]['license'] = sanitize_key( $_POST[ "license_key-{$url}-{$module['ID']}" ] );
 				wordpoints_update_network_option( 'wordpoints_edd_sl_module_licenses', $licenses );
 			}
 
@@ -262,7 +262,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 					autocomplete="off"
 					value="<?php echo esc_attr( $license ); ?>"
 				/>
-				<?php if ( $status !== false && 'valid' === $status ) : ?>
+				<?php if ( false !== $status && 'valid' === $status ) : ?>
 					<span style="color:green;"><?php esc_html_e( 'active', 'wordpointsorg' ); ?></span>
 					<?php wp_nonce_field( "wordpoints_deactivate_license_key-{$module_data['ID']}", "wordpoints_deactivate_license_key-{$module_data['ID']}" ); ?>
 					<input type="submit" name="edd-deactivate-license" class="button-secondary" value="<?php esc_attr_e( 'Deactivate License', 'wordpointsorg' ); ?>" />
@@ -341,7 +341,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 */
 	public function http_request_args( $args, $url ) {
 
-		if ( strpos( $url, 'https://' ) !== false && strpos( $url, 'edd_action=package_download' ) ) {
+		if ( false !== strpos( $url, 'https://' ) && strpos( $url, 'edd_action=package_download' ) ) {
 			$args['sslverify'] = false;
 		}
 

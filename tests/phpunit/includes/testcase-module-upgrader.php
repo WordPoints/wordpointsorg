@@ -163,8 +163,8 @@ abstract class WordPointsOrg_Module_Upgrader_UnitTestCase extends WordPointsOrg_
 
 			return array(
 				'headers' => array(
-					'x-wordpoints-module-api' => 'edd-software-licensing'
-				)
+					'x-wordpoints-module-api' => 'edd-software-licensing',
+				),
 			);
 		}
 

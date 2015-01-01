@@ -86,33 +86,39 @@ add_filter( 'map_meta_cap', 'wordpointsorg_map_custom_meta_caps', 10, 3 );
  */
 function wordpoints_get_installed_translations( $type ) {
 
-	if ( $type !== 'modules' )
+	if ( 'modules' !== $type ) {
 		return array();
+	}
 
 	$dir = "/wordpoints-{$type}";
 
-	if ( ! is_dir( WP_LANG_DIR ) || ! is_dir( WP_LANG_DIR . $dir ) )
+	if ( ! is_dir( WP_LANG_DIR ) || ! is_dir( WP_LANG_DIR . $dir ) ) {
 		return array();
+	}
 
 	$files = scandir( WP_LANG_DIR . $dir );
 
-	if ( ! $files )
+	if ( ! $files ) {
 		return array();
+	}
 
 	$language_data = array();
 
 	foreach ( $files as $file ) {
 
-		if ( '.' === $file[0] || is_dir( $file ) || substr( $file, -3 ) !== '.po' )
+		if ( '.' === $file[0] || is_dir( $file ) || substr( $file, -3 ) !== '.po' ) {
 			continue;
+		}
 
-		if ( ! preg_match( '/(?:(.+)-)?([A-Za-z_]{2,6}).po/', $file, $match ) )
+		if ( ! preg_match( '/(?:(.+)-)?([A-Za-z_]{2,6}).po/', $file, $match ) ) {
 			continue;
+		}
 
 		list( , $textdomain, $language ) = $match;
 
-		if ( '' === $textdomain )
+		if ( '' === $textdomain ) {
 			$textdomain = 'default';
+		}
 
 		$language_data[ $textdomain ][ $language ] = wp_get_pomo_file_data( WP_LANG_DIR . "$dir/$file" );
 	}

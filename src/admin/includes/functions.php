@@ -67,7 +67,6 @@ function wordpoints_register_module_channels() {
 	 * @since 1.0.0
 	 */
 	do_action( 'wordpoints_register_module_channels' );
-//wordpoints_check_for_module_updates(0);//todo
 }
 add_action( 'wordpoints_register_module_apis', 'wordpoints_register_module_channels', 100 );
 
@@ -514,7 +513,7 @@ function wordpointsorg_module_update_rows() {
 
 	if ( isset( $current['response'] ) && is_array( $current['response'] ) ) {
 
-		foreach( $current['response'] as $module_file => $version ) {
+		foreach ( $current['response'] as $module_file => $version ) {
 			add_action( "wordpoints_after_module_row_{$module_file}", 'wordpointsorg_module_update_row', 10, 2 );
 		}
 	}
@@ -607,7 +606,7 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 					 *
 					 * @since 1.0.0
 					 *
- 					 * @param array  $module_data The module's data.
+					 * @param array  $module_data The module's data.
 					 * @param string $new_version The new version of the module.
 					 */
 					do_action( "wordpoints_in_module_update_message-{$file}", $module_data, $new_version );
