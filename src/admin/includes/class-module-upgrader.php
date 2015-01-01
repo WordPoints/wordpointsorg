@@ -381,7 +381,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		$details = array(
 			'action' => 'update',
 			'type'   => 'wordpoints_module',
-			'bulk'   => $this->bulk
+			'bulk'   => $this->bulk,
 		);
 
 		/**
