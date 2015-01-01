@@ -184,35 +184,13 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 */
 	public function upgrade( $module_file, $args = array() ) {
 
-		$args = wp_parse_args( $args, array( 'clear_update_cache' => true ) );
-
-		$this->init();
-		$this->upgrade_strings();
-
-		add_filter( 'upgrader_pre_install', array( $this, 'deactivate_module_before_upgrade' ), 10, 2 );
-		add_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
-		add_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ), 10, 3 );
-		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ), 10, 4 );
-
+		$args = $this->_before_upgrade( $args );
 		$result = $this->_upgrade( $module_file );
-
-		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter( 'upgrader_pre_install', array( $this, 'deactivate_module_before_upgrade' ) );
-		remove_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
-		remove_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ) );
-		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ) );
+		$this->_after_upgrade( $module_file, $args );
 
 		if ( ! $result || is_wp_error( $result ) ) {
 			return $result;
 		}
-
-		// Force refresh of module update cache.
-		wordpointsorg_clean_modules_cache( $args['clear_update_cache'] );
-
-		/**
-		 * {@todo}
-		 */
-		do_action( 'upgrader_process_complete', $this, array( 'action' => 'update', 'type' => 'wordpoints_module' ), $module_file );
 
 		return true;
 	}
@@ -232,17 +210,9 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 */
 	public function bulk_upgrade( $modules, $args = array() ) {
 
-		$args = wp_parse_args( $args, array( 'clear_update_cache' => true ) );
-
-		$this->init();
 		$this->bulk = true;
-		$this->upgrade_strings();
 
-		$current = get_site_transient( 'wordpoints_module_updates' );
-
-		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ), 10, 4 );
-		add_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
-		add_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ), 10, 3 );
+		$args = $this->_before_upgrade( $args );
 
 		$this->skin->header();
 
@@ -255,26 +225,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 
 		$this->skin->bulk_header();
 
-		/*
-		 * Only start maintenance mode if:
-		 * - running Multisite and there are one or more modules specified, OR
-		 * - a module with an update available is currently active.
-		 */
-		if ( is_multisite() && ! empty( $modules ) ) {
-
-			$this->maintenance_mode( true );
-
-		} else {
-
-			foreach ( $modules as $module ) {
-
-				if ( is_wordpoints_module_active( $module ) && isset( $current['response'][ $module ] ) ) {
-
-					$this->maintenance_mode( true );
-					break;
-				}
-			}
-		}
+		$this->maybe_start_maintenance_mode( $modules );
 
 		$results = array();
 
@@ -298,21 +249,38 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		$this->skin->bulk_footer();
 		$this->skin->footer();
 
-		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ) );
-		remove_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
-		remove_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ) );
-
-		// Force refresh of module update information.
-		wordpointsorg_clean_modules_cache( $args['clear_update_cache'] );
-
-		/**
-		 * {@todo}
-		 */
-		do_action( 'upgrader_process_complete', $this, array( 'action' => 'update', 'type' => 'wordpoints_module', 'bulk' => true ), $modules );
+		$this->_after_upgrade( $modules, $args );
 
 		return $results;
 
 	} // function bulk_upgrade()
+
+	/**
+	 * Set up before running an upgrade.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args The arguments passed to the upgrader.
+	 *
+	 * @return array The parsed upgrader arguments.
+	 */
+	protected function _before_upgrade( $args ) {
+
+		$args = wp_parse_args( $args, array( 'clear_update_cache' => true ) );
+
+		$this->init();
+		$this->upgrade_strings();
+
+		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ), 10, 4 );
+		add_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
+		add_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ), 10, 3 );
+
+		if ( ! $this->bulk ) {
+			add_filter( 'upgrader_pre_install', array( $this, 'deactivate_module_before_upgrade' ), 10, 2 );
+		}
+
+		return $args;
+	}
 
 	/**
 	 * Upgrade a module.
@@ -320,6 +288,10 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 * This is the real meat of upgrade functions.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param string $module_file Basename path to the module file.
+	 *
+	 * @return mixed Returns true or an array on success, false or a WP_Error on failure.
 	 */
 	protected function _upgrade( $module_file ) {
 
@@ -377,6 +349,79 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 				),
 			)
 		);
+
+	} // function _upgrade()
+
+	/**
+	 * Clean up after an upgrade.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string|string[] $modules The module(s) being upgraded.
+	 * @param array           $args    The arguments passed to the upgrader.
+	 */
+	protected function _after_upgrade( $modules, $args ) {
+
+		remove_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
+		remove_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ) );
+		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ) );
+
+		if ( ! $this->bulk ) {
+
+			remove_filter( 'upgrader_pre_install', array( $this, 'deactivate_module_before_upgrade' ) );
+
+			if ( ! $this->skin->result || is_wp_error( $this->skin->result ) ) {
+				return;
+			}
+		}
+
+		// Force refresh of module update cache.
+		wordpointsorg_clean_modules_cache( $args['clear_update_cache'] );
+
+		$details = array(
+			'action' => 'update',
+			'type'   => 'wordpoints_module',
+			'bulk'   => $this->bulk
+		);
+
+		/**
+		 * {@todo}
+		 */
+		do_action( 'upgrader_process_complete', $this, $details, $modules );
+	}
+
+	/**
+	 * Conditionally start maintenance mode, only if necessary.
+	 *
+	 * Used when performing bulk updates.
+	 *
+	 * Only start maintenance mode if:
+	 * - running Multisite and there are one or more modules specified, OR
+	 * - a module with an update available is currently active.
+	 *
+	 * @param string[] $modules The modules being upgraded in bulk.
+	 */
+	public function maybe_start_maintenance_mode( $modules ) {
+
+		if ( is_multisite() && ! empty( $modules ) ) {
+
+			$this->maintenance_mode( true );
+
+		} else {
+
+			$current = get_site_transient( 'wordpoints_module_updates' );
+
+			foreach ( $modules as $module ) {
+
+				if (
+					is_wordpoints_module_active( $module )
+					&& isset( $current['response'][ $module ] )
+				) {
+					$this->maintenance_mode( true );
+					break;
+				}
+			}
+		}
 	}
 
 	/**
