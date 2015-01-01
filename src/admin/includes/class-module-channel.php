@@ -104,10 +104,10 @@ WordPoints_Module_Channels::init();
  *
  * @since 1.0.0
  *
- * @property-read $modules
- * @property-read $url
+ * @property-read WordPoints_Container_Object $modules
+ * @property-read string                      $url
  */
-final class WordPoints_Module_Channel  {
+final class WordPoints_Module_Channel {
 
 	/**
 	 * The URL of this channel.
