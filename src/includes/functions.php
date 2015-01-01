@@ -126,4 +126,18 @@ function wordpoints_get_installed_translations( $type ) {
 	return $language_data;
 }
 
+/**
+ * Load the module's text domain.
+ *
+ * @since 1.0.0
+ */
+function wordpointsorg_load_textdomain() {
+
+	wordpoints_load_module_textdomain(
+		'wordpointsorg'
+		, wordpoints_module_basename( WORDPOINTSORG_DIR ) . '/languages'
+	);
+}
+add_action( 'wordpoints_modules_loaded', 'wordpointsorg_load_textdomain' );
+
 // EOF
