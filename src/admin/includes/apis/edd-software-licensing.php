@@ -391,11 +391,14 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 * Perform a request to a remote channel.
 	 *
 	 * The possible actions include the following:
-	 * - get_version Retrieve the current version number for a module.
-	 * - get_information Get the information for a module (TODO).
+	 * - get_information    Get the information for a module.
+	 * - get_version        Same as above.
+	 * - activate_license   Activate the license for a module.
+	 * - deactivate_license Dectivate the license for a module.
+	 * - check_license      Check the status of a module's license.
 	 *
-	 * For the get_version and get_information actions it is possible to just pass in
-	 * an array of a module's data as the $data argument.
+	 * For all of these you shoul just pass in an array of a module's data as the
+	 * $data argument.
 	 *
 	 * @since 1.0.0
 	 *
