@@ -52,7 +52,7 @@ class WordPointsOrg_Un_Installer extends WordPoints_Un_Installer_Base {
 	 */
 	protected function install_network() {
 
-		$wordpoints_data = wordpoints_get_array_option( 'wordpoints_data' );
+		$wordpoints_data = wordpoints_get_array_option( 'wordpoints_data', 'network' );
 		$wordpoints_data['modules']['wordpointsorg']['version'] = WORDPOINTSORG_VERSION;
 		wordpoints_update_network_option( 'wordpoints_data', $wordpoints_data );
 	}
@@ -87,9 +87,14 @@ class WordPointsOrg_Un_Installer extends WordPoints_Un_Installer_Base {
 	 */
 	protected function uninstall_network() {
 
-		$wordpoints_data = wordpoints_get_array_option( 'wordpoints_data' );
+		$wordpoints_data = wordpoints_get_array_option( 'wordpoints_data', 'network' );
 		unset( $wordpoints_data['modules']['wordpointsorg'] );
 		wordpoints_update_network_option( 'wordpoints_data', $wordpoints_data );
+
+		wordpoints_delete_network_option( 'wordpoints_edd_sl_module_licenses' );
+		wordpoints_delete_network_option( 'wordpoints_edd_sl_module_info' );
+
+		delete_site_transient( 'wordpoints_module_updates' );
 	}
 
 	/**
