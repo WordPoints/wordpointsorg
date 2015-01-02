@@ -260,7 +260,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 		?>
 		<tr>
 			<td colspan="<?php echo (int) WordPoints_Modules_List_Table::instance()->get_column_count(); ?>" style="border-bottom: 1px solid #ddd;" class="colspanchange">
-				<label class="description" for="license_key-<?php echo esc_attr( $module_data['ID'] ); ?>">
+				<label class="description" for="license_key-<?php echo esc_attr( $channel->url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>">
 					<?php esc_html_e( 'License key', 'wordpointsorg' ); ?>
 				</label>
 				<input
