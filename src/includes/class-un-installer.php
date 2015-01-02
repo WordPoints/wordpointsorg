@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * Class to un/install the module.
+ *
+ * @package WordPointsOrg
+ * @since 1.0.0
+ */
+
+/**
+ * Un/install the module.
+ *
+ * @since 1.0.0
+ */
+class WordPointsOrg_Un_Installer extends WordPoints_Un_Installer_Base {
+
+	/**
+	 * @since 1.0.0
+	 */
+	protected $option_prefix = 'wordpointsorg_';
+
+	/**
+	 * The module's capabilities.
+	 *
+	 * Used to hold the list of capabilities during install and uninstall, so that
+	 * they don't have to be retrieved all over again for each site (if multisite).
+	 *
+	 * @since 1.0.0
+	 *
+	 * @type array $capabilties
+	 */
+	protected $capabilities;
+
+	/**
+	 * @since 1.0.0
+	 */
+	public function before_install() {
+
+		$this->capabilities = wordpointsorg_get_custom_caps();
+	}
+
+	/**
+	 * @since 1.0.0
+	 */
+	protected function before_uninstall() {
+
+		$this->capabilities = array_keys( wordpointsorg_get_custom_caps() );
+	}
+
+	/**
+	 * @since 1.0.0
+	 */
+	protected function install_network() {
+
+		$wordpoints_data = wordpoints_get_array_option( 'wordpoints_data' );
+		$wordpoints_data['modules']['wordpointsorg']['version'] = WORDPOINTSORG_VERSION;
+		wordpoints_update_network_option( 'wordpoints_data', $wordpoints_data );
+	}
+
+	/**
+	 * @since 1.0.0
+	 */
+	protected function install_site() {
+		wordpoints_add_custom_caps( $this->capabilities );
+	}
+
+	/**
+	 * @since 1.0.0
+	 */
+	protected function install_single() {
+
+		$this->install_network();
+		$this->install_site();
+	}
+
+	/**
+	 * @since 1.0.0
+	 */
+	protected function load_dependencies() {
+
+		require_once( dirname( __FILE__ ) . '/constants.php' );
+		require_once( WORDPOINTSORG_DIR . '/includes/functions.php' );
+	}
+
+	/**
+	 * @since 1.0.0
+	 */
+	protected function uninstall_network() {
+
+		$wordpoints_data = wordpoints_get_array_option( 'wordpoints_data' );
+		unset( $wordpoints_data['modules']['wordpointsorg'] );
+		wordpoints_update_network_option( 'wordpoints_data', $wordpoints_data );
+	}
+
+	/**
+	 * @since 1.0.0
+	 */
+	protected function uninstall_site() {
+		wordpoints_remove_custom_caps( $this->capabilities );
+	}
+
+	/**
+	 * @since 1.0.0
+	 */
+	protected function uninstall_single() {
+
+		$this->uninstall_network();
+		$this->uninstall_site();
+	}
+}
+
+// EOF

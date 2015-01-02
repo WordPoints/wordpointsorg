@@ -15,17 +15,15 @@
  */
 function wordpointsorg_activate( $network_active ) {
 
-	$wordpoints_data = wordpoints_get_array_option( 'wordpoints_data', 'network' );
+	/**
+	 * The module's un/installer.
+	 *
+	 * @since 1.0.0
+	 */
+	require_once( WORDPOINTSORG_DIR . '/includes/class-un-installer.php' );
 
-	if ( ! isset( $wordpoints_data['modules']['wordpointsorg']['version'] ) ) {
-
-		/**
-		 * The module's install script.
-		 *
-		 * @since 1.0.0
-		 */
-		require WORDPOINTSORG_DIR . '/install.php';
-	}
+	$installer = new WordPointsOrg_Un_Installer();
+	$installer->install( $network_active );
 }
 wordpoints_register_module_activation_hook( WORDPOINTSORG_DIR . 'wordpointsorg.php', 'wordpointsorg_activate' );
 
