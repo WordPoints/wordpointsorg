@@ -10,7 +10,7 @@
 /**
  * Bulk WordPoints module upgrader skin.
  *
- * @since $ver$
+ * @since 1.0.0
  */
 class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 
@@ -23,7 +23,7 @@ class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 	 *
 	 * This is filled in by WordPointsOrg_Module_Upgrader::bulk_upgrade().
 	 *
-	 * @since $ver$
+	 * @since 1.0.0
 	 *
 	 * @type array $module_info
 	 */
@@ -34,11 +34,7 @@ class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 	//
 
 	/**
-	 * Construct the skin.
-	 *
-	 * @since $ver$
-	 *
-	 * @param array $args An array of arguments.
+	 * @since 1.0.0
 	 */
 	public function __construct( $args = array() ) {
 
@@ -48,7 +44,7 @@ class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 	/**
 	 * Add the string's skins.
 	 *
-	 * @since $ver$
+	 * @since 1.0.0
 	 */
 	public function add_strings() {
 
@@ -57,9 +53,7 @@ class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 	}
 
 	/**
-	 * Called before each upgrade.
-	 *
-	 * @since $ver$
+	 * @since 1.0.0
 	 */
 	public function before( $title = '' ) {
 
@@ -67,9 +61,7 @@ class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 	}
 
 	/**
-	 * Called after each upgrade.
-	 *
-	 * @since $ver$
+	 * @since 1.0.0
 	 */
 	public function after( $title = '' ) {
 
@@ -79,7 +71,7 @@ class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 	/**
 	 * Display the footer.
 	 *
-	 * @since $ver$
+	 * @since 1.0.0
 	 */
 	public function bulk_footer() {
 
@@ -97,9 +89,9 @@ class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 		/**
 		 * The action links for the bulk module update footer.
 		 *
-		 * @since $ver$
+		 * @since 1.0.0
 		 *
-		 * @param array $update_action {
+		 * @param array $update_actions {
 		 *        HTML for links to appear in the bulk module updates footer.
 		 *
 		 *        @type string $modules_page Go to the modules page. Not available if

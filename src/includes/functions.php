@@ -3,6 +3,7 @@
 /**
  * General functions of the module.
  *
+ * @package WordPointsOrg
  * @since 1.0.0
  */
 
@@ -64,8 +65,6 @@ function wordpointsorg_get_custom_caps() {
  *
  * @since 1.0.0
  *
- * @filter map_meta_cap
- *
  * @param array  $caps The user's capabilities.
  * @param string $cap  The current capability in question.
  *
@@ -94,7 +93,7 @@ add_filter( 'map_meta_cap', 'wordpointsorg_map_custom_meta_caps', 10, 3 );
  *
  * Currently the only translations are for WordPoints Modules.
  *
- * @since $ver$
+ * @since 1.0.0
  *
  * @param string $type The type of extension to retrieve translations for.
  *

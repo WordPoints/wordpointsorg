@@ -3,7 +3,7 @@
 /**
  * Abstract classes to act as item containers.
  *
- * @package WordPoints_Module_API
+ * @package WordPointsOrg
  * @since 1.0.0
  */
 
@@ -157,6 +157,8 @@ class WordPoints_Container_Object extends WordPoints_Container {
 
 /**
  * Class to be a static container for items.
+ *
+ * Note that this API cannot be fully implemented for static classes until PHP 5.3.
  *
  * @since 1.0.0
  */

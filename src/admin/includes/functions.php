@@ -232,8 +232,6 @@ add_action( 'wordpoints_check_for_module_updates', 'wordpoints_check_for_module_
  * Handle module update requests on update.php.
  *
  * @since 1.0.0
- *
- * @action update-custom_update-selected-wordpoints-modules
  */
 function wordpointsorg_update_modules() {
 
@@ -276,8 +274,6 @@ add_action( 'update-custom_update-selected-wordpoints-modules', 'wordpointsorg_u
  * Upgrade a module.
  *
  * @since 1.0.0
- *
- * @action update-custom_upgrade-wordpoints-module
  */
 function wordpointsorg_upgrade_module() {
 
@@ -318,8 +314,6 @@ add_action( 'update-custom_wordpoints-upgrade-module', 'wordpointsorg_upgrade_mo
  * Handle updating multiple modules on the modules administration screen.
  *
  * @since 1.0.0
- *
- * @action wordpoints_modules_screen-update-selected
  */
 function wordpointsorg_update_selected_modules() {
 
@@ -378,8 +372,6 @@ add_filter( 'extra_module_headers', 'wordpointsorg_extra_module_headers' );
  *
  * @since 1.0.0
  *
- * @filter wordpoints_module_statuses
- *
  * @param array $statuses The module statuses.
  *
  * @return string[] The module statuses with 'upgrade' added.
@@ -396,8 +388,6 @@ add_filter( 'wordpoints_module_statuses', 'wordpointsorg_add_upgrade_module_stat
  * Add the 'upgrade' status to the modules list table.
  *
  * @since 1.0.0
- *
- * @filter wordpoints_modules_list_table_items
  *
  * @param array[] $modules Modules for display in the list table, grouped by status.
  *
@@ -458,8 +448,6 @@ add_filter( 'wordpoints_modules_status_link_text-upgrade', 'wordpointsorg_module
  *
  * @since 1.0.0
  *
- * @action wordpoints_module_bulk_actions
- *
  * @param array $actions The bulk action links for the modules table.
  *
  * @return array The bulk action links, possibly with 'Upgrade' action added.
@@ -478,8 +466,6 @@ add_filter( 'wordpoints_module_bulk_actions', 'wordpointsorg_module_upgrade_bulk
  * Add the 'update' class to modules in the list table that have an update available.
  *
  * @since 1.0.0
- *
- * @action wordpoints_module_list_row_class
  *
  * @param string $class The class for the module's row in the table.
  * @param string $module_file The module's main file.
@@ -524,6 +510,9 @@ add_action( 'admin_init', 'wordpointsorg_module_update_rows' );
  * Display the update message for a module in the modules list table.
  *
  * @since 1.0.0
+ *
+ * @WordPress\action wordpoints_after_module_row_{$module_file} Added by
+ *                   wordpointsorg_module_update_rows().
  */
 function wordpointsorg_module_update_row( $file, $module_data ) {
 

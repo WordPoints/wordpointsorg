@@ -7,7 +7,18 @@
  * @since 1.0.0
  */
 
+/**
+ * The WordPress upgreaders.
+ *
+ * @since 1.0.0
+ */
 include_once( ABSPATH . '/wp-admin/includes/class-wp-upgrader.php' );
+
+/**
+ * The WordPoints module installer class.
+ *
+ * @since 1.0.0
+ */
 include_once( WORDPOINTS_DIR . '/admin/includes/class-wordpoints-module-installer.php' );
 
 /**
@@ -118,7 +129,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 * @since 1.0.0
 	 *
 	 * @param string $package URL of the zip package of the module source.
-	 * @param array  $args {
+	 * @param array  $args    {
 	 *        Optional arguments.
 	 *
 	 *        @type bool $clear_update_cache Whether the to clear the update cache.
@@ -160,7 +171,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		wordpointsorg_clean_modules_cache( $args['clear_update_cache'] );
 
 		/**
-		 * {@todo This should be an @see}
+		 * This action is documented in /wp-admin/includes/class-wp-upgrader.php.
 		 */
 		do_action( 'upgrader_process_complete', $this, array( 'action' => 'install', 'type' => 'wordpoints_module' ), $package );
 
@@ -385,7 +396,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		);
 
 		/**
-		 * {@todo}
+		 * This action is documented in /wp-admin/includes/class-wp-upgrader.php.
 		 */
 		do_action( 'upgrader_process_complete', $this, $details, $modules );
 	}
@@ -398,6 +409,8 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 * Only start maintenance mode if:
 	 * - running Multisite and there are one or more modules specified, OR
 	 * - a module with an update available is currently active.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string[] $modules The modules being upgraded in bulk.
 	 */
@@ -582,8 +595,8 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @filter upgrader_clear_destination Added by self::upgrade() and
-	 *                                    self::bulk_upgrade().
+	 * @WordPress\filter upgrader_clear_destination Added by self::upgrade() and
+	 *                                              self::bulk_upgrade().
 	 *
 	 * @param true|WP_Error $removed            Whether the destination folder has been removed.
 	 * @param string        $local_destination  The local path to the destination folder.

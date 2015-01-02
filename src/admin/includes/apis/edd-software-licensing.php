@@ -33,7 +33,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @param string $channel The channel to get module licenses for.
 	 *
-	 * @return array[]
+	 * @return array[] The module license data.
 	 */
 	public function get_licenses( $channel ) {
 
@@ -54,7 +54,12 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array
+	 * @return string[] {
+	 *         The license data for this module.
+	 *
+	 *         @type string $license The license key.
+	 *         @type string $status  The license key's status.
+	 * }
 	 */
 	public function get_module_license_data( $channel, $module_id ) {
 
@@ -167,6 +172,8 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 * Save module license forms on submit.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @WordPress\action wordpoints_modules_list_table_items Added by self::hooks().
 	 */
 	public function wordpoints_modules_list_table_items( $modules ) {
 
@@ -226,6 +233,8 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 * Add the license key column to the modules list table.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @WordPress\action wordpoints_after_module_row Added by self::hooks().
 	 */
 	public function wordpoints_after_module_row( $module_file, $module_data ) {
 

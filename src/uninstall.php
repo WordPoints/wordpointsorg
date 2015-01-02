@@ -3,6 +3,7 @@
 /**
  * Uninstall the module.
  *
+ * @package WordPointsOrg
  * @since 1.0.0
  */
 

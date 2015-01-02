@@ -78,8 +78,18 @@ final class WordPoints_Module_APIs extends WordPoints_Container_Static {
 		return self::$instance->_get( $slug );
 	}
 
+	/**
+	 * Call the action to register all of the installed APIs.
+	 *
+	 * @since 1.0.0
+	 */
 	private static function register_apis() {
 
+		/**
+		 * Register the available module APIs.
+		 *
+		 * @since 1.0.0
+		 */
 		do_action( 'wordpoints_register_module_apis' );
 	}
 }

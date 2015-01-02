@@ -9,6 +9,8 @@
 
 /**
  * The WordPress upgrader.
+ *
+ * @since 1.0.0
  */
 require_once( ABSPATH . '/wp-admin/includes/class-wp-upgrader.php' );
 
@@ -87,8 +89,6 @@ class WordPointsOrg_Module_Upgrader_Skin extends WP_Upgrader_Skin {
 	}
 
 	/**
-	 * Called after the upgrade.
-	 *
 	 * @since 1.0.0
 	 */
 	public function after() {
