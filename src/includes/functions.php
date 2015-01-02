@@ -28,6 +28,24 @@ function wordpointsorg_activate( $network_active ) {
 wordpoints_register_module_activation_hook( WORDPOINTSORG_DIR . 'wordpointsorg.php', 'wordpointsorg_activate' );
 
 /**
+ * Deactivate the module.
+ *
+ * @since 1.0.0
+ */
+function wordpointsorg_deactivate() {
+
+	$timestamp = wp_next_scheduled( 'wordpoints_check_for_module_updates' );
+
+	if ( $timestamp ) {
+		wp_unschedule_event( $timestamp, 'wordpoints_check_for_module_updates' );
+	}
+}
+wordpoints_register_module_deactivation_hook(
+	WORDPOINTSORG_DIR . 'wordpointsorg.php'
+	, 'wordpointsorg_deactivate'
+);
+
+/**
  * Get the custom capabilities added by the module.
  *
  * The custom caps are keys, the corresponding core caps are values.
