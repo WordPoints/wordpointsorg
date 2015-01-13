@@ -7,7 +7,18 @@
  * @since 1.0.0
  */
 
+/**
+ * The WordPress upgreaders.
+ *
+ * @since 1.0.0
+ */
 include_once( ABSPATH . '/wp-admin/includes/class-wp-upgrader.php' );
+
+/**
+ * The WordPoints module installer class.
+ *
+ * @since 1.0.0
+ */
 include_once( WORDPOINTS_DIR . '/admin/includes/class-wordpoints-module-installer.php' );
 
 /**
@@ -20,7 +31,7 @@ include_once( WORDPOINTS_DIR . '/admin/includes/class-wordpoints-module-installe
 function wordpointsorg_clean_modules_cache( $clear_update_cache = true ) {
 
 	if ( $clear_update_cache ) {
-		delete_site_transient( 'wordpointsorg_update_modules' );
+		delete_site_transient( 'wordpoints_module_updates' );
 	}
 
 	wp_cache_delete( 'wordpoints_modules', 'wordpoints_modules' );
@@ -51,6 +62,15 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 */
 	public $bulk = false;
 
+	/**
+	 * Whether the upgrade routine bailed out early.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var bool
+	 */
+	public $bailed_early = false;
+
 	//
 	// Private Methods.
 	//
@@ -63,15 +83,17 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	private function upgrade_strings() {
 
 		$upgrade_strings = array(
-			'up_to_date'          => __( 'The module is at the latest version.', 'wordpoints' ),
-			'no_package'          => __( 'Update package not available.', 'wordpoints' ),
-			'downloading_package' => __( 'Downloading update from <span class="code">%s</span>&#8230;', 'wordpoints' ),
-			'unpack_package'      => __( 'Unpacking the update&#8230;', 'wordpoints' ),
-			'remove_old'          => __( 'Removing the old version of the module&#8230;', 'wordpoints' ),
-			'remove_old_failed'   => __( 'Could not remove the old module.', 'wordpoints' ),
-			'process_failed'      => __( 'Module update failed.', 'wordpoints' ),
-			'process_success'     => __( 'Module updated successfully.', 'wordpoints' ),
-			'not_installed'       => __( 'That module cannot be updated, because it is not installed.', '' ),
+			'up_to_date'          => __( 'The module is at the latest version.', 'wordpointsorg' ),
+			'no_package'          => __( 'Update package not available.', 'wordpointsorg' ),
+			'no_channel'          => __( 'That module cannot be updated, because there is no channel specified to receive updates through.', 'wordpointsorg' ),
+			'api_not_found'       => __( 'That module cannot be updated, because there is no API installed that can communicate with that channel.', 'wordpointsorg' ),
+			'downloading_package' => sprintf( __( 'Downloading update from %s&#8230;', 'wordpointsorg' ), '<span class="code">%s</span>' ),
+			'unpack_package'      => __( 'Unpacking the update&#8230;', 'wordpointsorg' ),
+			'remove_old'          => __( 'Removing the old version of the module&#8230;', 'wordpointsorg' ),
+			'remove_old_failed'   => __( 'Could not remove the old module.', 'wordpointsorg' ),
+			'process_failed'      => __( 'Module update failed.', 'wordpointsorg' ),
+			'process_success'     => __( 'Module updated successfully.', 'wordpointsorg' ),
+			'not_installed'       => __( 'That module cannot be updated, because it is not installed.', 'wordpointsorg' ),
 		);
 
 		$this->strings = array_merge( $this->strings, $upgrade_strings );
@@ -85,13 +107,13 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	private function install_strings() {
 
 		$install_strings = array(
-			'no_package'          => __( 'Install package not available.', 'wordpoints' ),
-			'downloading_package' => __( 'Downloading install package from <span class="code">%s</span>&#8230;', 'wordpoints' ),
-			'unpack_package'      => __( 'Unpacking the package&#8230;', 'wordpoints' ),
-			'installing_package'  => __( 'Installing the module&#8230;', 'wordpoints' ),
-			'no_files'            => __( 'The module contains no files.', 'wordpoints' ),
-			'process_failed'      => __( 'Module install failed.', 'wordpoints' ),
-			'process_success'     => __( 'Module installed successfully.', 'wordpoints' ),
+			'no_package'          => __( 'Install package not available.', 'wordpointsorg' ),
+			'downloading_package' => sprintf( __( 'Downloading install package from %s&#8230;', 'wordpointsorg' ), '<span class="code">%s</span>' ),
+			'unpack_package'      => __( 'Unpacking the package&#8230;', 'wordpointsorg' ),
+			'installing_package'  => __( 'Installing the module&#8230;', 'wordpointsorg' ),
+			'no_files'            => __( 'The module contains no files.', 'wordpointsorg' ),
+			'process_failed'      => __( 'Module install failed.', 'wordpointsorg' ),
+			'process_success'     => __( 'Module installed successfully.', 'wordpointsorg' ),
 		);
 
 		$this->strings = array_merge( $this->strings, $install_strings );
@@ -102,45 +124,12 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	//
 
 	/**
-	 * Build the URL for a package.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $module_data The response from the modules API for this module.
-	 *
-	 * @return string The URI for the zip package for this module.
-	 */
-	public function get_github_package_url( $module_data ) {
-
-		list( $github_user, $github_repo ) = explode( '/', $module_data['github_id'] );
-
-		$package_url = sprintf(
-			'http://github.com/%1$s/%2$s/releases/download/%3$s/%2$s.%3$s.zip'
-			, $github_user
-			, $github_repo
-			, $module_data['version']
-		);
-
-		/**
-		 * Filter the URL for a module package from GitHub.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param $package_url The URL of the package.
-		 * @param $github_user The GitHub username of the user the package is from.
-		 * @param $github_repo The GitHub name of the repo the package is from.
-		 * @param $version     The version of the module the package is for.
-		 */
-		return apply_filters( 'wordpointsorg_github_module_package_url', $package_url, $github_user, $github_repo, $module_data['version'] );
-	}
-
-	/**
 	 * Install a module.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $package URL of the zip package of the module source.
-	 * @param array  $args {
+	 * @param array  $args    {
 	 *        Optional arguments.
 	 *
 	 *        @type bool $clear_update_cache Whether the to clear the update cache.
@@ -182,7 +171,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		wordpointsorg_clean_modules_cache( $args['clear_update_cache'] );
 
 		/**
-		 * {@todo This should be an @see}
+		 * This action is documented in /wp-admin/includes/class-wp-upgrader.php.
 		 */
 		do_action( 'upgrader_process_complete', $this, array( 'action' => 'install', 'type' => 'wordpoints_module' ), $package );
 
@@ -194,8 +183,8 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $module The slug of the module to update.
-	 * @param array  $args {
+	 * @param string $module_file Basename path to the module file.
+	 * @param array  $args        {
 	 *        Optional arguments.
 	 *
 	 *        @type bool $clear_update_cache Whether the to clear the update cache.
@@ -204,73 +193,15 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 *
 	 * @return bool|WP_Error True on success, false or a WP_Error on failure.
 	 */
-	public function upgrade( $module, $args = array() ) {
+	public function upgrade( $module_file, $args = array() ) {
 
-		$args = wp_parse_args( $args, array( 'clear_update_cache' => true ) );
-
-		$this->init();
-		$this->upgrade_strings();
-
-		$modules = wordpoints_get_modules();
-
-		if ( ! isset( $modules[ $module ] ) ) {
-
-			$this->skin->before();
-			$this->skin->set_result( false );
-			$this->skin->error( 'not_installed' );
-			$this->skin->after();
-
-			return false;
-		}
-
-		$module_data = $modules[ $module ];
-
-		$current = get_site_transient( 'wordpointsorg_update_modules' );
-
-		if ( ! isset( $current['response'][ $module_data['ID'] ] ) ) {
-
-			$this->skin->before();
-			$this->skin->set_result( false );
-			$this->skin->error( 'up_to_date' );
-			$this->skin->after();
-
-			return false;
-		}
-
-		add_filter( 'upgrader_pre_install', array( $this, 'deactivate_module_before_upgrade' ), 10, 2 );
-		add_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
-		add_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ), 10, 3 );
-		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ), 10, 4 );
-
-		$result = $this->run(
-			array(
-				'package'           => $this->get_github_package_url( $current['response'][ $module_data['ID'] ] ),
-				'destination'       => wordpoints_modules_dir(),
-				'clear_destination' => true,
-				'clear_working'     => true,
-				'hook_extra'        => array(
-					'wordpoints_module' => $module,
-				),
-			)
-		);
-
-		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter( 'upgrader_pre_install', array( $this, 'deactivate_module_before_upgrade' ) );
-		remove_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
-		remove_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ) );
-		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ) );
+		$args = $this->_before_upgrade( $args );
+		$result = $this->_upgrade( $module_file );
+		$this->_after_upgrade( $module_file, $args );
 
 		if ( ! $result || is_wp_error( $result ) ) {
 			return $result;
 		}
-
-		// Force refresh of module update cache.
-		wordpointsorg_clean_modules_cache( $args['clear_update_cache'] );
-
-		/**
-		 * {@todo}
-		 */
-		do_action( 'upgrader_process_complete', $this, array( 'action' => 'update', 'type' => 'wordpoints_module' ), $module );
 
 		return true;
 	}
@@ -290,17 +221,9 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 */
 	public function bulk_upgrade( $modules, $args = array() ) {
 
-		$args = wp_parse_args( $args, array( 'clear_update_cache' => true ) );
-
-		$this->init();
 		$this->bulk = true;
-		$this->upgrade_strings();
 
-		$current = get_site_transient( 'wordpointsorg_update_modules' );
-
-		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ), 10, 4 );
-		add_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
-		add_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ), 10, 3 );
+		$args = $this->_before_upgrade( $args );
 
 		$this->skin->header();
 
@@ -313,30 +236,9 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 
 		$this->skin->bulk_header();
 
-		/*
-		 * Only start maintenance mode if:
-		 * - running Multisite and there are one or more modules specified, OR
-		 * - a module with an update available is currently active.
-		 */
-		if ( is_multisite() && ! empty( $modules ) ) {
-
-			$this->maintenance_mode( true );
-
-		} else {
-
-			foreach ( $modules as $module ) {
-
-				if ( is_wordpoints_module_active( $module ) && isset( $current['response'][ $module ] ) ) {
-
-					$this->maintenance_mode( true );
-					break;
-				}
-			}
-		}
+		$this->maybe_start_maintenance_mode( $modules );
 
 		$results = array();
-		$module_root = wordpoints_modules_dir();
-		$all_modules = wordpoints_get_modules();
 
 		$this->update_count = count( $modules );
 		$this->update_current = 0;
@@ -345,75 +247,195 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 
 			$this->update_current++;
 
-			if ( ! isset( $all_modules[ $module ] ) ) {
-
-				$this->skin->set_result( false );
-				$this->skin->before();
-				$this->skin->error( 'not_installed' );
-				$this->skin->after();
-				$results[ $module ] = false;
-
-				continue;
-			}
-
-			$this->skin->module = $module;
-			$this->skin->module_info = wordpoints_get_module_data( $module_root . $module );
-
-			if ( ! isset( $current->response[ $module ] ) ) {
-
-				$this->skin->set_result( true );
-				$this->skin->before();
-				$this->skin->feedback( 'up_to_date' );
-				$this->skin->after();
-				$results[ $module ] = true;
-
-				continue;
-			}
-
-			$this->skin->module_active = is_wordpoints_module_active( $module );
-
-			$result = $this->run(
-				array(
-					'package'           => $this->get_github_package_url( $current['response'][ $module ] ),
-					'destination'       => wordpoints_modules_dir(),
-					'clear_destination' => true,
-					'clear_working'     => true,
-					'is_multi'          => true,
-					'hook_extra'        => array(
-						'wordpoints_module' => $module
-					)
-				)
-			);
-
-			$results[ $module ] = $result;
+			$results[ $module ] = $this->_upgrade( $module );
 
 			// Prevent credentials auth screen from displaying multiple times.
-			if ( false === $result ) {
+			if ( false === $results[ $module ] && ! $this->bailed_early ) {
 				break;
 			}
-
-		} // foreach $modules
+		}
 
 		$this->maintenance_mode( false );
 
 		$this->skin->bulk_footer();
 		$this->skin->footer();
 
-		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ) );
-		remove_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
-		remove_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ) );
-
-		// Force refresh of module update information.
-		wordpointsorg_clean_modules_cache( $args['clear_update_cache'] );
-
-		/**
-		 * {@todo}
-		 */
-		do_action( 'upgrader_process_complete', $this, array( 'action' => 'update', 'type' => 'wordpoints_module', 'bulk' => true ), $modules );
+		$this->_after_upgrade( $modules, $args );
 
 		return $results;
 
 	} // function bulk_upgrade()
+
+	/**
+	 * Set up before running an upgrade.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args The arguments passed to the upgrader.
+	 *
+	 * @return array The parsed upgrader arguments.
+	 */
+	protected function _before_upgrade( $args ) {
+
+		$args = wp_parse_args( $args, array( 'clear_update_cache' => true ) );
+
+		$this->init();
+		$this->upgrade_strings();
+
+		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ), 10, 4 );
+		add_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
+		add_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ), 10, 3 );
+
+		if ( ! $this->bulk ) {
+			add_filter( 'upgrader_pre_install', array( $this, 'deactivate_module_before_upgrade' ), 10, 2 );
+		}
+
+		return $args;
+	}
+
+	/**
+	 * Upgrade a module.
+	 *
+	 * This is the real meat of upgrade functions.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $module_file Basename path to the module file.
+	 *
+	 * @return mixed Returns true or an array on success, false or a WP_Error on failure.
+	 */
+	protected function _upgrade( $module_file ) {
+
+		$this->bailed_early = false;
+
+		$modules = wordpoints_get_modules();
+
+		if ( ! isset( $modules[ $module_file ] ) ) {
+			$this->_bail_early( 'not_installed' );
+			return false;
+		}
+
+		$module_data = $modules[ $module_file ];
+
+		if ( $this->bulk ) {
+
+			$this->skin->module = $module_file;
+			$this->skin->module_info = wordpoints_get_module_data(
+				wordpoints_modules_dir() . $module_file
+			);
+			$this->skin->module_active = is_wordpoints_module_active( $module_file );
+		}
+
+		$current = get_site_transient( 'wordpoints_module_updates' );
+
+		if ( ! isset( $current['response'][ $module_file ] ) ) {
+			$this->_bail_early( 'up_to_date', 'feedback' );
+			return true;
+		}
+
+		$channel = wordpoints_get_channel_for_module( $module_data );
+		$channel = WordPoints_Module_Channels::get( $channel );
+
+		if ( ! $channel ) {
+			$this->_bail_early( 'no_channel' );
+			return false;
+		}
+
+		$api = $channel->get_api();
+
+		if ( false === $api ) {
+			$this->_bail_early( 'api_not_found' );
+			return false;
+		}
+
+		return $this->run(
+			array(
+				'package'           => $api->get_package_url( $channel, $module_data ),
+				'destination'       => wordpoints_modules_dir(),
+				'clear_destination' => true,
+				'clear_working'     => true,
+				'is_multi'          => $this->bulk,
+				'hook_extra'        => array(
+					'wordpoints_module' => $module_file,
+				),
+			)
+		);
+
+	} // function _upgrade()
+
+	/**
+	 * Clean up after an upgrade.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string|string[] $modules The module(s) being upgraded.
+	 * @param array           $args    The arguments passed to the upgrader.
+	 */
+	protected function _after_upgrade( $modules, $args ) {
+
+		remove_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
+		remove_filter( 'upgrader_source_selection', array( $this, 'correct_module_dir_name' ) );
+		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_module' ) );
+
+		if ( ! $this->bulk ) {
+
+			remove_filter( 'upgrader_pre_install', array( $this, 'deactivate_module_before_upgrade' ) );
+
+			if ( ! $this->skin->result || is_wp_error( $this->skin->result ) ) {
+				return;
+			}
+		}
+
+		// Force refresh of module update cache.
+		wordpointsorg_clean_modules_cache( $args['clear_update_cache'] );
+
+		$details = array(
+			'action' => 'update',
+			'type'   => 'wordpoints_module',
+			'bulk'   => $this->bulk,
+		);
+
+		/**
+		 * This action is documented in /wp-admin/includes/class-wp-upgrader.php.
+		 */
+		do_action( 'upgrader_process_complete', $this, $details, $modules );
+	}
+
+	/**
+	 * Conditionally start maintenance mode, only if necessary.
+	 *
+	 * Used when performing bulk updates.
+	 *
+	 * Only start maintenance mode if:
+	 * - running Multisite and there are one or more modules specified, OR
+	 * - a module with an update available is currently active.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string[] $modules The modules being upgraded in bulk.
+	 */
+	public function maybe_start_maintenance_mode( $modules ) {
+
+		if ( is_multisite() && ! empty( $modules ) ) {
+
+			$this->maintenance_mode( true );
+
+		} else {
+
+			$current = get_site_transient( 'wordpoints_module_updates' );
+
+			foreach ( $modules as $module ) {
+
+				if (
+					is_wordpoints_module_active( $module )
+					&& isset( $current['response'][ $module ] )
+				) {
+					$this->maintenance_mode( true );
+					break;
+				}
+			}
+		}
+	}
 
 	/**
 	 * Check if the source package actually contains a module.
@@ -463,7 +485,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 			return new WP_Error(
 				'incompatible_archive_no_modules'
 				, $this->strings['incompatible_archive']
-				, __( 'No valid modules were found.', 'wordpoints' )
+				, __( 'No valid modules were found.', 'wordpointsorg' )
 			);
 		}
 
@@ -477,7 +499,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return string|bool The module path or false on failure.
+	 * @return string|false The module path or false on failure.
 	 */
 	public function module_info() {
 
@@ -573,8 +595,8 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @filter upgrader_clear_destination Added by self::upgrade() and
-	 *                                    self::bulk_upgrade().
+	 * @WordPress\filter upgrader_clear_destination Added by self::upgrade() and
+	 *                                              self::bulk_upgrade().
 	 *
 	 * @param true|WP_Error $removed            Whether the destination folder has been removed.
 	 * @param string        $local_destination  The local path to the destination folder.
@@ -611,7 +633,7 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		if ( strpos( $data['wordpoints_module'], '/' ) && $this_module_dir !== $modules_dir ) {
 			$deleted = $wp_filesystem->delete( $this_module_dir, true );
 		} else {
-			$deleted = $wp_filesystem->delete( $moduless_dir . $data['wordpoints_module'] );
+			$deleted = $wp_filesystem->delete( $modules_dir . $data['wordpoints_module'] );
 		}
 
 		if ( ! $deleted ) {
@@ -619,6 +641,34 @@ final class WordPointsOrg_Module_Upgrader extends WordPoints_Module_Installer {
 		}
 
 		return true;
+	}
+
+	//
+	// Private Functions.
+	//
+
+	/**
+	 * Bail early before finishing a a process normally.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $message Slug for the message to show the user.
+	 * @param string $type    The type of message, 'error' (default), or 'feedback'.
+	 */
+	private function _bail_early( $message, $type = 'error' ) {
+
+		$this->bailed_early = true;
+
+		$this->skin->before();
+		$this->skin->set_result( false );
+
+		if ( 'feedback' === $type ) {
+			$this->skin->feedback( $message );
+		} else {
+			$this->skin->error( $message );
+		}
+
+		$this->skin->after();
 	}
 
 } // class WordPoints_Module_Upgrader

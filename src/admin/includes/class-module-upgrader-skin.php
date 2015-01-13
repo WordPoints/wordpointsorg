@@ -9,6 +9,8 @@
 
 /**
  * The WordPress upgrader.
+ *
+ * @since 1.0.0
  */
 require_once( ABSPATH . '/wp-admin/includes/class-wp-upgrader.php' );
 
@@ -73,7 +75,7 @@ class WordPointsOrg_Module_Upgrader_Skin extends WP_Upgrader_Skin {
 			'url'    => '',
 			'module' => '',
 			'nonce'  => '',
-			'title'  => __( 'Update Module', 'wordpoints' ),
+			'title'  => __( 'Update Module', 'wordpointsorg' ),
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -87,8 +89,6 @@ class WordPointsOrg_Module_Upgrader_Skin extends WP_Upgrader_Skin {
 	}
 
 	/**
-	 * Called after the upgrade.
-	 *
 	 * @since 1.0.0
 	 */
 	public function after() {
@@ -97,13 +97,34 @@ class WordPointsOrg_Module_Upgrader_Skin extends WP_Upgrader_Skin {
 
 		if ( ! empty( $this->module ) && ! is_wp_error( $this->result ) && $this->module_active ) {
 
-			echo '<iframe style="border:0;overflow:hidden" width="100%" height="170px" src="' . esc_attr( wp_nonce_url( 'admin.php?page=wordpoints_configure&tab=modules&action=activate-module&networkwide=' . $this->module_network_active . '&module=' . urlencode( $this->module ), "activate-module_{$this->module}" ) ) .'"></iframe>';
+			$url = wp_nonce_url( 'admin.php?page=wordpoints_configure&tab=modules&action=activate-module&networkwide=' . $this->module_network_active . '&module=' . urlencode( $this->module ), "activate-module_{$this->module}" );
+
+			?>
+
+			<iframe style="border: 0; overflow: hidden;" width="100%" height="170px" src="<?php echo esc_attr( $url ); ?>"></iframe>
+
+			<?php
 		}
 
-		// TODO update modue links
-		$update_actions =  array(
-			'activate_module' => '<a href="' . esc_attr( wp_nonce_url( 'admin.php?page=wordpoints_modules&action=activate&amp;module=' . urlencode( $this->module ), "activate-module_{$this->module}" ) ) . '" target="_parent">' . esc_html__( 'Activate Module', 'wordpoints' ) . '</a>',
-			'modules_page'    => '<a href="' . esc_attr( self_admin_url( 'admin.php?page=wordpoints_modules' ) ) . '" target="_parent">' . esc_html__( 'Return to Modules page', 'wordpoints' ) . '</a>'
+		$update_actions = $this->get_module_update_actions();
+
+		if ( ! empty( $update_actions ) ) {
+			$this->feedback( implode( ' | ', (array) $update_actions ) );
+		}
+	}
+
+	/**
+	 * Get the module update actions.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string[] The anchor elements for the actions links to display.
+	 */
+	public function get_module_update_actions() {
+
+		$update_actions = array(
+			'activate_module' => '<a href="' . esc_attr( wp_nonce_url( 'admin.php?page=wordpoints_modules&action=activate&amp;module=' . urlencode( $this->module ), "activate-module_{$this->module}" ) ) . '" target="_parent">' . esc_html__( 'Activate Module', 'wordpointsorg' ) . '</a>',
+			'modules_page'    => '<a href="' . esc_attr( self_admin_url( 'admin.php?page=wordpoints_modules' ) ) . '" target="_parent">' . esc_html__( 'Return to Modules page', 'wordpointsorg' ) . '</a>'
 		);
 
 		if (
@@ -128,13 +149,8 @@ class WordPointsOrg_Module_Upgrader_Skin extends WP_Upgrader_Skin {
 		 * }
 		 * @param string $module The basename path to the module file.
 		 */
-		$update_actions = apply_filters( 'wordpoints_update_module_complete_actions', $update_actions, $this->module );
-
-		if ( ! empty( $update_actions ) ) {
-			$this->feedback( implode( ' | ', (array) $update_actions ) );
-		}
-
-	} // function after()
+		return apply_filters( 'wordpoints_update_module_complete_actions', $update_actions, $this->module );
+	}
 
 } // class WordPoints_Module_Upgrader_Skin
 

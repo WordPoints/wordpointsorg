@@ -1,0 +1,210 @@
+# Copyright (C) 2015 WordPoints.org Modules
+# This file is distributed under the same license as the WordPoints.org Modules package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPoints.org Modules 1.0.0-alpha\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-01 21:05:52+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: admin/includes/apis/edd-software-licensing.php:198
+msgid ""
+"There was an error while trying to activate the license. Please try again."
+msgstr ""
+
+#: admin/includes/apis/edd-software-licensing.php:200
+msgid "That license key is invalid."
+msgstr ""
+
+#: admin/includes/apis/edd-software-licensing.php:202
+msgid "License activated."
+msgstr ""
+
+#: admin/includes/apis/edd-software-licensing.php:213
+msgid ""
+"There was an error while trying to deactivate the license. Please try again."
+msgstr ""
+
+#: admin/includes/apis/edd-software-licensing.php:215
+msgid ""
+"There was an error while trying to deactivate the license. Your license may "
+"be expired or invalid, or may already be deactivated."
+msgstr ""
+
+#: admin/includes/apis/edd-software-licensing.php:217
+msgid "License deactivated."
+msgstr ""
+
+#: admin/includes/apis/edd-software-licensing.php:255
+msgid "License key"
+msgstr ""
+
+#: admin/includes/apis/edd-software-licensing.php:266
+msgid "active"
+msgstr ""
+
+#: admin/includes/apis/edd-software-licensing.php:268
+msgid "Deactivate License"
+msgstr ""
+
+#: admin/includes/apis/edd-software-licensing.php:271
+msgid "Activate License"
+msgstr ""
+
+#: admin/includes/class-bulk-module-upgrader-skin.php:56
+msgid "Updating Module %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: admin/includes/class-bulk-module-upgrader-skin.php:89
+#: admin/includes/class-module-upgrader-skin.php:128
+msgid "Return to Modules page"
+msgstr ""
+
+#: admin/includes/class-bulk-module-upgrader-skin.php:90
+msgid "Return to WordPress Updates"
+msgstr ""
+
+#: admin/includes/class-module-upgrader-skin.php:76
+#: admin/includes/functions.php:292
+msgid "Update Module"
+msgstr ""
+
+#: admin/includes/class-module-upgrader-skin.php:127
+msgid "Activate Module"
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:75
+msgid "The module is at the latest version."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:76
+msgid "Update package not available."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:77
+msgid ""
+"That module cannot be updated, because there is no channel specified to "
+"receive updates through."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:78
+msgid ""
+"That module cannot be updated, because there is no API installed that can "
+"communicate with that channel."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:79
+msgid "Downloading update from %s&#8230;"
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:80
+msgid "Unpacking the update&#8230;"
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:81
+msgid "Removing the old version of the module&#8230;"
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:82
+msgid "Could not remove the old module."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:83
+msgid "Module update failed."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:84
+msgid "Module updated successfully."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:85
+msgid "That module cannot be updated, because it is not installed."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:99
+msgid "Install package not available."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:100
+msgid "Downloading install package from %s&#8230;"
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:101
+msgid "Unpacking the package&#8230;"
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:102
+msgid "Installing the module&#8230;"
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:103
+msgid "The module contains no files."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:104
+msgid "Module install failed."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:105
+msgid "Module installed successfully."
+msgstr ""
+
+#: admin/includes/class-module-upgrader.php:475
+msgid "No valid modules were found."
+msgstr ""
+
+#: admin/includes/functions.php:241 admin/includes/functions.php:285
+#: admin/includes/functions.php:327
+msgid "You do not have sufficient permissions to update modules for this site."
+msgstr ""
+
+#: admin/includes/functions.php:350
+msgid "Update Modules"
+msgstr ""
+
+#: admin/includes/functions.php:452
+msgid "Update Available <span class=\"count\">(%s)</span>"
+msgid_plural "Update Available <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/includes/functions.php:470
+msgid "Update"
+msgstr ""
+
+#: admin/includes/functions.php:578
+msgid ""
+"There is a new version of %1$s available. <a href=\"%2$s\" class=\"thickbox"
+"\" title=\"%3$s\">View version %4$s details</a>."
+msgstr ""
+
+#: admin/includes/functions.php:589
+msgid ""
+"There is a new version of %1$s available. <a href=\"%2$s\" class=\"thickbox"
+"\" title=\"%3$s\">View version %4$s details</a> or <a href=\"%5$s\">update "
+"now</a>."
+msgstr ""
+
+#. Description of the module
+msgid "Update modules from WordPoints.org through your admin panel."
+msgstr ""
+
+#. Author of the module
+msgid "WordPoints"
+msgstr ""
+
+#. #-#-#-#-#  wordpointsorg.pot (WordPoints.org Modules 1.0.0-alpha)  #-#-#-#-#
+#. Author URI of the module
+#. #-#-#-#-#  wordpointsorg.pot (WordPoints.org Modules 1.0.0-alpha)  #-#-#-#-#
+#. Module URI of the module
+msgid "http://wordpoints.org/"
+msgstr ""
+
+#. Module Name of the module
+msgid "WordPoints.org Modules"
+msgstr ""

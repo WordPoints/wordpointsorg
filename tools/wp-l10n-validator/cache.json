@@ -1,0 +1,72 @@
+{
+    "\/admin\/admin.php": {
+        "size": 680,
+        "hash": "20c3273bca964e0a031ff9a98ff545b6",
+        "errors": false
+    },
+    "\/admin\/includes\/apis\/edd-software-licensing.php": {
+        "size": 13729,
+        "hash": "53e5b50ddf268f692c226bc423a3da7d",
+        "errors": false
+    },
+    "\/admin\/includes\/class-bulk-module-upgrader-skin.php": {
+        "size": 2764,
+        "hash": "a8cf2b511239d66d2e2853f6b9585fa7",
+        "errors": false
+    },
+    "\/admin\/includes\/class-module-api.php": {
+        "size": 3969,
+        "hash": "297b32e0e857fafe0d49e3e55b85f5aa",
+        "errors": false
+    },
+    "\/admin\/includes\/class-module-channel.php": {
+        "size": 5758,
+        "hash": "00d77f17493515209612c61f468999a4",
+        "errors": false
+    },
+    "\/admin\/includes\/class-module-upgrader-skin.php": {
+        "size": 3959,
+        "hash": "bdd53005ff322c87726cb6529554b25d",
+        "errors": false
+    },
+    "\/admin\/includes\/class-module-upgrader.php": {
+        "size": 17658,
+        "hash": "5983ee2e0c476fe6e84328079a6fa062",
+        "errors": false
+    },
+    "\/admin\/includes\/functions.php": {
+        "size": 16713,
+        "hash": "c78f57e466ca8ca97ca09e4d9e7041b9",
+        "errors": false
+    },
+    "\/includes\/class-item-container.php": {
+        "size": 3716,
+        "hash": "84e0101601054b31a0eabfddb1fcffe5",
+        "errors": false
+    },
+    "\/includes\/constants.php": {
+        "size": 357,
+        "hash": "11469c68b4291f915c730846b9d9f461",
+        "errors": false
+    },
+    "\/includes\/functions.php": {
+        "size": 2776,
+        "hash": "8204cfae6aa5396e1ea2ac253bc632e3",
+        "errors": false
+    },
+    "\/install.php": {
+        "size": 789,
+        "hash": "9d4f83f3115f6fb01f53128f8fb0620b",
+        "errors": false
+    },
+    "\/uninstall.php": {
+        "size": 591,
+        "hash": "c1a44d3751f6942603a67f290da943ed",
+        "errors": false
+    },
+    "\/wordpointsorg.php": {
+        "size": 909,
+        "hash": "633561e4a923d0730dc7b211796c7e3c",
+        "errors": false
+    }
+}

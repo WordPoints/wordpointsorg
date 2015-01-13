@@ -15,6 +15,7 @@
 function wordpointsorgtests_manually_load_module() {
 
 	require WORDPOINTSORG_TESTS_DIR . '/../../src/wordpointsorg.php';
+	require WORDPOINTSORG_DIR . '/admin/admin.php';
 
 	wordpointsorg_activate( is_multisite() && getenv( 'WORDPOINTS_NETWORK_ACTIVE' ) );
 }

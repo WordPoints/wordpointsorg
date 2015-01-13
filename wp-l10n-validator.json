@@ -1,0 +1,16 @@
+{
+	"textdomain": { "wordpointsorg": true },
+	"basedir": "./src",
+	"bootstrap": "vendor/wordpoints/l10n-validator-config/bootstrap.php",
+	"cache": "./tools/wp-l10n-validator/cache.json",
+	"ignores-cache": "./tools/wp-l10n-validator/ignores-cache.json",
+	"ignores-tolerance": 25,
+	"ignored-functions": {
+		"wordpoints_get_modules_supporting": true,
+
+		"WordPoints_EDD_Software_Licensing_Module_API::get_module_information": true,
+		"WordPoints_EDD_Software_Licensing_Module_API::update_license_activation": true,
+		"WordPoints_Module_APIs::register": true,
+		"WordPointsOrg_Module_Upgrader::_bail_early": true
+	}
+}

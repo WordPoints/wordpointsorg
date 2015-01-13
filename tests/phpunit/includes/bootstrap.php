@@ -23,20 +23,28 @@ if ( ! getenv( 'WP_TESTS_DIR' ) ) {
 define( 'WORDPOINTSORG_TESTS_DIR', dirname( dirname( __FILE__ ) ) );
 
 /**
- * The WP plugin uninstall testing functions.
+ * We're running tests for a module.
  *
- * We need this because it is a dependency of the module uninstall tester.
+ * We need to tell WordPoints' tests bootstrap this so that it won't load it's plugin
+ * uninstall tester.
  *
  * @since 1.0.0
  */
-require_once WORDPOINTSORG_TESTS_DIR . '/library/plugin-uninstall/includes/functions.php';
+define( 'RUNNING_WORDPOINTS_MODULE_TESTS', true );
+
+/**
+ * The plugin uninstall testing functions.
+ *
+ * @since 1.0.0
+ */
+require_once WORDPOINTSORG_TESTS_DIR . '/../../vendor/jdgrimes/wp-plugin-uninstall-tester/includes/functions.php';
 
 /**
  * The WordPoints modules uninstall testing functions.
  *
  * @since 1.0.0
  */
-require_once WORDPOINTSORG_TESTS_DIR . '/library/module-uninstall/includes/functions.php';
+require_once WORDPOINTSORG_TESTS_DIR . '/../../vendor/wordpoints/module-uninstall-tester/includes/functions.php';
 
 /**
  * The WordPress tests functions.
@@ -48,33 +56,6 @@ require_once WORDPOINTSORG_TESTS_DIR . '/library/module-uninstall/includes/funct
  */
 require_once getenv( 'WP_TESTS_DIR' ) . 'includes/functions.php';
 
-if ( ! defined( 'WORDPOINTS_TESTS_DIR' ) ) {
-
-	/**
-	 * The WordPoints tests directory.
-	 *
-	 * We define it here if it isn't already defined, because it is used by the
-	 * function that loads the plugin.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @type string
-	 */
-	define( 'WORDPOINTS_TESTS_DIR', getenv( 'WORDPOINTS_TESTS_DIR' ) );
-}
-
-/**
- * The WordPoints tests functions.
- *
- * We need to load this so that we can load the plugin.
- *
- * @since 1.0.0
- */
-require_once getenv( 'WORDPOINTS_TESTS_DIR' ) . 'includes/functions.php';
-
-// Hook to load WordPoints.
-tests_add_filter( 'muplugins_loaded', 'wordpointstests_manually_load_plugin' );
-
 /**
  * The module's utilitiy functions for the tests.
  *
@@ -84,34 +65,34 @@ require_once WORDPOINTSORG_TESTS_DIR . '/includes/functions.php';
 
 // If we aren't running the uninstall tests, we need to hook in to load the module.
 if ( ! running_wordpoints_module_uninstall_tests() ) {
-	tests_add_filter( 'muplugins_loaded', 'wordpointsorgtests_manually_load_module' );
+
+	// Hook to load WordPoints.
+	tests_add_filter( 'muplugins_loaded', 'wordpointstests_manually_load_plugin' );
+
+	// Hook to load the module.
+	tests_add_filter( 'wordpoints_modules_loaded', 'wordpointsorgtests_manually_load_module', 5 );
 }
 
 /**
- * Sets up the WordPress test environment.
- *
- * We've got our action set up, so we can load this now, and it will load WordPress
- * and its test framework.
+ * The WordPoints tests bootstrap.
  *
  * @since 1.0.0
  */
-require getenv( 'WP_TESTS_DIR' ) . '/includes/bootstrap.php';
+require getenv( 'WORDPOINTS_TESTS_DIR' ) . '/includes/bootstrap.php';
 
 /**
- * The WP plugin uninstall testing bootstrap.
- *
- * We need this because it is a dependency of the module uninstall tester.
+ * The plugin uninstall testing bootstrap.
  *
  * @since 1.0.0
  */
-require_once WORDPOINTSORG_TESTS_DIR . '/library/plugin-uninstall/bootstrap.php';
+require_once WORDPOINTSORG_TESTS_DIR . '/../../vendor/jdgrimes/wp-plugin-uninstall-tester/bootstrap.php';
 
 /**
  * The WordPoints modules uninstall testing bootstrap.
  *
  * @since 1.0.0
  */
-require_once WORDPOINTSORG_TESTS_DIR . '/library/module-uninstall/bootstrap.php';
+require_once WORDPOINTSORG_TESTS_DIR . '/../../vendor/wordpoints/module-uninstall-tester/bootstrap.php';
 
 /**
  * A parent test case for tests involving HTTP requests.
