@@ -14,7 +14,7 @@
  *
  * @type string
  */
-define( 'WORDPOINTSORG_VERSION', '1.0.0-alpha' );
+define( 'WORDPOINTSORG_VERSION', '1.0.0' );
 
 /**
  * The module's main directory path.

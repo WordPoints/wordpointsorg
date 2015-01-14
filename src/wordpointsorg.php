@@ -5,14 +5,14 @@
  * Author:      WordPoints
  * Author URI:  http://wordpoints.org/
  * Module URI:  http://wordpoints.org/
- * Version:     1.0.0-alpha
+ * Version:     1.0.0
  * License:     GPLv2+
  * Description: Update modules from WordPoints.org through your admin panel.
  * Text Domain: wordpointsorg
  * Domain Path: /languages
  *
  * @package WordPointsOrg
- * @version 1.0.0-alpha
+ * @version 1.0.0
  * @license GPLv2+
  */
 
