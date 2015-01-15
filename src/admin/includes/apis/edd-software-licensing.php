@@ -266,7 +266,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				<input
 					id="license_key-<?php echo esc_attr( $channel->url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>"
 					name="license_key-<?php echo esc_attr( $channel->url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>"
-					type="text"
+					type="password"
 					class="regular-text"
 					autocomplete="off"
 					value="<?php echo esc_attr( $license ); ?>"
