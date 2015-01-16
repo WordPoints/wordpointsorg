@@ -335,7 +335,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 */
 	public function get_package_url( $channel, $module ) {
 
-		return $this->get_module_information( $channel, $module, 'package' );
+		return $this->get_module_information( $channel, $module['ID'], 'package' );
 	}
 
 	/**
@@ -343,7 +343,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 */
 	public function get_changelog_url( $channel, $module ) {
 
-		return $this->get_module_information( $channel, $module, 'url' );
+		return $this->get_module_information( $channel, $module['ID'], 'url' );
 	}
 
 	/**
@@ -365,28 +365,34 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WordPoints_Module_Channel $channel The module channel.
-	 * @param array                     $module  The module's data.
-	 * @param string                    $info    The piece of info to get.
+	 * @param WordPoints_Module_Channel $channel   The module channel.
+	 * @param string                    $module_id The module's ID.
+	 * @param string                    $key       The piece of info to get.
 	 *
 	 * @return mixed The remote information for this module.
 	 */
-	protected function get_module_information( $channel, $module, $info = null ) {
+	protected function get_module_information( $channel, $module_id, $key = null ) {
+
+		// Back-compat for pre-1.1.0.
+		if ( is_array( $module_id ) ) {
+			_deprecated_argument( __METHOD__, '1.1.0', 'The $module parameter is now expected to be a module ID.' );
+			$module_id = $module_id['ID'];
+		}
 
 		$all_info = wordpoints_get_array_option( 'wordpoints_edd_sl_module_info', 'network' );
 
-		if ( ! isset( $all_info[ $channel->url ][ $module['ID'] ] ) ) {
+		if ( ! isset( $all_info[ $channel->url ][ $module_id ] ) ) {
 			return false;
 		}
 
-		if ( isset( $info ) ) {
-			if ( isset( $all_info[ $channel->url ][ $module['ID'] ][ $info ] ) ) {
-				return $all_info[ $channel->url ][ $module['ID'] ][ $info ];
+		if ( isset( $key ) ) {
+			if ( isset( $all_info[ $channel->url ][ $module_id ][ $key ] ) ) {
+				return $all_info[ $channel->url ][ $module_id ][ $key ];
 			} else {
 				return false;
 			}
 		} else {
-			return $all_info[ $channel->url ][ $module['ID'] ];
+			return $all_info[ $channel->url ][ $module_id ];
 		}
 	}
 
