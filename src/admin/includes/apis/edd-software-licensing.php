@@ -76,6 +76,30 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	}
 
 	/**
+	 * Check whether a module has a valid license.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $channel   The channel to get module licenses for.
+	 * @param string $module_id The module's unique ID.
+	 *
+	 * @return bool Whether the module has a valid license.
+	 */
+	public function module_has_valid_license( $channel, $module_id ) {
+
+		$license_data = $this->get_module_license_data( $channel, $module_id );
+
+		if (
+			isset( $license_data['license'], $license_data['status'] )
+			&& 'valid' === $license_data['status']
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Activate a module's license key.
 	 *
 	 * @since 1.0.0
@@ -304,12 +328,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 
 		foreach ( $modules as $file => $module ) {
 
-			$license_data = $this->get_module_license_data( $channel, $module['ID'] );
-
-			if (
-				! isset( $license_data['license'], $license_data['status'] )
-				|| 'valid' !== $license_data['status']
-			) {
+			if ( ! $this->module_has_valid_license( $channel, $module['ID'] ) ) {
 				continue;
 			}
 

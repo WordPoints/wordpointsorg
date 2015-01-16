@@ -70,6 +70,58 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 		$this->assertTrue( $this->api->supports( 'updates' ) );
 	}
 
+	/**
+	 * Test checking if a module has a valid license.
+	 *
+	 * @since 1.1.0
+	 */
+	public function test_module_has_valid_license() {
+
+		$this->assertFalse(
+			$this->api->module_has_valid_license( $this->channel, '123' )
+		);
+
+		wordpoints_update_network_option(
+			'wordpoints_edd_sl_module_licenses'
+			, array(
+				$this->channel->url => array( '123' => array( 'status' => 'valid' ) )
+			)
+		);
+
+		// It will still be false, because the 'license' key must be set as well.
+		$this->assertFalse(
+			$this->api->module_has_valid_license( $this->channel, '123' )
+		);
+
+		wordpoints_update_network_option(
+			'wordpoints_edd_sl_module_licenses'
+			, array(
+				$this->channel->url => array(
+					'123' => array( 'status' => 'valid', 'license' => 'lkjlkjlkjk' )
+				)
+			)
+		);
+
+		// This time it should be true.
+		$this->assertTrue(
+			$this->api->module_has_valid_license( $this->channel, '123' )
+		);
+
+		wordpoints_update_network_option(
+			'wordpoints_edd_sl_module_licenses'
+			, array(
+				$this->channel->url => array(
+					'123' => array( 'status' => 'expired', 'license' => 'lkjlkj' )
+				)
+			)
+		);
+
+		// The status must be 'valid', this license is expired.
+		$this->assertFalse(
+			$this->api->module_has_valid_license( $this->channel, '123' )
+		);
+	}
+
 	//
 	// Responders.
 	//
