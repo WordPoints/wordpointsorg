@@ -397,6 +397,29 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	}
 
 	/**
+	 * Save the information for a module.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param WordPoints_Module_Channel $channel   The module channel.
+	 * @param string                    $module_id The module's ID.
+	 * @param mixed                     $info      The information to save.
+	 * @param string                    $key       The piece of info to get.
+	 */
+	protected function set_module_information( $channel, $module_id, $info, $key = null ) {
+
+		$all_info = wordpoints_get_array_option( 'wordpoints_edd_sl_module_info', 'network' );
+
+		if ( isset( $key ) ) {
+			$all_info[ $channel->url ][ $module_id ][ $key ] = $info;
+		} else {
+			$all_info[ $channel->url ][ $module_id ] = $info;
+		}
+
+		wordpoints_update_network_option( 'wordpoints_edd_sl_module_info', $all_info );
+	}
+
+	/**
 	 * Perform a request to a remote channel.
 	 *
 	 * The possible actions include the following:
