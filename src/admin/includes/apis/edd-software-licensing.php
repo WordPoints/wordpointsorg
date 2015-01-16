@@ -54,6 +54,9 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param string $channel The channel to get module licenses for.
+	 * @param string $module_id The module's unique ID.
+	 *
 	 * @return string[] {
 	 *         The license data for this module.
 	 *
@@ -230,7 +233,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	}
 
 	/**
-	 * Add the license key column to the modules list table.
+	 * Add the license key rows to the modules list table.
 	 *
 	 * @since 1.0.0
 	 *
