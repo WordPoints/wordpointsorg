@@ -498,6 +498,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 		if (
 			$response
 			&& isset( $response['sections'] )
+			&& is_string( $response['sections'] )
 			&& 1 !== preg_match( '~O:\d~', $response['sections'] ) // No object injection.
 		) {
 			$response['sections'] = maybe_unserialize( $response['sections'] );
