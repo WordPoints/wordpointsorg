@@ -221,15 +221,37 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	}
 
 	/**
-	 * Test checking if a module has a valid license.
+	 * Test that module_has_valid_license() returns true if a module has a valid license.
 	 *
 	 * @since 1.1.0
 	 */
 	public function test_module_has_valid_license() {
 
+		$this->add_module_licenses_option();
+
+		$this->assertTrue(
+			$this->api->module_has_valid_license( $this->channel, '123' )
+		);
+	}
+
+	/**
+	 * Test that module_has_valid_license() returns false if a module doesn't exist.
+	 *
+	 * @since 1.1.0
+	 */
+	public function test_nonexistant_module_has_valid_license() {
+
 		$this->assertFalse(
 			$this->api->module_has_valid_license( $this->channel, '123' )
 		);
+	}
+
+	/**
+	 * Test that module_has_valid_license() returns if the 'license' key isn't set.
+	 *
+	 * @since 1.1.0
+	 */
+	public function test_module_has_no_valid_license() {
 
 		$this->api->update_module_license_data(
 			$this->channel
@@ -238,28 +260,22 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 			, 'status'
 		);
 
-		// It will still be false, because the 'license' key must be set as well.
 		$this->assertFalse(
 			$this->api->module_has_valid_license( $this->channel, '123' )
 		);
+	}
+
+	/**
+	 * Test that module_has_valid_license() returns false if the license is invalid.
+	 *
+	 * @since 1.1.0
+	 */
+	public function test_module_has_invalid_license() {
 
 		$this->api->update_module_license_data(
 			$this->channel
 			, '123'
-			, 'lkjlkjlkjk'
-			, 'license'
-		);
-
-		// This time it should be true.
-		$this->assertTrue(
-			$this->api->module_has_valid_license( $this->channel, '123' )
-		);
-
-		$this->api->update_module_license_data(
-			$this->channel
-			, '123'
-			, 'expired'
-			, 'status'
+			, array( 'status' => 'expired', 'license' => 'lkjkjkj' )
 		);
 
 		// The status must be 'valid', this license is expired.
@@ -284,7 +300,7 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 		$licenses = array(
 			$this->channel->url => array(
 				'123' => array( 'status' => 'valid', 'license' => 'lkjlkjklj' ),
-				'45'  => array( 'status' => 'invalid', 'license' => '' ),
+				'45'  => array( 'status' => 'invalid' ),
 			),
 			'example.com' => array(
 				'the_plug' => array( 'status' => 'valid', 'license' => 'lkjjjjj' ),
