@@ -525,7 +525,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @return array|false The response, or false on error.
 	 */
-	private function request( $action, $channel, $data ) {
+	protected function request( $action, $channel, $data ) {
 
 		$params = array();
 
