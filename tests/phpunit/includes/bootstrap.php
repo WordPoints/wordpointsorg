@@ -102,6 +102,13 @@ require_once WORDPOINTSORG_TESTS_DIR . '/../../vendor/wordpoints/module-uninstal
 require_once( WORDPOINTSORG_TESTS_DIR . '/includes/testcase-http.php' );
 
 /**
+ * A parent test case for the module API tests.
+ *
+ * @since 1.1.0
+ */
+require_once( WORDPOINTSORG_TESTS_DIR . '/includes/testcases/module-api.php' );
+
+/**
  * A parent test case for tests involving the module upgrader.
  *
  * @since 1.0.0

@@ -1,32 +1,60 @@
 <?php
 
 /**
- * A test case for the EDD Software Licensing module API.
+ * Parent class for the module API test cases.
  *
  * @package WordPointsOrg\Tests
- * @since 1.0.0
+ * @since 1.1.0
  */
 
 /**
- * Test that the EDD Software Licensing module API works.
+ * Parent test case for the module API tests.
  *
- * @since 1.0.0
+ * @since 1.1.0
  */
-class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
-	extends WordPointsOrg_HTTP_UnitTestCase {
+class WordPointsOrg_Module_API_UnitTestCase extends WordPointsOrg_HTTP_UnitTestCase {
 
 	/**
-	 * @since 1.0.0
+	 * The slug of the API being tested.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var string
+	 */
+	protected $api_slug;
+
+	/**
+	 * The object for the API being tested.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var WordPoints_Module_API
+	 */
+	protected $api;
+
+	/**
+	 * The object for the channel to use in the tests.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var WordPoints_Module_Channel
+	 */
+	protected $channel;
+
+	/**
+	 * @since 1.1.0
 	 */
 	public static function setUpBeforeClass() {
 
 		parent::setUpBeforeClass();
 
-		WordPoints_Module_APIs::init();
+		if ( ! did_action( 'wordpoints_register_module_apis' ) ) {
+			WordPoints_Module_APIs::init();
+		}
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function setUp() {
 
@@ -37,89 +65,17 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 			, true
 		);
 
-		$this->api = WordPoints_Module_APIs::get( 'edd-software-licensing' );
+		$this->api = WordPoints_Module_APIs::get( $this->api_slug );
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function tearDown() {
 
 		WordPoints_Module_Channels::deregister( 'wordpoints.test' );
 
 		parent::tearDown();
-	}
-
-	/**
-	 * Test that the EDD module API is registered.
-	 *
-	 * @since 1.0.0
-	 */
-	public function test_is_registered() {
-
-		$this->assertArrayHasKey( 'edd-software-licensing', WordPoints_Module_APIs::get() );
-	}
-
-	/**
-	 * Test that it supports the expected API functions.
-	 *
-	 * @since 1.0.0
-	 */
-	public function test_supports() {
-
-		$this->assertTrue( $this->api->supports( 'updates' ) );
-	}
-
-	/**
-	 * Test checking if a module has a valid license.
-	 *
-	 * @since 1.1.0
-	 */
-	public function test_module_has_valid_license() {
-
-		$this->assertFalse(
-			$this->api->module_has_valid_license( $this->channel, '123' )
-		);
-
-		wordpoints_update_network_option(
-			'wordpoints_edd_sl_module_licenses'
-			, array(
-				$this->channel->url => array( '123' => array( 'status' => 'valid' ) )
-			)
-		);
-
-		// It will still be false, because the 'license' key must be set as well.
-		$this->assertFalse(
-			$this->api->module_has_valid_license( $this->channel, '123' )
-		);
-
-		wordpoints_update_network_option(
-			'wordpoints_edd_sl_module_licenses'
-			, array(
-				$this->channel->url => array(
-					'123' => array( 'status' => 'valid', 'license' => 'lkjlkjlkjk' )
-				)
-			)
-		);
-
-		// This time it should be true.
-		$this->assertTrue(
-			$this->api->module_has_valid_license( $this->channel, '123' )
-		);
-
-		wordpoints_update_network_option(
-			'wordpoints_edd_sl_module_licenses'
-			, array(
-				$this->channel->url => array(
-					'123' => array( 'status' => 'expired', 'license' => 'lkjlkj' )
-				)
-			)
-		);
-
-		// The status must be 'valid', this license is expired.
-		$this->assertFalse(
-			$this->api->module_has_valid_license( $this->channel, '123' )
-		);
 	}
 
 	//
