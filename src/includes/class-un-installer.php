@@ -91,8 +91,8 @@ class WordPointsOrg_Un_Installer extends WordPoints_Un_Installer_Base {
 		unset( $wordpoints_data['modules']['wordpointsorg'] );
 		wordpoints_update_network_option( 'wordpoints_data', $wordpoints_data );
 
-		wordpoints_delete_network_option( 'wordpoints_edd_sl_module_licenses' );
-		wordpoints_delete_network_option( 'wordpoints_edd_sl_module_info' );
+		delete_site_option( 'wordpoints_edd_sl_module_licenses' );
+		delete_site_option( 'wordpoints_edd_sl_module_info' );
 
 		delete_site_transient( 'wordpoints_module_updates' );
 	}

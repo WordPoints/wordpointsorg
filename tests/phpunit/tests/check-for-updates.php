@@ -157,7 +157,7 @@ class WordPoints_Check_For_Module_Updates_Test extends WordPointsOrg_HTTP_UnitTe
 
 		$this->http_responder = array( $this, 'respond_get_version' );
 
-		wordpoints_update_network_option(
+		update_site_option(
 			'wordpoints_edd_sl_module_licenses'
 			, array(
 				'wordpoints.org' => array(

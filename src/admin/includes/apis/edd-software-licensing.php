@@ -35,12 +35,16 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @return array[] The module license data.
 	 */
-	public function get_licenses( $channel ) {
+	public function get_licenses( $channel = null ) {
 
 		$licenses = wordpoints_get_array_option(
 			'wordpoints_edd_sl_module_licenses'
-			, 'network'
+			, 'site'
 		);
+
+		if ( ! isset( $channel ) ) {
+			return $licenses;
+		}
 
 		if ( ! isset( $licenses[ $channel->url ] ) ) {
 			return array();
@@ -50,12 +54,29 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	}
 
 	/**
+	 * Update the licenses for modules that use this API.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string  $channel  The channel to get module licenses for.
+	 * @param array[] $licenses The licenses data to save.
+	 */
+	public function update_licenses( $channel, $licenses ) {
+
+		$all_licenses = $this->get_licenses();
+		$all_licenses[ $channel->url ] = $licenses;
+
+		update_site_option( 'wordpoints_edd_sl_module_licenses', $all_licenses );
+	}
+
+	/**
 	 * Get the license data for a module.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $channel The channel to get module licenses for.
+	 * @param string $channel   The channel to get module licenses for.
 	 * @param string $module_id The module's unique ID.
+	 * @param string $key       The key for the specific piece of data to get.
 	 *
 	 * @return string[] {
 	 *         The license data for this module.
@@ -64,15 +85,52 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *         @type string $status  The license key's status.
 	 * }
 	 */
-	public function get_module_license_data( $channel, $module_id ) {
+	public function get_module_license_data( $channel, $module_id, $key = null ) {
 
 		$licenses = $this->get_licenses( $channel );
 
 		if ( ! isset( $licenses[ $module_id ] ) ) {
-			return array();
+			return isset( $key ) ? null : array();
+		}
+
+		if ( isset( $key ) ) {
+
+			if ( ! isset( $licenses[ $module_id ][ $key ] ) ) {
+				return null;
+			}
+
+			return $licenses[ $module_id ][ $key ];
 		}
 
 		return $licenses[ $module_id ];
+	}
+
+	/**
+	 * Update the license data for a module.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string   $channel   The channel to get module licenses for.
+	 * @param string   $module_id The module's unique ID.
+	 * @param string[] $data      {
+	 *         The license data for this module.
+	 *
+	 *         @type string $license The license key.
+	 *         @type string $status  The license key's status.
+	 * }
+	 * @param string $key        The key for the specific piece of data to update.
+	 */
+	public function update_module_license_data( $channel, $module_id, $data, $key = null ) {
+
+		$licenses = $this->get_licenses( $channel );
+
+		if ( isset( $key ) ) {
+			$licenses[ $module_id ][ $key ] = $data;
+		} else {
+			$licenses[ $module_id ] = $data;
+		}
+
+		$this->update_licenses( $channel, $licenses );
 	}
 
 	/**
@@ -148,17 +206,16 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			return false;
 		}
 
-		$licenses = wordpoints_get_array_option( 'wordpoints_edd_sl_module_licenses', 'network' );
+		// This 'license' key actually holds the license's status.
+		if ( 'failed' !== $response['license'] ) {
 
-		if ( 'activate' === $status ) {
-			// This is actually the status, and will be "valid" or "invalid".
-			$licenses[ $channel->url ][ $module['ID'] ]['status'] = $response['license'];
-		} elseif ( 'deactivated' === $response['license'] ) {
-			// This is actually the status, and will be "deactivated" or "failed".
-			$licenses[ $channel->url ][ $module['ID'] ]['status'] = $response['license'];
+			$this->update_module_license_data(
+				$channel
+				, $module['ID']
+				, $response['license']
+				, 'status'
+			);
 		}
-
-		wordpoints_update_network_option( 'wordpoints_edd_sl_module_licenses', $licenses );
 
 		return $response['license'];
 	}
@@ -217,9 +274,12 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 
 			if ( isset( $_POST[ "license_key-{$url}-{$module['ID']}" ] ) ) {
 
-				$licenses = wordpoints_get_array_option( 'wordpoints_edd_sl_module_licenses', 'network' );
-				$licenses[ $channel->url ][ $module['ID'] ]['license'] = sanitize_key( $_POST[ "license_key-{$url}-{$module['ID']}" ] );
-				wordpoints_update_network_option( 'wordpoints_edd_sl_module_licenses', $licenses );
+				$this->update_module_license_data(
+					$channel->url
+					, $module['ID']
+					, 'license'
+					, sanitize_key( $_POST[ "license_key-{$url}-{$module['ID']}" ] )
+				);
 			}
 
 			if (
