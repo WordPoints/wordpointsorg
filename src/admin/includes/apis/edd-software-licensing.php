@@ -31,7 +31,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $channel The channel to get module licenses for.
+	 * @param WordPoints_Module_Channel $channel The channel to get module licenses for.
 	 *
 	 * @return array[] The module license data.
 	 */
@@ -58,8 +58,8 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param string  $channel  The channel to get module licenses for.
-	 * @param array[] $licenses The licenses data to save.
+	 * @param WordPoints_Module_Channel $channel  The channel to get module licenses for.
+	 * @param array[]                   $licenses The licenses data to save.
 	 */
 	public function update_licenses( $channel, $licenses ) {
 
@@ -74,9 +74,11 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $channel   The channel to get module licenses for.
-	 * @param string $module_id The module's unique ID.
-	 * @param string $key       The key for the specific piece of data to get.
+	 * @param WordPoints_Module_Channel $channel   The channel to get module licenses
+	 *                                             for.
+	 * @param string                    $module_id The module's unique ID.
+	 * @param string $key                          The key for the specific piece of
+	 *                                             data to get.
 	 *
 	 * @return string[] {
 	 *         The license data for this module.
@@ -110,9 +112,9 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param string   $channel   The channel to get module licenses for.
-	 * @param string   $module_id The module's unique ID.
-	 * @param string[] $data      {
+	 * @param WordPoints_Module_Channel $channel   The channel to get module licenses for.
+	 * @param string                    $module_id The module's unique ID.
+	 * @param string[]|string           $data      {
 	 *         The license data for this module.
 	 *
 	 *         @type string $license The license key.
@@ -138,8 +140,9 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param string $channel   The channel to get module licenses for.
-	 * @param string $module_id The module's unique ID.
+	 * @param WordPoints_Module_Channel $channel   The channel to get module licenses
+	 *                                             for.
+	 * @param string                    $module_id The module's unique ID.
 	 *
 	 * @return bool Whether the module has a valid license.
 	 */
