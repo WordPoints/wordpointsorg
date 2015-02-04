@@ -364,7 +364,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 					<input type="submit" name="edd-deactivate-license" class="button-secondary" value="<?php esc_attr_e( 'Deactivate License', 'wordpointsorg' ); ?>" />
 				<?php else : ?>
 					<?php wp_nonce_field( "wordpoints_activate_license_key-{$module_data['ID']}", "wordpoints_activate_license_key-{$module_data['ID']}" ); ?>
-					<input type="submit"name="edd-activate-license"  class="button-secondary" value="<?php esc_attr_e( 'Activate License', 'wordpointsorg' ); ?>" />
+					<input type="submit" name="edd-activate-license"  class="button-secondary" value="<?php esc_attr_e( 'Activate License', 'wordpointsorg' ); ?>" />
 				<?php endif; ?>
 			</td>
 		</tr>
