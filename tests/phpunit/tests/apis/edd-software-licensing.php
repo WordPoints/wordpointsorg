@@ -21,6 +21,24 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	protected $api_slug = 'edd-software-licensing';
 
 	/**
+	 * @since 1.1.0
+	 *
+	 * @var WordPoints_EDD_Software_Licensing_Module_API
+	 */
+	protected $api;
+
+	/**
+	 * @since 1.1.0
+	 */
+	public function setUp() {
+
+		parent::setUp();
+
+		$transient = 'wrdpnts_' . md5( "module_channel_supports_ssl-{$this->channel->url}" );
+		set_site_transient( $transient, 0, WEEK_IN_SECONDS );
+	}
+
+	/**
 	 * Test that the EDD module API is registered.
 	 *
 	 * @since 1.0.0
@@ -118,7 +136,7 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 */
 	public function test_get_nonexistant_modules_license_data() {
 
-		$licenses = $this->add_module_licenses_option();
+		$this->add_module_licenses_option();
 
 		$this->assertEquals(
 			array()
@@ -282,6 +300,151 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 		$this->assertFalse(
 			$this->api->module_has_valid_license( $this->channel, '123' )
 		);
+	}
+
+	/**
+	 * Test that activate_license() saves the license's 'valid' status in the db.
+	 *
+	 * @since 1.1.0
+	 */
+	public function test_activate_valid_license() {
+
+		$this->api->update_module_license_data(
+			$this->channel
+			, '123'
+			, 'testkey'
+			, 'license'
+		);
+
+		$result = $this->api->activate_license(
+			$this->channel
+			, array( 'ID' => '123', 'name' => '' )
+		);
+
+		$this->assertEquals( 'valid', $result );
+
+		$this->assertEquals(
+			'valid'
+			, $this->api->get_module_license_data( $this->channel, '123', 'status' )
+		);
+	}
+
+	/**
+	 * Test that activate_license() saves the license's 'invalid' status in the db.
+	 *
+	 * @since 1.1.0
+	 */
+	public function test_activate_invalid_license() {
+
+		$result = $this->api->activate_license(
+			$this->channel
+			, array( 'ID' => '123', 'name' => '' )
+		);
+
+		$this->assertEquals( 'invalid', $result );
+
+		$this->assertEquals(
+			'invalid'
+			, $this->api->get_module_license_data( $this->channel, '123', 'status' )
+		);
+	}
+
+	/**
+	 * Test that deactivate_license() saves the license's 'deactivated' status in the db.
+	 *
+	 * @since 1.1.0
+	 */
+	public function test_deactivate_valid_license() {
+
+		$this->api->update_module_license_data(
+			$this->channel
+			, '123'
+			, 'testkey_2'
+			, 'license'
+		);
+
+		$result = $this->api->deactivate_license(
+			$this->channel
+			, array( 'ID' => '123', 'name' => '' )
+		);
+
+		$this->assertEquals( 'deactivated', $result );
+
+		$this->assertEquals(
+			'deactivated'
+			, $this->api->get_module_license_data( $this->channel, '123', 'status' )
+		);
+	}
+
+	/**
+	 * Test that deactivate_license() doesn't save an invalid license's status in the db.
+	 *
+	 * @since 1.1.0
+	 */
+	public function test_deactivate_invalid_license() {
+
+		$this->api->update_module_license_data(
+			$this->channel
+			, '123'
+			, 'lkjljl'
+			, 'license'
+		);
+
+		$result = $this->api->deactivate_license(
+			$this->channel
+			, array( 'ID' => '123', 'name' => '' )
+		);
+
+		$this->assertEquals( 'failed', $result );
+
+		$this->assertEquals(
+			''
+			, $this->api->get_module_license_data( $this->channel, '123', 'status' )
+		);
+	}
+
+	/**
+	 * Test that check_license() returns a license's 'valid' status.
+	 *
+	 * @since 1.1.0
+	 */
+	public function test_check_valid_active_license() {
+
+		$this->api->update_module_license_data(
+			$this->channel
+			, '123'
+			, 'testkey_2'
+			, 'license'
+		);
+
+		$result = $this->api->check_license(
+			$this->channel
+			, array( 'ID' => '123', 'name' => '' )
+		);
+
+		$this->assertEquals( 'valid', $result );
+	}
+
+	/**
+	 * Test that check_license() returns a license's 'inactive' status.
+	 *
+	 * @since 1.1.0
+	 */
+	public function test_check_inactive_active_license() {
+
+		$this->api->update_module_license_data(
+			$this->channel
+			, '123'
+			, 'testkey'
+			, 'license'
+		);
+
+		$result = $this->api->check_license(
+			$this->channel
+			, array( 'ID' => '123', 'name' => '' )
+		);
+
+		$this->assertEquals( 'inactive', $result );
 	}
 
 	//
