@@ -33,6 +33,16 @@ define( 'WORDPOINTSORG_TESTS_DIR', dirname( dirname( __FILE__ ) ) );
 define( 'RUNNING_WORDPOINTS_MODULE_TESTS', true );
 
 /**
+ * @since 1.1.0
+ */
+define( 'WP_HTTP_TC_USE_CACHING', true );
+
+/**
+ * @since 1.1.0
+ */
+define( 'WP_HTTP_TC_CACHE_DIR', WORDPOINTSORG_TESTS_DIR . '/cache/wp-http-tc' );
+
+/**
  * The plugin uninstall testing functions.
  *
  * @since 1.0.0
@@ -95,11 +105,22 @@ require_once WORDPOINTSORG_TESTS_DIR . '/../../vendor/jdgrimes/wp-plugin-uninsta
 require_once WORDPOINTSORG_TESTS_DIR . '/../../vendor/wordpoints/module-uninstall-tester/bootstrap.php';
 
 /**
+ * The WP HTTP testcase bootstrap.
+ *
+ * @since 1.1.0
+ */
+require_once WORDPOINTSORG_TESTS_DIR . '/../../vendor/jdgrimes/wp-http-testcase/wp-http-testcase.php';
+
+if ( ! running_wordpoints_module_uninstall_tests() ) {
+	WP_HTTP_TestCase::init();
+}
+
+/**
  * A parent test case for tests involving HTTP requests.
  *
  * @since 1.0.0
  */
-require_once( WORDPOINTSORG_TESTS_DIR . '/includes/testcase-http.php' );
+require_once( WORDPOINTSORG_TESTS_DIR . '/includes/testcases/http.php' );
 
 /**
  * A parent test case for the module API tests.

@@ -3,9 +3,43 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "54d0c1a449c2581b24ed76c496491fc2",
+    "hash": "0a91fe58dfdb5672033c013b226675f5",
     "packages": [],
     "packages-dev": [
+        {
+            "name": "jdgrimes/wp-http-testcase",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JDGrimes/wp-http-testcase.git",
+                "reference": "838d066dc6cc7e0bb646f0706ddc4b596f9d1c9e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JDGrimes/wp-http-testcase/zipball/838d066dc6cc7e0bb646f0706ddc4b596f9d1c9e",
+                "reference": "838d066dc6cc7e0bb646f0706ddc4b596f9d1c9e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "J.D. Grimes",
+                    "email": "jdg@codesymphony.co",
+                    "homepage": "http://codesymphony.co",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHPUnit testcase for WordPress code involving HTTP requests",
+            "homepage": "https://github.com/JDGrimes/wp-http-testcase",
+            "time": "2015-02-03 19:19:00"
+        },
         {
             "name": "jdgrimes/wp-l10n-validator",
             "version": "dev-master",
