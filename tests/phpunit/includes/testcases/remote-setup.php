@@ -8,11 +8,56 @@
  */
 
 /**
+ * Class to handle the remote simulators.
+ *
+ * @since 1.1.0
+ */
+class WordPointsOrg_Tests_Remote_Simulators {
+
+	/**
+	 * The registered simulators.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var WordPointsOrg_Tests_Remote_Simulator[]
+	 */
+	protected static $simulators;
+
+	/**
+	 * Register a simulator.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $slug  The unique slug for this simulator.
+	 * @param string $class The name of the simulator's class.
+	 */
+	public static function register( $slug, $class ) {
+		self::$simulators[ $slug ] = $class;
+	}
+
+	/**
+	 * Initialize the simulators.
+	 *
+	 * @since 1.1.0
+	 */
+	public static function init() {
+
+		$simulator = getenv( 'HTTP_X_WORDPOINTSORG_TESTS_API' );
+
+		if ( ! isset( self::$simulators[ $simulator ] ) ) {
+			return;
+		}
+
+		new self::$simulators[ $simulator ];
+	}
+}
+
+/**
  * Class to simulate a particular site configuration on the remote server.
  *
  * @since 1.1.0
  */
-class WordPointsOrg_Tests_Remote_Simulator {
+abstract class WordPointsOrg_Tests_Remote_Simulator {
 
 	/**
 	 * @since 1.1.0
@@ -105,11 +150,14 @@ class WordPointsOrg_Tests_Remote_EDD_Software_Licenses_Simulator
 		// Create the download.
 		wp_insert_post(
 			array(
-				'import_id' => 123,
-				'post_type' => 'download',
+				'import_id'   => 123,
+				'post_type'   => 'download',
 				'post_status' => 'publish',
+				'post_title'  => 'Test Download',
 			)
 		);
+
+		add_post_meta( 123, 'edd_price', '100.00' );
 
 		// Create the license.
 		$license_id = wp_insert_post(
@@ -133,5 +181,52 @@ class WordPointsOrg_Tests_Remote_EDD_Software_Licenses_Simulator
 		edd_software_licensing()->insert_site( $license_id, $_POST['url'] );
 	}
 }
+WordPointsOrg_Tests_Remote_Simulators::register(
+	'edd-software-licensing'
+	, 'WordPointsOrg_Tests_Remote_EDD_Software_Licenses_Simulator'
+);
+
+/**
+ * Set up the remote server to handle an EDD Software Licenses Free requests.
+ *
+ * @since 1.1.0
+ */
+class WordPointsOrg_Tests_Remote_EDD_Software_Licenses_Free_Simulator
+	extends WordPointsOrg_Tests_Remote_EDD_Software_Licenses_Simulator {
+
+	/**
+	 * @since 1.1.0
+	 */
+	public function load_dependencies() {
+
+		parent::load_dependencies();
+
+		include_once( WP_PLUGIN_DIR . '/edd-sl-free/edd-sl-free.php' );
+	}
+
+	/**
+	 * @since 1.1.0
+	 */
+	public function setup() {
+
+		// Create the download.
+		wp_insert_post(
+			array(
+				'import_id'   => 124,
+				'post_type'   => 'download',
+				'post_status' => 'publish',
+				'post_title'  => 'Free Download',
+			)
+		);
+
+		parent::setup();
+	}
+}
+WordPointsOrg_Tests_Remote_Simulators::register(
+	'edd-software-licensing-free'
+	, 'WordPointsOrg_Tests_Remote_EDD_Software_Licenses_Free_Simulator'
+);
+
+WordPointsOrg_Tests_Remote_Simulators::init();
 
 // EOF

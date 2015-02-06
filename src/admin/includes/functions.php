@@ -82,6 +82,12 @@ function wordpoints_register_default_module_apis() {
 		, null
 		, 'WordPoints_EDD_Software_Licensing_Module_API'
 	);
+
+	WordPoints_Module_APIs::register(
+		'edd-software-licensing-free'
+		, null
+		, 'WordPoints_EDD_Software_Licensing_Free_Module_API'
+	);
 }
 add_action( 'wordpoints_register_module_apis', 'wordpoints_register_default_module_apis' );
 

@@ -28,17 +28,6 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	protected $api;
 
 	/**
-	 * @since 1.1.0
-	 */
-	public function setUp() {
-
-		parent::setUp();
-
-		$transient = 'wrdpnts_' . md5( "module_channel_supports_ssl-{$this->channel->url}" );
-		set_site_transient( $transient, 0, WEEK_IN_SECONDS );
-	}
-
-	/**
 	 * Test that the EDD module API is registered.
 	 *
 	 * @since 1.0.0

@@ -35,4 +35,11 @@ include_once( WORDPOINTSORG_DIR . '/admin/includes/class-module-api.php' );
  */
 include_once( WORDPOINTSORG_DIR . '/admin/includes/apis/edd-software-licensing.php' );
 
+/**
+ * Easy Digital Downloads Software Licensing Free module API.
+ *
+ * @since 1.0.0
+ */
+include_once( WORDPOINTSORG_DIR . '/admin/includes/apis/edd-software-licensing-free.php' );
+
 // EOF
