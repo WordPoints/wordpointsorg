@@ -10,6 +10,7 @@
 
 		"WordPoints_EDD_Software_Licensing_Module_API::get_module_information": true,
 		"WordPoints_EDD_Software_Licensing_Module_API::update_license_activation": true,
+		"WordPoints_EDD_Software_Licensing_Module_API::update_module_license_data": true,
 		"WordPoints_Module_APIs::register": true,
 		"WordPointsOrg_Module_Upgrader::_bail_early": true
 	}

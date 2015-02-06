@@ -1,11 +1,9 @@
 {
     "\/admin\/includes\/apis\/edd-software-licensing.php": {
-        "edd-software-licensing": {
-            "20": false
-        },
         "-": {
-            "258": false,
-            "259": false
+            "353": false,
+            "357": false,
+            "358": false
         }
     },
     "\/admin\/includes\/class-module-channel.php": {
@@ -102,6 +100,13 @@
             "args_started": true,
             "arg_count": 0,
             "parentheses": 1
+        },
+        "176": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 0,
+            "parentheses": 1
         }
     },
     "update": {
@@ -111,7 +116,15 @@
             "args_started": true,
             "arg_count": 0,
             "parentheses": 1
-        }
+        },
+        "393": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 0,
+            "parentheses": 1
+        },
+        "486": false
     },
     "version": {
         "166": {
@@ -129,10 +142,24 @@
             "args_started": true,
             "arg_count": 0,
             "parentheses": 1
+        },
+        "267": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 0,
+            "parentheses": 1
         }
     },
     "update.php?action=update-selected-wordpoints-modules&amp;modules=": {
         "264": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 1,
+            "parentheses": 1
+        },
+        "268": {
             "name": "array",
             "type": "unknown",
             "args_started": true,
@@ -147,15 +174,29 @@
             "args_started": true,
             "arg_count": 2,
             "parentheses": 1
+        },
+        "307": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 2,
+            "parentheses": 1
         }
     },
     "channel": {
         "370": false
     },
     "upgrade": {
-        "389": false
+        "389": false,
+        "387": false
     },
     "default": {
-        "120": false
+        "120": false,
+        "135": false
+    },
+    "\/admin\/includes\/apis\/edd-software-licensing-free.php": {
+        "edd-software-licensing-free": {
+            "21": false
+        }
     }
 }
