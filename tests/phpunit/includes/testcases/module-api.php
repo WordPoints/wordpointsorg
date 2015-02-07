@@ -93,6 +93,11 @@ class WordPointsOrg_Module_API_UnitTestCase extends WordPointsOrg_HTTP_UnitTestC
 	public function add_module_api_header( $request ) {
 
 		$request['headers']['X_WORDPOINTSORG_TESTS_API'] = $this->api_slug;
+
+		// Normalize the URL.
+		if ( isset( $request['body']['url'] ) ) {
+			$request['body']['url'] = 'http://example.org';
+		}
 var_dump( $request );
 		return $request;
 	}
