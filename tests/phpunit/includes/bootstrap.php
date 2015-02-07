@@ -35,11 +35,6 @@ define( 'RUNNING_WORDPOINTS_MODULE_TESTS', true );
 /**
  * @since 1.1.0
  */
-define( 'WP_HTTP_TC_USE_CACHING', true );
-
-/**
- * @since 1.1.0
- */
 define( 'WP_HTTP_TC_CACHE_DIR', WORDPOINTSORG_TESTS_DIR . '/cache/wp-http-tc' );
 
 /**
