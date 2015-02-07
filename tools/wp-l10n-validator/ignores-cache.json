@@ -1,7 +1,9 @@
 {
     "\/admin\/includes\/apis\/edd-software-licensing.php": {
-        "edd-software-licensing": {
-            "20": false
+        "-": {
+            "353": false,
+            "357": false,
+            "358": false
         }
     },
     "\/admin\/includes\/class-module-channel.php": {
