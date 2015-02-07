@@ -98,7 +98,7 @@ class WordPointsOrg_Module_API_UnitTestCase extends WordPointsOrg_HTTP_UnitTestC
 		if ( isset( $request['body']['url'] ) ) {
 			$request['body']['url'] = 'http://example.org';
 		}
-var_dump( $request );
+
 		return $request;
 	}
 }
