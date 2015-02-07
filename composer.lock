@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JDGrimes/wp-http-testcase.git",
-                "reference": "a6ada56cf4f36d4127c1f3771667ea3af28adcab"
+                "reference": "1a5a71f44d391a7c9c8c3b3fdd40a8c03e7d4e5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JDGrimes/wp-http-testcase/zipball/a6ada56cf4f36d4127c1f3771667ea3af28adcab",
-                "reference": "a6ada56cf4f36d4127c1f3771667ea3af28adcab",
+                "url": "https://api.github.com/repos/JDGrimes/wp-http-testcase/zipball/1a5a71f44d391a7c9c8c3b3fdd40a8c03e7d4e5c",
+                "reference": "1a5a71f44d391a7c9c8c3b3fdd40a8c03e7d4e5c",
                 "shasum": ""
             },
             "require": {
@@ -38,7 +38,7 @@
             ],
             "description": "PHPUnit testcase for WordPress code involving HTTP requests",
             "homepage": "https://github.com/JDGrimes/wp-http-testcase",
-            "time": "2015-02-07 15:21:52"
+            "time": "2015-02-07 16:29:28"
         },
         {
             "name": "jdgrimes/wp-l10n-validator",
