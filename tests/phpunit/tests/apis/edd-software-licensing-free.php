@@ -48,7 +48,7 @@ class WordPointsOrg_EDD_Software_Licensing_Free_Module_API_Test
 	 */
 	public function test_is_free_module_cached_free() {
 
-		wordpoints_update_network_option(
+		update_site_option(
 			'wordpoints_edd_sl_module_info'
 			, array(
 				$this->channel->url => array( '124' => array( 'is_free' => true ) )
@@ -67,7 +67,7 @@ class WordPointsOrg_EDD_Software_Licensing_Free_Module_API_Test
 	 */
 	public function test_is_free_module_cached_not_free() {
 
-		wordpoints_update_network_option(
+		update_site_option(
 			'wordpoints_edd_sl_module_info'
 			, array(
 				$this->channel->url => array( '123' => array( 'version' => '3' ) )
@@ -88,7 +88,7 @@ class WordPointsOrg_EDD_Software_Licensing_Free_Module_API_Test
 
 		$this->assertTrue( $this->api->is_free_module( $this->channel, '124' ) );
 
-		$cache = wordpoints_get_network_option( 'wordpoints_edd_sl_module_info' );
+		$cache = get_site_option( 'wordpoints_edd_sl_module_info' );
 
 		$this->assertArrayHasKey( 'wordpoints.test', $cache );
 		$this->assertArrayHasKey( '124', $cache['wordpoints.test'] );
@@ -106,7 +106,7 @@ class WordPointsOrg_EDD_Software_Licensing_Free_Module_API_Test
 
 		$this->assertFalse( $this->api->is_free_module( $this->channel, '123' ) );
 
-		$cache = wordpoints_get_network_option( 'wordpoints_edd_sl_module_info' );
+		$cache = get_site_option( 'wordpoints_edd_sl_module_info' );
 
 		$this->assertArrayHasKey( 'wordpoints.test', $cache );
 		$this->assertArrayHasKey( '123', $cache['wordpoints.test'] );

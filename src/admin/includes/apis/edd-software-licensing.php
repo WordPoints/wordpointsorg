@@ -387,7 +387,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			return $updates;
 		}
 
-		$info = wordpoints_get_array_option( 'wordpoints_edd_sl_module_info', 'network' );
+		$info = wordpoints_get_array_option( 'wordpoints_edd_sl_module_info', 'site' );
 
 		foreach ( $modules as $file => $module ) {
 
@@ -407,7 +407,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			}
 		}
 
-		wordpoints_update_network_option( 'wordpoints_edd_sl_module_info', $info );
+		update_site_option( 'wordpoints_edd_sl_module_info', $info );
 
 		return $updates;
 	}
@@ -461,7 +461,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			$module_id = $module_id['ID'];
 		}
 
-		$all_info = wordpoints_get_array_option( 'wordpoints_edd_sl_module_info', 'network' );
+		$all_info = wordpoints_get_array_option( 'wordpoints_edd_sl_module_info', 'site' );
 
 		if ( ! isset( $all_info[ $channel->url ][ $module_id ] ) ) {
 			return false;
@@ -490,7 +490,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 */
 	protected function set_module_information( $channel, $module_id, $info, $key = null ) {
 
-		$all_info = wordpoints_get_array_option( 'wordpoints_edd_sl_module_info', 'network' );
+		$all_info = wordpoints_get_array_option( 'wordpoints_edd_sl_module_info', 'site' );
 
 		if ( isset( $key ) ) {
 			$all_info[ $channel->url ][ $module_id ][ $key ] = $info;
@@ -498,7 +498,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			$all_info[ $channel->url ][ $module_id ] = $info;
 		}
 
-		wordpoints_update_network_option( 'wordpoints_edd_sl_module_info', $all_info );
+		update_site_option( 'wordpoints_edd_sl_module_info', $all_info );
 	}
 
 	/**
