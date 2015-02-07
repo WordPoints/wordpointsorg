@@ -3,21 +3,21 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0a91fe58dfdb5672033c013b226675f5",
+    "hash": "07a90474204acc0427109d1323fc1cd1",
     "packages": [],
     "packages-dev": [
         {
             "name": "jdgrimes/wp-http-testcase",
-            "version": "1.2.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JDGrimes/wp-http-testcase.git",
-                "reference": "19eaf8b50ff8e429d776346c1549cdcc87a4b9d3"
+                "reference": "a6ada56cf4f36d4127c1f3771667ea3af28adcab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JDGrimes/wp-http-testcase/zipball/19eaf8b50ff8e429d776346c1549cdcc87a4b9d3",
-                "reference": "19eaf8b50ff8e429d776346c1549cdcc87a4b9d3",
+                "url": "https://api.github.com/repos/JDGrimes/wp-http-testcase/zipball/a6ada56cf4f36d4127c1f3771667ea3af28adcab",
+                "reference": "a6ada56cf4f36d4127c1f3771667ea3af28adcab",
                 "shasum": ""
             },
             "require": {
@@ -38,7 +38,7 @@
             ],
             "description": "PHPUnit testcase for WordPress code involving HTTP requests",
             "homepage": "https://github.com/JDGrimes/wp-http-testcase",
-            "time": "2015-02-06 16:43:16"
+            "time": "2015-02-07 15:21:52"
         },
         {
             "name": "jdgrimes/wp-l10n-validator",
@@ -170,7 +170,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "jdgrimes/wp-l10n-validator": 20,
-        "wordpoints/l10n-validator-config": 20
+        "wordpoints/l10n-validator-config": 20,
+        "jdgrimes/wp-http-testcase": 20
     },
     "platform": {
         "php": ">=5.2.0"
