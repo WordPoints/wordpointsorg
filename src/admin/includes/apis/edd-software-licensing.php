@@ -508,10 +508,10 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 * - get_information    Get the information for a module.
 	 * - get_version        Same as above.
 	 * - activate_license   Activate the license for a module.
-	 * - deactivate_license Dectivate the license for a module.
+	 * - deactivate_license Deactivate the license for a module.
 	 * - check_license      Check the status of a module's license.
 	 *
-	 * For all of these you shoul just pass in an array of a module's data as the
+	 * For all of these you should just pass in an array of a module's data as the
 	 * $data argument.
 	 *
 	 * @since 1.0.0
