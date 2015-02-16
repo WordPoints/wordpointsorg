@@ -36,44 +36,6 @@ function wordpoints_get_channel_for_module( $module ) {
 }
 
 /**
- * Get the API for a module.
- *
- * @since 1.1.0
- *
- * @param string|array $module The module to get the API for. Can be the module file
- *                             or the array of the module's data.
- *
- * @return WordPoints_Module_API|false The API for the module, or false if none.
- */
-function wordpoints_get_api_for_module( $module ) {
-
-	if ( is_string( $module ) ) {
-		$module = wordpoints_get_module_data( $module, false, false );
-	}
-
-	$api = false;
-
-	$channel = WordPoints_Module_Channels::get(
-		wordpoints_get_channel_for_module( $module )
-	);
-
-	if ( $channel ) {
-		$api = $channel->get_api();
-	}
-
-	/**
-	 * Filter the API to use for a module.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param WordPoints_Module_API|false     $api     The API to use, or false for none.
-	 * @param array                           $module  The module's header data.
-	 * @param WordPoints_Module_Channel|false $channel The channel to use, or false for none.
-	 */
-	return apply_filters( 'wordpoints_api_for_module', $api, $module, $channel );
-}
-
-/**
  * Register the module channels.
  *
  * @since 1.0.0

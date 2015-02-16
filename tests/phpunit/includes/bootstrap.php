@@ -131,11 +131,4 @@ require_once( WORDPOINTSORG_TESTS_DIR . '/includes/testcases/module-api.php' );
  */
 require_once( WORDPOINTSORG_TESTS_DIR . '/includes/testcases/module-upgrader.php' );
 
-/**
- * A mock for module APIs.
- *
- * @since 1.0.0
- */
-require_once( WORDPOINTSORG_TESTS_DIR . '/includes/mocks/module-api.php' );
-
 // EOF
