@@ -61,21 +61,21 @@ abstract class WordPointsOrg_Module_Upgrader_UnitTestCase extends WordPointsOrg_
 		 *
 		 * @since 1.0.0
 		 */
-		require_once( WORDPOINTSORG_TESTS_DIR . '/includes/module-installer-skin.php' );
+		require_once( WORDPOINTSORG_TESTS_DIR . '/includes/mocks/module-installer-skin.php' );
 
 		/**
 		 * A child class of the module upgrader skin to use in the tests.
 		 *
 		 * @since 1.0.0
 		 */
-		require_once( WORDPOINTSORG_TESTS_DIR . '/includes/module-upgrader-skin.php' );
+		require_once( WORDPOINTSORG_TESTS_DIR . '/includes/mocks/module-upgrader-skin.php' );
 
 		/**
 		 * A child class of the module bulk upgrader skin to use in the tests.
 		 *
 		 * @since 1.0.0
 		 */
-		require_once( WORDPOINTSORG_TESTS_DIR . '/includes/module-bulk-upgrader-skin.php' );
+		require_once( WORDPOINTSORG_TESTS_DIR . '/includes/mocks/module-bulk-upgrader-skin.php' );
 
 		// Initialize the modules API, because it is hooked to admin_init which
 		// doesn't fire before the tests run.

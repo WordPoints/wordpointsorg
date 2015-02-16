@@ -129,6 +129,6 @@ require_once( WORDPOINTSORG_TESTS_DIR . '/includes/testcases/module-api.php' );
  *
  * @since 1.0.0
  */
-require_once( WORDPOINTSORG_TESTS_DIR . '/includes/testcase-module-upgrader.php' );
+require_once( WORDPOINTSORG_TESTS_DIR . '/includes/testcases/module-upgrader.php' );
 
 // EOF
