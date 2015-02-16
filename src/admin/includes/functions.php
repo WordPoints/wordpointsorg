@@ -557,14 +557,7 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 		return false;
 	}
 
-	$channel = wordpoints_get_channel_for_module( $module_data );
-	$channel = WordPoints_Module_Channels::get( $channel );
-
-	if ( ! $channel ) {
-		return false;
-	}
-
-	$api = $channel->get_api();
+	$api = wordpoints_get_api_for_module( $module_data );
 
 	if ( ! $api ) {
 		return false;
