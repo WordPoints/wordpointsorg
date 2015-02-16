@@ -189,14 +189,17 @@ final class WordPoints_Module_Channel {
 			// The cached value is an integer so we can tell when the transient has expired.
 			$supports_ssl = 0;
 
-			$response = wp_remote_get( 'https://' . $this->url );
+			if ( wp_http_supports( array( 'ssl' ) ) ) {
 
-			if ( ! is_wp_error( $response ) ) {
+				$response = wp_remote_get( 'https://' . $this->url, array( 'sslverify' => false ) );
 
-				$status = wp_remote_retrieve_response_code( $response );
+				if ( ! is_wp_error( $response ) ) {
 
-				if ( 200 === (int) $status || 401 === (int) $status ) {
-					$supports_ssl = 1;
+					$status = wp_remote_retrieve_response_code( $response );
+
+					if ( 200 === (int) $status || 401 === (int) $status ) {
+						$supports_ssl = 1;
+					}
 				}
 			}
 
