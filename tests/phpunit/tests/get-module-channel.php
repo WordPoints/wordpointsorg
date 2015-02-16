@@ -11,6 +11,8 @@
  * Test wordpoints_get_channel_for_module().
  *
  * @since 1.0.0
+ *
+ * @covers ::wordpoints_get_channel_for_module
  */
 class WordPoints_Get_Channel_For_Module_Test extends WP_UnitTestCase {
 
