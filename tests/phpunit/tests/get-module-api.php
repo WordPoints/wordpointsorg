@@ -125,6 +125,38 @@ class WordPoints_Get_API_For_Module_Test extends WP_UnitTestCase {
 			wordpoints_get_api_for_module( array( 'channel' => 'wordpoints.test' ) )
 		);
 	}
+
+	/**
+	 * Test that it calls the wordpoints_api_for_module filter.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_calls_filter() {
+
+		add_filter( 'wordpoints_api_for_module', array( $this, 'wordpoints_api_for_module' ), 10, 3 );
+		$channel = wordpoints_get_api_for_module( array( 'channel' => 'wordpoints.test' ) );
+		remove_filter( 'wordpoints_api_for_module', array( $this, 'wordpoints_api_for_module' ) );
+
+		$this->assertEquals( __CLASS__, $channel );
+	}
+
+	//
+	// Helpers
+	//
+
+	/**
+	 * @since 1.0.0
+	 *
+	 * @see self::test_calls_filter()
+	 */
+	public function wordpoints_api_for_module( $api, $module, $channel ) {
+
+		$this->assertEquals( $this->api, $api );
+		$this->assertEquals( 'wordpoints.test', $channel->url );
+		$this->assertEquals( array( 'channel' => 'wordpoints.test' ), $module );
+
+		return __CLASS__;
+	}
 }
 
 // EOF

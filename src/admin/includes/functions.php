@@ -61,7 +61,16 @@ function wordpoints_get_api_for_module( $module ) {
 		$api = $channel->get_api();
 	}
 
-	return $api;
+	/**
+	 * Filter the API to use for a module.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param WordPoints_Module_API|false     $api     The API to use, or false for none.
+	 * @param array                           $module  The module's header data.
+	 * @param WordPoints_Module_Channel|false $channel The channel to use, or false for none.
+	 */
+	return apply_filters( 'wordpoints_api_for_module', $api, $module, $channel );
 }
 
 /**
