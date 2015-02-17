@@ -557,7 +557,9 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 			'strong' => array()
 		);
 
-		$details_url = $api->get_changelog_url( $channel, $module_data );
+		$details_url = admin_url(
+			'update.php?action=wordpoints-iframe-module-changelog&module=' . urlencode( $file )
+		);
 
 		?>
 
@@ -614,5 +616,57 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 		<?php
 	}
 }
+
+/**
+ * Display the changelog for a module.
+ *
+ * @since 1.1.0
+ */
+function wordpointsorg_iframe_module_changelog() {
+
+	if ( ! defined( 'IFRAME_REQUEST' ) ) {
+		define( 'IFRAME_REQUEST', true );
+	}
+
+	if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
+		wp_die( __( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
+	}
+
+	if ( empty( $_GET['module'] ) ) {
+		wp_die( __( 'No module supplied.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
+	}
+
+	$module_file = sanitize_text_field( urldecode( $_GET['module'] ) );
+
+	$modules = wordpoints_get_modules();
+
+	if ( ! isset( $modules[ $module_file ] ) ) {
+		wp_die( __( 'That module does not exist.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
+	}
+
+	$channel = WordPoints_Module_Channels::get(
+		wordpoints_get_channel_for_module( $modules[ $module_file ] )
+	);
+
+	if ( ! $channel ) {
+		wp_die( __( 'There is no channel specified for this module.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
+	}
+
+	$api = $channel->get_api();
+
+	if ( ! $api ) {
+		wp_die( __( 'The channel for this module uses an unsupported API.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
+	}
+
+	iframe_header();
+
+	echo wp_kses(
+		$api->get_changelog( $channel, $modules[ $module_file ] )
+		, 'wordpoints_module_changelog'
+	);
+
+	iframe_footer();
+}
+add_action( 'update-custom_wordpoints-iframe-module-changelog', 'wordpointsorg_iframe_module_changelog' );
 
 // EOF

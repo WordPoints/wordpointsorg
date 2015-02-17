@@ -182,16 +182,16 @@ abstract class WordPoints_Module_API {
 	abstract public function get_package_url( $channel, $module );
 
 	/**
-	 * Get the URL of the changelog for the latest version of a module.
+	 * Get the changelog for the latest version of a module.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
-	 * @param WordPoints_Module_Channel $channel The channel the package should be from.
+	 * @param WordPoints_Module_Channel $channel The channel the changelog should be from.
 	 * @param array                     $module  The module's data.
 	 *
 	 * @return string The changelog URL.
 	 */
-	abstract public function get_changelog_url( $channel, $module );
+	abstract public function get_changelog( $channel, $module );
 }
 
 // EOF

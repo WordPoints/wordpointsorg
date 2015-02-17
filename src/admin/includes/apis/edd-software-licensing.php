@@ -421,7 +421,30 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	}
 
 	/**
+	 * @since 1.1.0
+	 */
+	public function get_changelog( $channel, $module ) {
+
+		$sections = $this->get_module_information( $channel, $module['ID'], 'sections' );
+
+		if ( isset( $sections['changelog'] ) ) {
+			return $sections['changelog'];
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get the URL for the changelog for the latest version of a module.
+	 *
+	 * This function is no longer used.
+	 *
 	 * @since 1.0.0
+	 *
+	 * @param WordPoints_Module_Channel $channel The channel the changelog should be from.
+	 * @param array                     $module  The module's data.
+	 *
+	 * @return string The changelog URL.
 	 */
 	public function get_changelog_url( $channel, $module ) {
 
