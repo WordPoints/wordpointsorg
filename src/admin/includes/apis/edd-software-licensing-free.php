@@ -80,6 +80,10 @@ class WordPoints_EDD_Software_Licensing_Free_Module_API
 	 */
 	public function wordpoints_after_module_row( $module_file, $module_data ) {
 
+		if ( empty( $module_data['ID'] ) ) {
+			return;
+		}
+
 		$channel = wordpoints_get_channel_for_module( $module_data );
 		$channel = WordPoints_Module_Channels::get( $channel );
 
