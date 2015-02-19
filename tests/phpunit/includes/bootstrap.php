@@ -7,7 +7,9 @@
  * @since 1.0.0
  */
 
-WordPoints_Module_APIs::init();
+if ( class_exists( 'WordPoints_Module_APIs' ) ) {
+	WordPoints_Module_APIs::init();
+}
 
 /**
  * The WP HTTP testcase bootstrap.
