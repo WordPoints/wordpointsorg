@@ -64,11 +64,6 @@ function wordpointsorg_get_custom_caps() {
  * Map custom meta capabilities of the module.
  *
  * @since 1.0.0
- *
- * @param array  $caps The user's capabilities.
- * @param string $cap  The current capability in question.
- *
- * @return array The user's capabilities.
  */
 function wordpointsorg_map_custom_meta_caps( $caps, $cap, $user_id ) {
 
