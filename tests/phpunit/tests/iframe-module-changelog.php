@@ -42,6 +42,11 @@ class WordPointsOrg_Iframe_Module_Changelog_Test extends WP_UnitTestCase {
 		$user = $this->factory->user->create_and_get();
 		$user->add_cap( 'update_wordpoints_modules' );
 
+		// On multisite the user must be a super admin.
+		if ( is_multisite() ) {
+			grant_super_admin( $user->ID );
+		}
+
 		wp_set_current_user( $user->ID );
 
 		$_GET['module'] = urlencode( 'module-7/module-7.php' );
