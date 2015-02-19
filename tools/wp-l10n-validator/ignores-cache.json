@@ -1,9 +1,7 @@
 {
     "\/admin\/includes\/apis\/edd-software-licensing.php": {
-        "-": {
-            "353": false,
-            "357": false,
-            "358": false
+        "edd-software-licensing": {
+            "20": false
         }
     },
     "\/admin\/includes\/class-module-channel.php": {
@@ -93,7 +91,10 @@
     "-": {
         "259": false,
         "357": false,
-        "358": false
+        "358": false,
+        "365": false,
+        "369": false,
+        "370": false
     },
     "install": {
         "165": {
@@ -126,7 +127,8 @@
             "arg_count": 0,
             "parentheses": 1
         },
-        "486": false
+        "486": false,
+        "490": false
     },
     "version": {
         "166": {
@@ -151,6 +153,13 @@
             "args_started": true,
             "arg_count": 0,
             "parentheses": 1
+        },
+        "271": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 0,
+            "parentheses": 1
         }
     },
     "update.php?action=update-selected-wordpoints-modules&amp;modules=": {
@@ -162,6 +171,13 @@
             "parentheses": 1
         },
         "268": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 1,
+            "parentheses": 1
+        },
+        "272": {
             "name": "array",
             "type": "unknown",
             "args_started": true,
@@ -183,18 +199,28 @@
             "args_started": true,
             "arg_count": 2,
             "parentheses": 1
+        },
+        "311": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 2,
+            "parentheses": 1
         }
     },
     "channel": {
-        "370": false
+        "370": false,
+        "374": false
     },
     "upgrade": {
         "389": false,
-        "387": false
+        "387": false,
+        "391": false
     },
     "default": {
         "120": false,
-        "135": false
+        "135": false,
+        "130": false
     },
     "\/admin\/includes\/apis\/edd-software-licensing-free.php": {
         "edd-software-licensing-free": {
