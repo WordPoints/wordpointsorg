@@ -108,7 +108,7 @@ function wordpoints_get_installed_translations( $type ) {
 
 	$files = scandir( WP_LANG_DIR . $dir );
 
-	if ( ! $files ) {
+	if ( empty( $files ) ) {
 		return array();
 	}
 
