@@ -26,7 +26,7 @@ function wordpointsorg_activate( $network_active ) {
 	$installer = new WordPointsOrg_Un_Installer();
 	$installer->install( $network_active );
 }
-wordpoints_register_module_activation_hook( WORDPOINTSORG_DIR . 'wordpointsorg.php', 'wordpointsorg_activate' );
+wordpoints_register_module_activation_hook( WORDPOINTSORG_DIR . '/wordpointsorg.php', 'wordpointsorg_activate' );
 
 /**
  * Deactivate the module.
