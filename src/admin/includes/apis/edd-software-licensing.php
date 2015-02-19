@@ -439,7 +439,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			return $sections['changelog'];
 		}
 
-		return false;
+		return __( 'Changelog not available.', 'wordpointsorg' );
 	}
 
 	/**
