@@ -44,18 +44,6 @@ class WordPointsOrg_Module_API_UnitTestCase extends WordPointsOrg_HTTP_UnitTestC
 	/**
 	 * @since 1.1.0
 	 */
-	public static function setUpBeforeClass() {
-
-		parent::setUpBeforeClass();
-
-		if ( ! did_action( 'wordpoints_register_module_apis' ) ) {
-			WordPoints_Module_APIs::init();
-		}
-	}
-
-	/**
-	 * @since 1.1.0
-	 */
 	public function setUp() {
 
 		parent::setUp();
