@@ -233,7 +233,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *
 	 * @return string|false The license's status, or false on failure.
 	 */
-	function check_license( $channel, $module ) {
+	public function check_license( $channel, $module ) {
 
 		$response = $this->request( 'check_license', $channel, $module );
 
