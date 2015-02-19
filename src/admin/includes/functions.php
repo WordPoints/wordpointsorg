@@ -347,7 +347,7 @@ function wordpointsorg_update_selected_modules() {
 	?>
 
 	<div class="wrap">
-		<h2><?php esc_html__( 'Update Modules', 'wordpointsorg' ); ?></h2>
+		<h2><?php esc_html_e( 'Update Modules', 'wordpointsorg' ); ?></h2>
 
 		<iframe src="<?php echo esc_attr( $url ); ?>" style="width: 100%; height:100%; min-height:850px;"></iframe>
 	</div>
