@@ -286,7 +286,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			if ( isset( $_POST[ "license_key-{$url}-{$module['ID']}" ] ) ) {
 
 				$this->update_module_license_data(
-					$channel->url
+					$channel
 					, $module['ID']
 					, 'license'
 					, sanitize_key( $_POST[ "license_key-{$url}-{$module['ID']}" ] )
