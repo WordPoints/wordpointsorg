@@ -559,7 +559,6 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 		switch ( $action ) {
 
 			case 'get_version':
-			case 'get_information':
 			case 'activate_license':
 			case 'deactivate_license':
 			case 'check_license':
