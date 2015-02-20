@@ -1,7 +1,9 @@
 {
     "\/admin\/includes\/apis\/edd-software-licensing.php": {
-        "edd-software-licensing": {
-            "20": false
+        "-": {
+            "360": false,
+            "364": false,
+            "365": false
         }
     },
     "\/admin\/includes\/class-module-channel.php": {
@@ -160,6 +162,13 @@
             "args_started": true,
             "arg_count": 0,
             "parentheses": 1
+        },
+        "275": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 0,
+            "parentheses": 1
         }
     },
     "update.php?action=update-selected-wordpoints-modules&amp;modules=": {
@@ -178,6 +187,13 @@
             "parentheses": 1
         },
         "272": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 1,
+            "parentheses": 1
+        },
+        "276": {
             "name": "array",
             "type": "unknown",
             "args_started": true,
@@ -206,16 +222,25 @@
             "args_started": true,
             "arg_count": 2,
             "parentheses": 1
+        },
+        "315": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 2,
+            "parentheses": 1
         }
     },
     "channel": {
         "370": false,
-        "374": false
+        "374": false,
+        "378": false
     },
     "upgrade": {
         "389": false,
         "387": false,
-        "391": false
+        "391": false,
+        "395": false
     },
     "default": {
         "120": false,

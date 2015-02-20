@@ -5,8 +5,8 @@
         "errors": false
     },
     "\/admin\/includes\/apis\/edd-software-licensing.php": {
-        "size": 18035,
-        "hash": "0a3a13506d6ae187b4072a1acc4b44d9",
+        "size": 18056,
+        "hash": "1ba5a2dc266d928f3f7c1aab40df637f",
         "errors": false
     },
     "\/admin\/includes\/class-bulk-module-upgrader-skin.php": {
@@ -15,13 +15,13 @@
         "errors": false
     },
     "\/admin\/includes\/class-module-api.php": {
-        "size": 4122,
-        "hash": "7edcbcaa3b2382a2531d939555e84c54",
+        "size": 4184,
+        "hash": "4f7ad24295660b0cdd311f3681567054",
         "errors": false
     },
     "\/admin\/includes\/class-module-channel.php": {
-        "size": 5849,
-        "hash": "058845544622042a0661110ab4c53c15",
+        "size": 5919,
+        "hash": "80872f1570dbf5f0fefbabe41c72fff6",
         "errors": false
     },
     "\/admin\/includes\/class-module-upgrader-skin.php": {
@@ -35,8 +35,8 @@
         "errors": false
     },
     "\/admin\/includes\/functions.php": {
-        "size": 18255,
-        "hash": "15bbd669d633ad3b354749e5aebb49bf",
+        "size": 18531,
+        "hash": "c5eee4ab0a5e3eb1b47bcc2ef0a6401b",
         "errors": false
     },
     "\/includes\/class-item-container.php": {
@@ -70,8 +70,8 @@
         "errors": false
     },
     "\/admin\/includes\/apis\/edd-software-licensing-free.php": {
-        "size": 2150,
-        "hash": "3362392e8894ddfd7818fb0d0194e07d",
+        "size": 2204,
+        "hash": "21922711a058a8b669d049686daa40cb",
         "errors": false
     },
     "\/includes\/class-un-installer.php": {
