@@ -11,6 +11,8 @@
  * Test wordpoints_register_module_channels().
  *
  * @since 1.0.0
+ *
+ * @covers ::wordpoints_register_module_channels
  */
 class WordPoints_Register_Module_Channels_Test
 	extends WordPointsOrg_HTTP_UnitTestCase {

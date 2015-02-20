@@ -11,6 +11,8 @@
  * Test that modules are upgraded correctly.
  *
  * @since 1.0.0
+ *
+ * @covers WordPointsOrg_Module_Upgrader::upgrade
  */
 class WordPointsOrg_Module_Upgrader_Upgrade_Test extends WordPointsOrg_Module_Upgrader_UnitTestCase {
 

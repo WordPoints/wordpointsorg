@@ -31,6 +31,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that the EDD module API is registered.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @coversNothing
 	 */
 	public function test_is_registered() {
 
@@ -41,6 +43,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that it supports the expected API functions.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @coversNothing
 	 */
 	public function test_supports() {
 
@@ -51,6 +55,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that the get_licenses() method gets all licenses from the database.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::get_licenses
 	 */
 	public function test_get_all_licenses() {
 
@@ -63,6 +69,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that the get_licenses() method can return licenses for just a channel.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::get_licenses
 	 */
 	public function test_get_channel_licenses() {
 
@@ -78,6 +86,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that get_licenses() returns an empty array if the channel isn't set.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::get_licenses
 	 */
 	public function test_get_nonexistant_channel_licenses() {
 
@@ -88,6 +98,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that update_licenses() saves the licenses in the database.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::update_licenses
 	 */
 	public function test_update_channel_licenses() {
 
@@ -107,6 +119,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that get_module_license_data() returns the license data for a module.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::get_module_license_data
 	 */
 	public function test_get_module_license_data() {
 
@@ -122,6 +136,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that get_module_license_data() returns empty array if nonexistant module.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::get_module_license_data
 	 */
 	public function test_get_nonexistant_modules_license_data() {
 
@@ -137,6 +153,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that get_module_license_data() can get just a piece of data.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::get_module_license_data
 	 */
 	public function test_get_module_license_data_by_key() {
 
@@ -153,6 +171,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * for a nonexistant module.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::get_module_license_data
 	 */
 	public function test_get_nonexistant_modules_license_data_by_key() {
 
@@ -167,6 +187,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * for a nonexistant key.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::get_module_license_data
 	 */
 	public function test_get_module_license_data_by_nonexistant_key() {
 
@@ -180,6 +202,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that update_module_license_data() saves the data in the database.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::update_module_license_data
 	 */
 	public function test_update_module_license_data() {
 
@@ -202,6 +226,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that update_module_license_data() can save just a piece of data.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::update_module_license_data
 	 */
 	public function test_update_module_license_data_by_key() {
 
@@ -231,6 +257,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that module_has_valid_license() returns true if a module has a valid license.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::module_has_valid_license
 	 */
 	public function test_module_has_valid_license() {
 
@@ -245,6 +273,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that module_has_valid_license() returns false if a module doesn't exist.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::module_has_valid_license
 	 */
 	public function test_nonexistant_module_has_valid_license() {
 
@@ -257,6 +287,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that module_has_valid_license() returns if the 'license' key isn't set.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::module_has_valid_license
 	 */
 	public function test_module_has_no_valid_license() {
 
@@ -276,6 +308,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that module_has_valid_license() returns false if the license is invalid.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::module_has_valid_license
 	 */
 	public function test_module_has_invalid_license() {
 
@@ -295,6 +329,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that activate_license() saves the license's 'valid' status in the db.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::activate_license
 	 */
 	public function test_activate_valid_license() {
 
@@ -322,6 +358,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that activate_license() saves the license's 'invalid' status in the db.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::activate_license
 	 */
 	public function test_activate_invalid_license() {
 
@@ -342,6 +380,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that deactivate_license() saves the license's 'deactivated' status in the db.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::deactivate_license
 	 */
 	public function test_deactivate_valid_license() {
 
@@ -369,6 +409,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that deactivate_license() doesn't save an invalid license's status in the db.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::deactivate_license
 	 */
 	public function test_deactivate_invalid_license() {
 
@@ -396,6 +438,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that check_license() returns a license's 'valid' status.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::check_license
 	 */
 	public function test_check_valid_active_license() {
 
@@ -418,6 +462,8 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 * Test that check_license() returns a license's 'inactive' status.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @covers WordPoints_EDD_Software_Licensing_Module_API::check_license
 	 */
 	public function test_check_inactive_active_license() {
 

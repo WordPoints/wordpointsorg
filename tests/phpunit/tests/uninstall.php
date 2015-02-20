@@ -41,6 +41,8 @@ class WordPointsOrg_Uninstall_Test extends WordPoints_Module_Uninstall_UnitTestC
 	 * Test that install and uninstall work as expected.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @covers WordPointsOrg_Un_Installer
 	 */
 	public function test_uninstall() {
 

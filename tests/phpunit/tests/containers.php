@@ -18,6 +18,8 @@ class WordPoints_Container_Test extends WP_UnitTestCase {
 	 * Test that the object container works.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @covers WordPoints_Container_Object
 	 */
 	public function test_object_container() {
 
@@ -54,6 +56,8 @@ class WordPoints_Container_Test extends WP_UnitTestCase {
 	 * Test that the object container works.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @covers WordPoints_Container_Static
 	 */
 	public function test_static_container() {
 

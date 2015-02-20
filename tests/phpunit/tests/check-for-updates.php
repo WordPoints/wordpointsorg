@@ -11,6 +11,8 @@
  * Test wordpoints_check_for_module_updates().
  *
  * @since 1.0.0
+ *
+ * @covers ::wordpoints_check_for_module_updates
  */
 class WordPoints_Check_For_Module_Updates_Test extends WordPointsOrg_HTTP_UnitTestCase {
 

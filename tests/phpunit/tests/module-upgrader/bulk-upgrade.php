@@ -11,6 +11,9 @@
  * Test that modules are bulk upgraded correctly.
  *
  * @since 1.0.0
+ *
+ * @covers WordPointsOrg_Bulk_Module_Upgrader_Skin
+ * @covers WordPointsOrg_Module_Upgrader::bulk_upgrade
  */
 class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test
 	extends WordPointsOrg_Module_Upgrader_UnitTestCase {
