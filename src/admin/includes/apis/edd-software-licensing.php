@@ -264,6 +264,10 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 */
 	public function wordpoints_modules_list_table_items( $modules ) {
 
+		if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
+			return;
+		}
+
 		foreach ( $modules['all'] as $module ) {
 
 			if ( empty( $module['ID'] ) ) {
@@ -332,7 +336,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 */
 	public function wordpoints_after_module_row( $module_file, $module_data ) {
 
-		if ( empty( $module_data['ID'] ) ) {
+		if ( empty( $module_data['ID'] ) || ! current_user_can( 'update_wordpoints_modules' ) ) {
 			return;
 		}
 

@@ -80,7 +80,7 @@ class WordPoints_EDD_Software_Licensing_Free_Module_API
 	 */
 	public function wordpoints_after_module_row( $module_file, $module_data ) {
 
-		if ( empty( $module_data['ID'] ) ) {
+		if ( empty( $module_data['ID'] ) || ! current_user_can( 'update_wordpoints_modules' ) ) {
 			return;
 		}
 
