@@ -80,6 +80,8 @@ final class WordPoints_Module_Channels extends WordPoints_Container_Static {
 	 * @since 1.0.0
 	 *
 	 * @see WordPoints_Container::_get()
+	 *
+	 * @return WordPoints_Module_Channel[]|WordPoints_Module_Channel
 	 */
 	public static function get( $slug = null ) {
 		return self::$instance->_get( $slug );

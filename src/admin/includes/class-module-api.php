@@ -73,6 +73,8 @@ final class WordPoints_Module_APIs extends WordPoints_Container_Static {
 	 * @since 1.0.0
 	 *
 	 * @see WordPoints_Container::_get()
+	 *
+	 * @return WordPoints_Module_API[]|WordPoints_Module_API
 	 */
 	public static function get( $slug = null ) {
 		return self::$instance->_get( $slug );

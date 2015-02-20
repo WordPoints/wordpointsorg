@@ -139,6 +139,9 @@ add_action( 'init', 'wordpoints_schedule_module_update_checks' );
  * @WordPress\action wordpoints_check_for_module_updates Cron event registered by
  *                   wordpoints_schedule_module_update_checks().
  *
+ * @param int $timeout Maximum acceptable age for the cache. If the cache is older
+ *                     than this, a it will be updated. The default is 12 hours.
+ *
  * @return false|void Nothing, or false if the update check was skipped.
  */
 function wordpoints_check_for_module_updates( $timeout = null ) {
