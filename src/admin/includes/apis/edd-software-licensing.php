@@ -281,7 +281,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				continue;
 			}
 
-			$url = str_replace( '.', '_', $channel->url );
+			$url = sanitize_title_with_dashes( $channel->url );
 
 			if ( isset( $_POST[ "license_key-{$url}-{$module['ID']}" ] ) ) {
 
@@ -352,15 +352,17 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			, $this->get_module_license_data( $channel, $module_data['ID'] )
 		);
 
+		$channel_url = sanitize_title_with_dashes( $channel->url );
+
 		?>
 		<tr>
 			<td colspan="<?php echo (int) WordPoints_Modules_List_Table::instance()->get_column_count(); ?>" style="border-bottom: 1px solid #ddd;" class="colspanchange">
-				<label class="description" for="license_key-<?php echo esc_attr( $channel->url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>">
+				<label class="description" for="license_key-<?php echo esc_attr( $channel_url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>">
 					<?php esc_html_e( 'License key', 'wordpointsorg' ); ?>
 				</label>
 				<input
-					id="license_key-<?php echo esc_attr( $channel->url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>"
-					name="license_key-<?php echo esc_attr( $channel->url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>"
+					id="license_key-<?php echo esc_attr( $channel_url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>"
+					name="license_key-<?php echo esc_attr( $channel_url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>"
 					type="password"
 					class="regular-text"
 					autocomplete="off"
