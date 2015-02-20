@@ -1,4 +1,4 @@
-WordPointsOrg
+WordPointsOrg [![Build Status](https://travis-ci.org/WordPoints/wordpointsorg.svg?branch=master)](https://travis-ci.org/WordPoints/wordpointsorg) [![Coverage Status](https://coveralls.io/repos/WordPoints/wordpointsorg/badge.svg?branch=master)](https://coveralls.io/r/WordPoints/wordpointsorg?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/WordPoints/wordpointsorg/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/WordPoints/wordpointsorg/?branch=master)
 =============
 
 WordPoints module for installing modules from WordPoints.org
