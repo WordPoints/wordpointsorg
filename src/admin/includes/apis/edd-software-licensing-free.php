@@ -8,7 +8,7 @@
  */
 
 /**
- * Module API for channels using EDD Sofware Licensing and a shim for free modules.
+ * Module API for channels using EDD Software Licensing and a shim for free modules.
  *
  * @since 1.1.0
  */
