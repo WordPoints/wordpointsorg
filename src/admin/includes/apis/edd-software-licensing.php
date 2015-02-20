@@ -343,17 +343,10 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			return;
 		}
 
-		$license = $status = false;
-
-		$license_data = $this->get_module_license_data( $channel, $module_data['ID'] );
-
-		if ( isset( $license_data['status'] ) ) {
-			$status = $license_data['status'];
-		}
-
-		if ( isset( $license_data['license'] ) ) {
-			$license = $license_data['license'];
-		}
+		$license_data = array_merge(
+			array( 'status' => false, 'license' => false )
+			, $this->get_module_license_data( $channel, $module_data['ID'] )
+		);
 
 		?>
 		<tr>
@@ -367,9 +360,9 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 					type="password"
 					class="regular-text"
 					autocomplete="off"
-					value="<?php echo esc_attr( $license ); ?>"
+					value="<?php echo esc_attr( $license_data['license'] ); ?>"
 				/>
-				<?php if ( false !== $status && 'valid' === $status ) : ?>
+				<?php if ( false !== $license_data['license'] && 'valid' === $license_data['status'] ) : ?>
 					<span style="color:green;"><?php esc_html_e( 'active', 'wordpointsorg' ); ?></span>
 					<?php wp_nonce_field( "wordpoints_deactivate_license_key-{$module_data['ID']}", "wordpoints_deactivate_license_key-{$module_data['ID']}" ); ?>
 					<input type="submit" name="edd-deactivate-license" class="button-secondary" value="<?php esc_attr_e( 'Deactivate License', 'wordpointsorg' ); ?>" />
