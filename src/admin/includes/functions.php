@@ -284,7 +284,7 @@ add_action( 'update-custom_update-selected-wordpoints-modules', 'wordpointsorg_u
 function wordpointsorg_upgrade_module() {
 
 	if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ) );
+		wp_die( esc_html__( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ) );
 	}
 
 	$module = ( isset( $_REQUEST['module'] ) ) ? $_REQUEST['module'] : '';
@@ -324,7 +324,7 @@ add_action( 'update-custom_wordpoints-upgrade-module', 'wordpointsorg_upgrade_mo
 function wordpointsorg_update_selected_modules() {
 
 	if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ) );
+		wp_die( esc_html__( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ) );
 	}
 
 	check_admin_referer( 'bulk-modules' );
@@ -629,11 +629,11 @@ function wordpointsorg_iframe_module_changelog() {
 	}
 
 	if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
+		wp_die( esc_html__( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
 	}
 
 	if ( empty( $_GET['module'] ) ) {
-		wp_die( __( 'No module supplied.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
+		wp_die( esc_html__( 'No module supplied.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
 	}
 
 	$module_file = sanitize_text_field( urldecode( $_GET['module'] ) );
@@ -641,7 +641,7 @@ function wordpointsorg_iframe_module_changelog() {
 	$modules = wordpoints_get_modules();
 
 	if ( ! isset( $modules[ $module_file ] ) ) {
-		wp_die( __( 'That module does not exist.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
+		wp_die( esc_html__( 'That module does not exist.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
 	}
 
 	$channel = WordPoints_Module_Channels::get(
@@ -649,13 +649,13 @@ function wordpointsorg_iframe_module_changelog() {
 	);
 
 	if ( ! $channel ) {
-		wp_die( __( 'There is no channel specified for this module.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
+		wp_die( esc_html__( 'There is no channel specified for this module.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
 	}
 
 	$api = $channel->get_api();
 
 	if ( ! $api ) {
-		wp_die( __( 'The channel for this module uses an unsupported API.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
+		wp_die( esc_html__( 'The channel for this module uses an unsupported API.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
 	}
 
 	iframe_header();
