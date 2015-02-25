@@ -459,20 +459,6 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	}
 
 	/**
-	 * Disable SSL verification in order to prevent download update failures.
-	 *
-	 * @since 1.0.0
-	 */
-	public function http_request_args( $args, $url ) {
-
-		if ( false !== strpos( $url, 'https://' ) && strpos( $url, 'edd_action=package_download' ) ) {
-			$args['sslverify'] = false;
-		}
-
-		return $args;
-	}
-
-	/**
 	 * Retrieve the information for a module.
 	 *
 	 * @since 1.0.0
@@ -596,7 +582,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 */
 	private function _remote_post( $channel, $params ) {
 
-		$args = array( 'timeout' => 15, 'sslverify' => false, 'body' => $params );
+		$args = array( 'timeout' => 15, 'body' => $params );
 
 		$response = wp_remote_post( $channel->get_full_url(), $args );
 
