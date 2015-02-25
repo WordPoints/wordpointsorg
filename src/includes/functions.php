@@ -188,4 +188,42 @@ function wordpointsorg_module_changelog_allowed_html( $allowed_tags, $context ) 
 }
 add_filter( 'wp_kses_allowed_html', 'wordpointsorg_module_changelog_allowed_html', 10, 2 );
 
+/**
+ * Add the module update counts to the other update counts.
+ *
+ * @since 1.1.0
+ *
+ * @param array $update_data
+ *
+ * @return array
+ */
+function wordpoints_module_update_counts( $update_data ) {
+
+	$update_data['counts']['wordpoints_modules'] = 0;
+
+	if ( current_user_can( 'update_wordpoints_modules' ) ) {
+		$module_updates = get_site_transient( 'wordpoints_module_updates' );
+
+		if ( ! empty( $module_updates['response'] ) ) {
+			$update_data['counts']['wordpoints_modules'] = count( $module_updates['response'] );
+
+			$title = sprintf(
+				_n(
+					'%d WordPoints Module Update'
+					, '%d WordPoints Module Updates'
+					, $update_data['counts']['wordpoints_modules']
+				)
+				, $update_data['counts']['wordpoints_modules']
+			);
+
+			$update_data['title'] .= ', ' . esc_attr( $title );
+		}
+	}
+
+	$update_data['counts']['total'] += $update_data['counts']['wordpoints_modules'];
+
+	return $update_data;
+}
+add_filter( 'wp_get_update_data', 'wordpoints_module_update_counts' );
+
 // EOF
