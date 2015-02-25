@@ -583,8 +583,8 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 
 		?>
 
-		<tr class="plugin-update-tr">
-			<td colspan="<?php echo (int) WordPoints_Modules_List_Table::instance()->get_column_count(); ?>" class="plugin-update colspanchange">
+		<tr class="plugin-update-tr wordpoints-module-update-tr">
+			<td colspan="<?php echo (int) WordPoints_Modules_List_Table::instance()->get_column_count(); ?>" class="plugin-update wordpoints-module-update colspanchange">
 				<div class="update-message" style="margin: 0;">
 
 					<?php
