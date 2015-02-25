@@ -35,8 +35,8 @@
         "errors": false
     },
     "\/admin\/includes\/functions.php": {
-        "size": 18531,
-        "hash": "c5eee4ab0a5e3eb1b47bcc2ef0a6401b",
+        "size": 23005,
+        "hash": "b2f46ee8848de49253c3bcf534be5450",
         "errors": false
     },
     "\/includes\/class-item-container.php": {
@@ -50,8 +50,8 @@
         "errors": false
     },
     "\/includes\/functions.php": {
-        "size": 4279,
-        "hash": "77e801574be8c863629ce2391f8055d3",
+        "size": 5282,
+        "hash": "f29ee0f19b5e14dec2a3f31b93aa287a",
         "errors": false
     },
     "\/install.php": {

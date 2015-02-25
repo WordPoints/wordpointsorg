@@ -212,6 +212,7 @@ function wordpoints_module_update_counts( $update_data ) {
 					'%d WordPoints Module Update'
 					, '%d WordPoints Module Updates'
 					, $update_data['counts']['wordpoints_modules']
+					, 'wordpointsorg'
 				)
 				, $update_data['counts']['wordpoints_modules']
 			);

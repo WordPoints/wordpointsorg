@@ -86,8 +86,8 @@
         }
     },
     "\/includes\/functions.php": {
-        "default": {
-            "115": false
+        ",": {
+            "220": false
         }
     },
     "-": {
@@ -130,7 +130,8 @@
             "parentheses": 1
         },
         "486": false,
-        "490": false
+        "490": false,
+        "507": false
     },
     "version": {
         "166": {
@@ -169,6 +170,13 @@
             "args_started": true,
             "arg_count": 0,
             "parentheses": 1
+        },
+        "287": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 0,
+            "parentheses": 1
         }
     },
     "update.php?action=update-selected-wordpoints-modules&amp;modules=": {
@@ -194,6 +202,13 @@
             "parentheses": 1
         },
         "276": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 1,
+            "parentheses": 1
+        },
+        "288": {
             "name": "array",
             "type": "unknown",
             "args_started": true,
@@ -229,18 +244,27 @@
             "args_started": true,
             "arg_count": 2,
             "parentheses": 1
+        },
+        "327": {
+            "name": "array",
+            "type": "unknown",
+            "args_started": true,
+            "arg_count": 2,
+            "parentheses": 1
         }
     },
     "channel": {
         "370": false,
         "374": false,
-        "378": false
+        "378": false,
+        "391": false
     },
     "upgrade": {
         "389": false,
         "387": false,
         "391": false,
-        "395": false
+        "395": false,
+        "408": false
     },
     "default": {
         "120": false,

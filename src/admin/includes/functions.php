@@ -741,7 +741,7 @@ function wordpoints_list_module_updates() {
 		<?php return; ?>
 	<?php endif; ?>
 
-	<p><?php esc_html_e( 'The following modules have new versions available. Check the ones you want to update and then click &#8220;Update Modules&#8221;.' ); ?></p>
+	<p><?php esc_html_e( 'The following modules have new versions available. Check the ones you want to update and then click &#8220;Update Modules&#8221;.', 'wordpointsorg' ); ?></p>
 
 	<form method="post" action="update-core.php?action=do-wordpoints-module-upgrade" name="upgrade-wordpoints-modules" class="upgrade">
 		<?php wp_nonce_field( 'bulk-modules' ); ?>
