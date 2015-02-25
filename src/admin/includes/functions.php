@@ -8,6 +8,22 @@
  */
 
 /**
+ * Register admin-side scripts and styles.
+ *
+ * @since 1.1.0
+ */
+function wordpointsorg_admin_register_scripts() {
+
+	$assets_url = wordpoints_modules_url( 'admin/assets', WORDPOINTSORG_DIR . '/wordpointsorg.php' );
+
+	wp_register_style(
+		'wordpointsorg-module-list-tables'
+		, $assets_url . '/css/list-tables.css'
+	);
+}
+add_action( 'admin_init', 'wordpointsorg_admin_register_scripts' );
+
+/**
  * Get the channel for a module.
  *
  * @since 1.0.0
@@ -362,6 +378,7 @@ function wordpointsorg_update_selected_modules() {
 	exit;
 }
 add_action( 'wordpoints_modules_screen-update-selected', 'wordpointsorg_update_selected_modules' );
+add_action( 'update-core-custom_do-wordpoints-module-upgrade', 'wordpointsorg_update_selected_modules' );
 
 /**
  * Add support for the channel module file header.
@@ -663,13 +680,122 @@ function wordpointsorg_iframe_module_changelog() {
 
 	iframe_header();
 
+	echo '<div style="margin-left: 10px;">';
 	echo wp_kses(
 		$api->get_changelog( $channel, $modules[ $module_file ] )
 		, 'wordpoints_module_changelog'
 	);
+	echo '</div>';
 
 	iframe_footer();
 }
 add_action( 'update-custom_wordpoints-iframe-module-changelog', 'wordpointsorg_iframe_module_changelog' );
+
+/**
+ * Get all of the modules with updates.
+ *
+ * In addition to the usual data for a modules, the 'new_version' key contains the
+ * new version available for each module.
+ *
+ * @since 1.1.0
+ *
+ * @return array[] The data arrays for the modules with updates, indexed by module
+ *                 file.
+ */
+function wordpoints_get_module_updates() {
+
+	$all_modules = wordpoints_get_modules();
+	$update_modules = array();
+	$module_updates = get_site_transient( 'wordpoints_module_updates' );
+
+	foreach ( $all_modules as $module_file => $module_data ) {
+
+		if ( ! isset( $module_updates['response'][ $module_file ] ) ) {
+			continue;
+		}
+
+		$update_modules[ $module_file ] = $module_data;
+		$update_modules[ $module_file ]['new_version'] = $module_updates['response'][ $module_file ];
+	}
+
+	return $update_modules;
+}
+
+/**
+ * List the available module updates.
+ *
+ * @since 1.1.0
+ */
+function wordpoints_list_module_updates() {
+
+	wp_enqueue_style( 'wordpointsorg-module-list-tables' );
+
+	$modules = wordpoints_get_module_updates();
+
+	?>
+
+	<h3><?php esc_html_e( 'WordPoints Modules', 'wordpointsorg' ); ?></h3>
+
+	<?php if ( empty( $modules ) ) : ?>
+		<p><?php esc_html_e( 'Your modules are all up to date.', 'wordpointsorg' ); ?></p>
+		<?php return; ?>
+	<?php endif; ?>
+
+	<p><?php esc_html_e( 'The following modules have new versions available. Check the ones you want to update and then click &#8220;Update Modules&#8221;.' ); ?></p>
+
+	<form method="post" action="update-core.php?action=do-wordpoints-module-upgrade" name="upgrade-wordpoints-modules" class="upgrade">
+		<?php wp_nonce_field( 'bulk-modules' ); ?>
+
+		<p><input id="upgrade-wordpoints-modules" class="button" type="submit" value="<?php esc_attr_e( 'Update Modules', 'wordpointsorg' ); ?>" name="upgrade" /></p>
+
+		<table class="widefat" id="update-wordpoints-modules-table">
+			<thead>
+				<tr>
+					<th scope="col" class="manage-column check-column">
+						<input type="checkbox" id="wordpoints-modules-select-all" />
+					</th>
+					<th scope="col" class="manage-column">
+						<label for="wordpoints-modules-select-all"><?php esc_html_e( 'Select All', 'wordpointsorg' ); ?></label>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody class="wordpoints-modules">
+				<?php foreach ( $modules as $module_file => $module_data ) : ?>
+					<tr>
+						<th scope="row" class="check-column">
+							<input type="checkbox" name="checked[]" value="<?php echo esc_attr( $module_file ); ?>" />
+						</th>
+						<td>
+							<p>
+								<strong><?php echo esc_html( $module_data['name'] ); ?></strong>
+								<br />
+								<?php echo esc_html( sprintf( __( 'You have version %1$s installed. Update to %2$s.', 'wordpointsorg' ), $module_data['version'], $module_data['new_version'] ) ); ?>
+								<a href="<?php echo esc_attr( self_admin_url( 'update.php?action=wordpoints-iframe-module-changelog&module=' . urlencode( $module_file ) . '&TB_iframe=true&width=640&height=662' ) ); ?>" class="thickbox" title="<?php echo esc_attr( $module_data['name'] ); ?>">
+									<?php echo esc_html( sprintf( __( 'View version %1$s details.', 'wordpointsorg' ), $module_data['new_version'] ) ); ?>
+								</a>
+							</p>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+
+			<tfoot>
+				<tr>
+					<th scope="col" class="manage-column check-column">
+						<input type="checkbox" id="wordpoints-modules-select-all-2" />
+					</th>
+					<th scope="col" class="manage-column">
+						<label for="wordpoints-modules-select-all-2"><?php _e( 'Select All', 'wordpointsorg' ); ?></label>
+					</th>
+				</tr>
+			</tfoot>
+		</table>
+		<p><input id="upgrade-wordpoints-modules-2" class="button" type="submit" value="<?php esc_attr_e( 'Update Modules', 'wordpointsorg' ); ?>" name="upgrade" /></p>
+	</form>
+
+	<?php
+}
+add_action( 'core_upgrade_preamble', 'wordpoints_list_module_updates' );
 
 // EOF
