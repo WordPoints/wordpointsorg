@@ -4,8 +4,8 @@
  * Module Name: WordPoints.org Modules
  * Author:      WordPoints
  * Author URI:  http://wordpoints.org/
- * Module URI:  http://wordpoints.org/
  * Version:     1.0.0
+ * Module URI:  http://wordpoints.org/modules/wordpoints-org/
  * License:     GPLv2+
  * Description: Update modules from WordPoints.org through your admin panel.
  * Text Domain: wordpointsorg
