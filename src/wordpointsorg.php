@@ -4,15 +4,15 @@
  * Module Name: WordPoints.org Modules
  * Author:      WordPoints
  * Author URI:  http://wordpoints.org/
- * Version:     1.0.0
  * Module URI:  http://wordpoints.org/modules/wordpoints-org/
+ * Version:     1.1.0
  * License:     GPLv2+
  * Description: Update modules from WordPoints.org through your admin panel.
  * Text Domain: wordpointsorg
  * Domain Path: /languages
  *
  * @package WordPointsOrg
- * @version 1.0.0
+ * @version 1.1.0
  * @license GPLv2+
  */
 

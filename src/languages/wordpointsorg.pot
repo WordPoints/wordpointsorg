@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the WordPoints WordPoints.org Modules package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPoints WordPoints.org Modules 1.0.0\n"
+"Project-Id-Version: WordPoints WordPoints.org Modules 1.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-14 21:25:54+00:00\n"
+"POT-Creation-Date: 2015-02-26 20:46:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,48 +12,52 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: admin/includes/apis/edd-software-licensing.php:205
+#: admin/includes/apis/edd-software-licensing.php:303
 msgid ""
 "There was an error while trying to activate the license. Please try again."
 msgstr ""
 
-#: admin/includes/apis/edd-software-licensing.php:207
+#: admin/includes/apis/edd-software-licensing.php:305
 msgid "That license key is invalid."
 msgstr ""
 
-#: admin/includes/apis/edd-software-licensing.php:209
+#: admin/includes/apis/edd-software-licensing.php:307
 msgid "License activated."
 msgstr ""
 
-#: admin/includes/apis/edd-software-licensing.php:220
+#: admin/includes/apis/edd-software-licensing.php:318
 msgid ""
 "There was an error while trying to deactivate the license. Please try again."
 msgstr ""
 
-#: admin/includes/apis/edd-software-licensing.php:222
+#: admin/includes/apis/edd-software-licensing.php:320
 msgid ""
 "There was an error while trying to deactivate the license. Your license may "
 "be expired or invalid, or may already be deactivated."
 msgstr ""
 
-#: admin/includes/apis/edd-software-licensing.php:224
+#: admin/includes/apis/edd-software-licensing.php:322
 msgid "License deactivated."
 msgstr ""
 
-#: admin/includes/apis/edd-software-licensing.php:264
+#: admin/includes/apis/edd-software-licensing.php:361
 msgid "License key"
 msgstr ""
 
-#: admin/includes/apis/edd-software-licensing.php:275
+#: admin/includes/apis/edd-software-licensing.php:372
 msgid "active"
 msgstr ""
 
-#: admin/includes/apis/edd-software-licensing.php:277
+#: admin/includes/apis/edd-software-licensing.php:374
 msgid "Deactivate License"
 msgstr ""
 
-#: admin/includes/apis/edd-software-licensing.php:280
+#: admin/includes/apis/edd-software-licensing.php:377
 msgid "Activate License"
+msgstr ""
+
+#: admin/includes/apis/edd-software-licensing.php:441
+msgid "Changelog not available."
 msgstr ""
 
 #: admin/includes/class-bulk-module-upgrader-skin.php:52
@@ -70,7 +74,7 @@ msgid "Return to WordPress Updates"
 msgstr ""
 
 #: admin/includes/class-module-upgrader-skin.php:78
-#: admin/includes/functions.php:288
+#: admin/includes/functions.php:313
 msgid "Update Module"
 msgstr ""
 
@@ -158,37 +162,86 @@ msgstr ""
 msgid "No valid modules were found."
 msgstr ""
 
-#: admin/includes/functions.php:239 admin/includes/functions.php:281
-#: admin/includes/functions.php:321
+#: admin/includes/functions.php:264 admin/includes/functions.php:306
+#: admin/includes/functions.php:346 admin/includes/functions.php:652
 msgid "You do not have sufficient permissions to update modules for this site."
 msgstr ""
 
-#: admin/includes/functions.php:344
+#: admin/includes/functions.php:369 admin/includes/functions.php:749
+#: admin/includes/functions.php:794
 msgid "Update Modules"
 msgstr ""
 
-#: admin/includes/functions.php:442
+#: admin/includes/functions.php:468
 msgid "Update Available <span class=\"count\">(%s)</span>"
 msgid_plural "Update Available <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/includes/functions.php:458
+#: admin/includes/functions.php:484
 msgid "Update"
 msgstr ""
 
-#: admin/includes/functions.php:567
+#: admin/includes/functions.php:595
 msgid ""
 "There is a new version of %1$s available. <a href=\"%2$s\" class=\"thickbox"
 "\" title=\"%3$s\">View version %4$s details</a>."
 msgstr ""
 
-#: admin/includes/functions.php:578
+#: admin/includes/functions.php:606
 msgid ""
 "There is a new version of %1$s available. <a href=\"%2$s\" class=\"thickbox"
 "\" title=\"%3$s\">View version %4$s details</a> or <a href=\"%5$s\">update "
 "now</a>."
 msgstr ""
+
+#: admin/includes/functions.php:656
+msgid "No module supplied."
+msgstr ""
+
+#: admin/includes/functions.php:664
+msgid "That module does not exist."
+msgstr ""
+
+#: admin/includes/functions.php:672
+msgid "There is no channel specified for this module."
+msgstr ""
+
+#: admin/includes/functions.php:678
+msgid "The channel for this module uses an unsupported API."
+msgstr ""
+
+#: admin/includes/functions.php:737
+msgid "WordPoints Modules"
+msgstr ""
+
+#: admin/includes/functions.php:740
+msgid "Your modules are all up to date."
+msgstr ""
+
+#: admin/includes/functions.php:744
+msgid ""
+"The following modules have new versions available. Check the ones you want "
+"to update and then click &#8220;Update Modules&#8221;."
+msgstr ""
+
+#: admin/includes/functions.php:758 admin/includes/functions.php:789
+msgid "Select All"
+msgstr ""
+
+#: admin/includes/functions.php:773
+msgid "You have version %1$s installed. Update to %2$s."
+msgstr ""
+
+#: admin/includes/functions.php:775
+msgid "View version %1$s details."
+msgstr ""
+
+#: includes/functions.php:211
+msgid "%d WordPoints Module Update"
+msgid_plural "%d WordPoints Module Updates"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Description of the module
 msgid "Update modules from WordPoints.org through your admin panel."
@@ -198,13 +251,14 @@ msgstr ""
 msgid "WordPoints"
 msgstr ""
 
-#. #-#-#-#-#  wordpointsorg.pot (WordPoints WordPoints.org Modules 1.0.0)  #-#-#-#-#
 #. Author URI of the module
-#. #-#-#-#-#  wordpointsorg.pot (WordPoints WordPoints.org Modules 1.0.0)  #-#-#-#-#
-#. Module URI of the module
 msgid "http://wordpoints.org/"
 msgstr ""
 
 #. Module Name of the module
 msgid "WordPoints.org Modules"
+msgstr ""
+
+#. Module URI of the module
+msgid "http://wordpoints.org/modules/wordpoints-org/"
 msgstr ""
