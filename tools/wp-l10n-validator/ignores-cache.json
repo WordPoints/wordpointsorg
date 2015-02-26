@@ -1,5 +1,13 @@
 {
+    "\/admin\/includes\/apis\/edd-software-licensing-free.php": {
+        "edd-software-licensing-free": {
+            "21": false
+        }
+    },
     "\/admin\/includes\/apis\/edd-software-licensing.php": {
+        "edd-software-licensing": {
+            "20": false
+        },
         "-": {
             "360": false,
             "364": false,
@@ -13,7 +21,7 @@
     },
     "\/admin\/includes\/class-module-upgrader.php": {
         "install": {
-            "156": {
+            "176": {
                 "name": "array",
                 "type": "unknown",
                 "args_started": true,
@@ -22,14 +30,7 @@
             }
         },
         "update": {
-            "248": {
-                "name": "array",
-                "type": "unknown",
-                "args_started": true,
-                "arg_count": 0,
-                "parentheses": 1
-            },
-            "405": {
+            "393": {
                 "name": "array",
                 "type": "unknown",
                 "args_started": true,
@@ -39,17 +40,8 @@
         }
     },
     "\/admin\/includes\/functions.php": {
-        "version": {
-            "167": {
-                "name": "wp_list_pluck",
-                "type": "unknown",
-                "args_started": true,
-                "arg_count": 1,
-                "parentheses": 1
-            }
-        },
         "bulk-update-modules": {
-            "266": {
+            "286": {
                 "name": "array",
                 "type": "unknown",
                 "args_started": true,
@@ -58,7 +50,7 @@
             }
         },
         "update.php?action=update-selected-wordpoints-modules&amp;modules=": {
-            "267": {
+            "287": {
                 "name": "array",
                 "type": "unknown",
                 "args_started": true,
@@ -67,7 +59,7 @@
             }
         },
         "update.php?action=wordpoints-upgrade-module&module=": {
-            "308": {
+            "326": {
                 "name": "array",
                 "type": "unknown",
                 "args_started": true,
@@ -76,204 +68,21 @@
             }
         },
         "channel": {
-            "369": false
+            "390": false
         },
         "upgrade": {
-            "388": false
+            "407": false
         },
         "update": {
-            "494": false
+            "506": false
         }
     },
     "\/includes\/functions.php": {
+        "default": {
+            "130": false
+        },
         ",": {
             "220": false
-        }
-    },
-    "-": {
-        "259": false,
-        "357": false,
-        "358": false,
-        "365": false,
-        "369": false,
-        "370": false
-    },
-    "install": {
-        "165": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 0,
-            "parentheses": 1
-        },
-        "176": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 0,
-            "parentheses": 1
-        }
-    },
-    "update": {
-        "382": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 0,
-            "parentheses": 1
-        },
-        "393": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 0,
-            "parentheses": 1
-        },
-        "486": false,
-        "490": false,
-        "507": false
-    },
-    "version": {
-        "166": {
-            "name": "wp_list_pluck",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 1,
-            "parentheses": 1
-        }
-    },
-    "bulk-update-modules": {
-        "263": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 0,
-            "parentheses": 1
-        },
-        "267": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 0,
-            "parentheses": 1
-        },
-        "271": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 0,
-            "parentheses": 1
-        },
-        "275": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 0,
-            "parentheses": 1
-        },
-        "287": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 0,
-            "parentheses": 1
-        }
-    },
-    "update.php?action=update-selected-wordpoints-modules&amp;modules=": {
-        "264": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 1,
-            "parentheses": 1
-        },
-        "268": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 1,
-            "parentheses": 1
-        },
-        "272": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 1,
-            "parentheses": 1
-        },
-        "276": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 1,
-            "parentheses": 1
-        },
-        "288": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 1,
-            "parentheses": 1
-        }
-    },
-    "update.php?action=wordpoints-upgrade-module&module=": {
-        "305": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 2,
-            "parentheses": 1
-        },
-        "307": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 2,
-            "parentheses": 1
-        },
-        "311": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 2,
-            "parentheses": 1
-        },
-        "315": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 2,
-            "parentheses": 1
-        },
-        "327": {
-            "name": "array",
-            "type": "unknown",
-            "args_started": true,
-            "arg_count": 2,
-            "parentheses": 1
-        }
-    },
-    "channel": {
-        "370": false,
-        "374": false,
-        "378": false,
-        "391": false
-    },
-    "upgrade": {
-        "389": false,
-        "387": false,
-        "391": false,
-        "395": false,
-        "408": false
-    },
-    "default": {
-        "120": false,
-        "135": false,
-        "130": false
-    },
-    "\/admin\/includes\/apis\/edd-software-licensing-free.php": {
-        "edd-software-licensing-free": {
-            "21": false
         }
     }
 }
