@@ -265,7 +265,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	public function wordpoints_modules_list_table_items( $modules ) {
 
 		if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
-			return;
+			return $modules;
 		}
 
 		foreach ( $modules['all'] as $module ) {
