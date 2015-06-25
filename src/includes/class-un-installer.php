@@ -32,15 +32,18 @@ class WordPointsOrg_Un_Installer extends WordPoints_Un_Installer_Base {
 	public function __construct() {
 
 		if ( version_compare( WORDPOINTS_VERSION, '1.10.0', '<=' ) ) {
+
 			$this->option_prefix = 'wordpointsorg_';
+
+		} else {
+
+			$this->load_dependencies();
+
+			parent::__construct(
+				plugin_basename( WORDPOINTSORG_DIR . '/wordpointsorg.php' )
+				, WORDPOINTSORG_VERSION
+			);
 		}
-
-		$this->load_dependencies();
-
-		parent::__construct(
-			plugin_basename( WORDPOINTSORG_DIR . '/wordpointsorg.php' )
-			, WORDPOINTSORG_VERSION
-		);
 	}
 
 	/**
