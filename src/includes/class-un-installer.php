@@ -31,7 +31,7 @@ class WordPointsOrg_Un_Installer extends WordPoints_Un_Installer_Base {
 	 */
 	public function __construct() {
 
-		if ( version_compare( WORDPOINTS_VERSION, '1.10.0', '<=' ) ) {
+		if ( version_compare( WORDPOINTS_VERSION, '2.0.0-alpha', '<' ) ) {
 
 			$this->option_prefix = 'wordpointsorg_';
 
