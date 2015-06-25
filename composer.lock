@@ -77,16 +77,16 @@
         },
         {
             "name": "wordpoints/module-uninstall-tester",
-            "version": "0.2.3",
+            "version": "0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPoints/module-uninstall-tester.git",
-                "reference": "251c92e943ed8868c24d0c8a265990c5f0fac420"
+                "reference": "129f99866d2dcca319ad36392eb2878866caf7c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPoints/module-uninstall-tester/zipball/251c92e943ed8868c24d0c8a265990c5f0fac420",
-                "reference": "251c92e943ed8868c24d0c8a265990c5f0fac420",
+                "url": "https://api.github.com/repos/WordPoints/module-uninstall-tester/zipball/129f99866d2dcca319ad36392eb2878866caf7c4",
+                "reference": "129f99866d2dcca319ad36392eb2878866caf7c4",
                 "shasum": ""
             },
             "require": {
@@ -108,7 +108,7 @@
             ],
             "description": "Utilities for testing WordPoints module install/uninstall with PHPUnit",
             "homepage": "https://github.com/WordPoints/wordpoints-module-uninstall-tester",
-            "time": "2015-06-25 20:27:54"
+            "time": "2015-06-25 21:42:04"
         }
     ],
     "aliases": [],
