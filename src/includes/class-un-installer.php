@@ -15,11 +15,6 @@
 class WordPointsOrg_Un_Installer extends WordPoints_Un_Installer_Base {
 
 	/**
-	 * @since 1.0.0
-	 */
-	protected $option_prefix = 'wordpointsorg_';
-
-	/**
 	 * The module's capabilities.
 	 *
 	 * Used to hold the list of capabilities during install and uninstall, so that
@@ -30,6 +25,23 @@ class WordPointsOrg_Un_Installer extends WordPoints_Un_Installer_Base {
 	 * @type array $capabilties
 	 */
 	protected $capabilities;
+
+	/**
+	 * @since 1.1.2
+	 */
+	public function __construct() {
+
+		if ( version_compare( WORDPOINTS_VERSION, '1.10.0', '<=' ) ) {
+			$this->option_prefix = 'wordpointsorg_';
+		}
+
+		$this->load_dependencies();
+
+		parent::__construct(
+			plugin_basename( WORDPOINTSORG_DIR . '/wordpointsorg.php' )
+			, WORDPOINTSORG_VERSION
+		);
+	}
 
 	/**
 	 * @since 1.0.0
