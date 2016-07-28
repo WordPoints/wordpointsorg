@@ -115,8 +115,6 @@ abstract class WordPointsOrg_Module_Upgrader_UnitTestCase extends WordPointsOrg_
 			$wp_filesystem->delete( wordpoints_modules_dir() . '/' .  $this->package_name, true );
 		}
 
-		ob_start();
-
 		parent::tearDown();
 
 		remove_filter( 'filesystem_method', array( $this, 'use_direct_filesystem_method' ) );

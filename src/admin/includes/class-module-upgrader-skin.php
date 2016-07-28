@@ -66,7 +66,7 @@ class WordPointsOrg_Module_Upgrader_Skin extends WP_Upgrader_Skin {
 	 *        @type string $url    The form URL passed to request_filesystem_credentials() if needed.
 	 *        @type string $module The basename module path.
 	 *        @type string $nonce  An nonce to be added to the $url before it is passed torequest_filesystem_credentials().
-	 *        @type string $title  Text for H2 title used by WP_Upgrader_Skin::header().
+	 *        @type string $title  Text for H1 title used by WP_Upgrader_Skin::header().
 	 * }
 	 */
 	public function __construct( $args = array() ) {

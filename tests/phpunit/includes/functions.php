@@ -53,6 +53,9 @@ function wordpointsorgtests_modules_dir() {
 
 	return WORDPOINTSORG_TESTS_DIR . '/data/modules/';
 }
-tests_add_filter( 'wordpoints_modules_dir', 'wordpointsorgtests_modules_dir', 20 );
+
+if ( ! running_wordpoints_module_uninstall_tests() ) {
+	tests_add_filter( 'wordpoints_modules_dir', 'wordpointsorgtests_modules_dir', 20 );
+}
 
 // EOF

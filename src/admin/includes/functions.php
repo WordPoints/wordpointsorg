@@ -366,7 +366,7 @@ function wordpointsorg_update_selected_modules() {
 	?>
 
 	<div class="wrap">
-		<h2><?php esc_html_e( 'Update Modules', 'wordpointsorg' ); ?></h2>
+		<h1><?php esc_html_e( 'Update Modules', 'wordpointsorg' ); ?></h1>
 
 		<iframe src="<?php echo esc_attr( $url ); ?>" style="width: 100%; height:100%; min-height:850px;"></iframe>
 	</div>
@@ -734,7 +734,7 @@ function wordpoints_list_module_updates() {
 
 	?>
 
-	<h3><?php esc_html_e( 'WordPoints Modules', 'wordpointsorg' ); ?></h3>
+	<h2><?php esc_html_e( 'WordPoints Modules', 'wordpointsorg' ); ?></h2>
 
 	<?php if ( empty( $modules ) ) : ?>
 		<p><?php esc_html_e( 'Your modules are all up to date.', 'wordpointsorg' ); ?></p>
@@ -751,9 +751,9 @@ function wordpoints_list_module_updates() {
 		<table class="widefat" id="update-wordpoints-modules-table">
 			<thead>
 				<tr>
-					<th scope="col" class="manage-column check-column">
+					<td scope="col" class="manage-column check-column">
 						<input type="checkbox" id="wordpoints-modules-select-all" />
-					</th>
+					</td>
 					<th scope="col" class="manage-column">
 						<label for="wordpoints-modules-select-all"><?php esc_html_e( 'Select All', 'wordpointsorg' ); ?></label>
 					</th>
@@ -782,9 +782,9 @@ function wordpoints_list_module_updates() {
 
 			<tfoot>
 				<tr>
-					<th scope="col" class="manage-column check-column">
+					<td scope="col" class="manage-column check-column">
 						<input type="checkbox" id="wordpoints-modules-select-all-2" />
-					</th>
+					</td>
 					<th scope="col" class="manage-column">
 						<label for="wordpoints-modules-select-all-2"><?php _e( 'Select All', 'wordpointsorg' ); ?></label>
 					</th>

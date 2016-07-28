@@ -1,20 +1,29 @@
 <?php
 
 /**
- * Module Name: WordPoints.org Modules
- * Author:      WordPoints
- * Author URI:  http://wordpoints.org/
- * Module URI:  http://wordpoints.org/modules/wordpoints-org/
- * Version:     1.1.2
- * License:     GPLv2+
- * Description: Update modules from WordPoints.org through your admin panel.
- * Text Domain: wordpointsorg
- * Domain Path: /languages
+ * Main file of the WordPoints.org Modules module.
  *
  * @package WordPointsOrg
- * @version 1.1.2
+ * @version 1.1.3
  * @license GPLv2+
  */
+
+WordPoints_Modules::register(
+	'
+		Module Name: WordPoints.org Modules
+		Author:      WordPoints
+		Author URI:  http://wordpoints.org/
+		Module URI:  http://wordpoints.org/modules/wordpoints-org/
+		Version:     1.1.3
+		License:     GPLv2+
+		Description: Update modules from WordPoints.org through your admin panel.
+		Text Domain: wordpointsorg
+		Domain Path: /languages
+		Channel:     wordpoints.org
+		ID:          389
+	'
+	, __FILE__
+);
 
 /**
  * Module constants.
