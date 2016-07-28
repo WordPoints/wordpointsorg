@@ -10,6 +10,8 @@
  * Description: Update modules from WordPoints.org through your admin panel.
  * Text Domain: wordpointsorg
  * Domain Path: /languages
+ * Channel: wordpoints.org
+ * ID: 389
  *
  * @package WordPointsOrg
  * @version 1.1.2
