@@ -1,9 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "1a67d5a425ca004266632b226d452bb0",
+    "hash": "2a0eb3a1453e4d4243d71e65aba4e25a",
+    "content-hash": "a2cac6937c7a89e946256580794fc625",
     "packages": [],
     "packages-dev": [
         {
@@ -42,16 +44,16 @@
         },
         {
             "name": "jdgrimes/wp-plugin-uninstall-tester",
-            "version": "0.4.2",
+            "version": "0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JDGrimes/wp-plugin-uninstall-tester.git",
-                "reference": "ee09116b088115919b1b81fcff19f74da6e5833e"
+                "reference": "99e9c16ded11150f21a7a78a472997c2a0c59fb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JDGrimes/wp-plugin-uninstall-tester/zipball/ee09116b088115919b1b81fcff19f74da6e5833e",
-                "reference": "ee09116b088115919b1b81fcff19f74da6e5833e",
+                "url": "https://api.github.com/repos/JDGrimes/wp-plugin-uninstall-tester/zipball/99e9c16ded11150f21a7a78a472997c2a0c59fb2",
+                "reference": "99e9c16ded11150f21a7a78a472997c2a0c59fb2",
                 "shasum": ""
             },
             "require": {
@@ -72,24 +74,24 @@
             ],
             "description": "Utilities for testing WordPress plugin install/uninstall with PHPUnit",
             "homepage": "https://github.com/JDGrimes/wp-plugin-uninstall-tester",
-            "time": "2014-11-25 14:47:10"
+            "time": "2016-06-30 19:28:49"
         },
         {
             "name": "wordpoints/module-uninstall-tester",
-            "version": "0.2.2",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPoints/module-uninstall-tester.git",
-                "reference": "1470fdee74c738403415aee51cc319b651d33b1a"
+                "reference": "3702d007ff7d2f8d0ad62a41de7e1e4dbaeab5c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPoints/module-uninstall-tester/zipball/1470fdee74c738403415aee51cc319b651d33b1a",
-                "reference": "1470fdee74c738403415aee51cc319b651d33b1a",
+                "url": "https://api.github.com/repos/WordPoints/module-uninstall-tester/zipball/3702d007ff7d2f8d0ad62a41de7e1e4dbaeab5c4",
+                "reference": "3702d007ff7d2f8d0ad62a41de7e1e4dbaeab5c4",
                 "shasum": ""
             },
             "require": {
-                "jdgrimes/wp-plugin-uninstall-tester": "~0.2",
+                "jdgrimes/wp-plugin-uninstall-tester": "^0.6",
                 "php": ">=5.2.0"
             },
             "type": "library",
@@ -107,12 +109,14 @@
             ],
             "description": "Utilities for testing WordPoints module install/uninstall with PHPUnit",
             "homepage": "https://github.com/WordPoints/wordpoints-module-uninstall-tester",
-            "time": "2015-01-02 15:22:16"
+            "time": "2016-07-27 20:28:04"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.2.0"
     },

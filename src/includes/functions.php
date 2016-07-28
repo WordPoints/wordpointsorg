@@ -11,10 +11,13 @@
  * Activate the module.
  *
  * @since 1.0.0
+ * @deprecated 1.1.3
  *
  * @param bool $network_active Whether the plugin is being network activated.
  */
 function wordpointsorg_activate( $network_active ) {
+
+	_deprecated_function( __FUNCTION__, '1.1.3', 'WordPoints_Installables::install()' );
 
 	/**
 	 * The module's un/installer.
@@ -26,7 +29,6 @@ function wordpointsorg_activate( $network_active ) {
 	$installer = new WordPointsOrg_Un_Installer();
 	$installer->install( $network_active );
 }
-wordpoints_register_module_activation_hook( WORDPOINTSORG_DIR . '/wordpointsorg.php', 'wordpointsorg_activate' );
 
 /**
  * Deactivate the module.
