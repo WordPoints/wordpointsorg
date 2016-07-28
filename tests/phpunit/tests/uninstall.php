@@ -17,25 +17,9 @@
 class WordPointsOrg_Uninstall_Test extends WordPoints_Module_Uninstall_UnitTestCase {
 
 	/**
-	 * The module's install function.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @type callable $install_function
+	 * @since 1.1.3
 	 */
-	protected $install_function = 'wordpointsorg_activate';
-
-	/**
-	 * Set up for the tests.
-	 *
-	 * @since 1.0.0
-	 */
-	public function setUp() {
-
-		$this->module_file = WORDPOINTSORG_TESTS_DIR . '/../../src/wordpointsorg.php';
-
-		parent::setUp();
-	}
+	protected $module_file = 'wordpointsorg/wordpointsorg.php';
 
 	/**
 	 * Test that install and uninstall work as expected.
@@ -45,6 +29,8 @@ class WordPointsOrg_Uninstall_Test extends WordPoints_Module_Uninstall_UnitTestC
 	 * @covers WordPointsOrg_Un_Installer
 	 */
 	public function test_uninstall() {
+
+		unset( $GLOBALS['wp_roles'] );
 
 		// Check that the custom capabilities were added on install.
 		$this->assertTrue( get_role( 'administrator' )->has_cap( 'update_wordpoints_modules' ) );
