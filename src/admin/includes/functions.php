@@ -751,9 +751,9 @@ function wordpoints_list_module_updates() {
 		<table class="widefat" id="update-wordpoints-modules-table">
 			<thead>
 				<tr>
-					<th scope="col" class="manage-column check-column">
+					<td scope="col" class="manage-column check-column">
 						<input type="checkbox" id="wordpoints-modules-select-all" />
-					</th>
+					</td>
 					<th scope="col" class="manage-column">
 						<label for="wordpoints-modules-select-all"><?php esc_html_e( 'Select All', 'wordpointsorg' ); ?></label>
 					</th>
@@ -782,9 +782,9 @@ function wordpoints_list_module_updates() {
 
 			<tfoot>
 				<tr>
-					<th scope="col" class="manage-column check-column">
+					<td scope="col" class="manage-column check-column">
 						<input type="checkbox" id="wordpoints-modules-select-all-2" />
-					</th>
+					</td>
 					<th scope="col" class="manage-column">
 						<label for="wordpoints-modules-select-all-2"><?php _e( 'Select All', 'wordpointsorg' ); ?></label>
 					</th>
