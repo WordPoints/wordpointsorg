@@ -366,7 +366,7 @@ function wordpointsorg_update_selected_modules() {
 	?>
 
 	<div class="wrap">
-		<h2><?php esc_html_e( 'Update Modules', 'wordpointsorg' ); ?></h2>
+		<h1><?php esc_html_e( 'Update Modules', 'wordpointsorg' ); ?></h1>
 
 		<iframe src="<?php echo esc_attr( $url ); ?>" style="width: 100%; height:100%; min-height:850px;"></iframe>
 	</div>
@@ -734,7 +734,7 @@ function wordpoints_list_module_updates() {
 
 	?>
 
-	<h3><?php esc_html_e( 'WordPoints Modules', 'wordpointsorg' ); ?></h3>
+	<h2><?php esc_html_e( 'WordPoints Modules', 'wordpointsorg' ); ?></h2>
 
 	<?php if ( empty( $modules ) ) : ?>
 		<p><?php esc_html_e( 'Your modules are all up to date.', 'wordpointsorg' ); ?></p>
