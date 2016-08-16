@@ -219,7 +219,11 @@ function wordpoints_module_update_counts( $update_data ) {
 				, $update_data['counts']['wordpoints_modules']
 			);
 
-			$update_data['title'] .= ', ' . esc_attr( $title );
+			if ( ! empty( $update_data['title'] ) ) {
+				$update_data['title'] .= ', ';
+			}
+
+			$update_data['title'] .= esc_attr( $title );
 		}
 	}
 
