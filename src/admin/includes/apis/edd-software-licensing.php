@@ -300,8 +300,8 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				$this->update_module_license_data(
 					$channel
 					, $module['ID']
-					, 'license'
 					, sanitize_key( $_POST[ "license_key-{$url}-{$module['ID']}" ] )
+					, 'license'
 				);
 
 				$result = $this->activate_license( $channel, $module );
