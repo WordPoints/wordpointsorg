@@ -251,8 +251,32 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 */
 	public function hooks() {
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'wordpoints_modules_list_table_items', array( $this, 'wordpoints_modules_list_table_items' ) );
+		add_filter( 'wordpoints_module_list_row_class', array( $this, 'wordpoints_module_list_row_class' ), 10, 3 );
 		add_action( 'wordpoints_after_module_row', array( $this, 'wordpoints_after_module_row' ), 10, 2 );
+	}
+
+	/**
+	 * Enqueue admin scripts and styles.
+	 *
+	 * @since 1.1.4
+	 *
+	 * @WordPress\action admin_enqueue_scripts Added by self::hooks().
+	 */
+	public function admin_enqueue_scripts() {
+
+		if ( isset( $_GET['page'] ) && 'wordpoints_modules' === $_GET['page'] ) {
+			wp_enqueue_style(
+				'wordpointsorg-admin-modules'
+				, wordpoints_modules_url(
+					'/admin/assets/css/modules.css'
+					, WORDPOINTSORG_DIR . '/wordpointsorg.php'
+				)
+				, array()
+				, WORDPOINTSORG_VERSION
+			);
+		}
 	}
 
 	/**
@@ -343,6 +367,47 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	}
 
 	/**
+	 * Filter the classes for a row in the WordPoints modules list table.
+	 *
+	 * @since 1.1.4
+	 *
+	 * @WordPress\filter wordpoints_module_list_row_class Added by self::hooks().
+	 *
+	 * @param string $classes     The HTML classes for this module row.
+	 * @param string $module_file The module file.
+	 * @param array  $module_data The module data.
+	 *
+	 * @return string The filtered classes.
+	 */
+	public function wordpoints_module_list_row_class( $classes, $module_file, $module_data ) {
+
+		// Add license information if this user is allowed to see it.
+		if ( ! empty( $module_data['ID'] ) && current_user_can( 'update_wordpoints_modules' ) ) {
+
+			$channel = wordpoints_get_channel_for_module( $module_data );
+			$channel = WordPoints_Module_Channels::get( $channel );
+
+			if ( $channel && $this === $channel->get_api() ) {
+
+				$classes .= ' wordpoints-has-edd-license wordpoints-has-license';
+
+				$license_data = array_merge(
+					array( 'status' => false, 'license' => false )
+					, $this->get_module_license_data( $channel, $module_data['ID'] )
+				);
+
+				if ( $license_data['status'] ) {
+					$classes .= ' '. sanitize_html_class(
+						'wordpoints-license-' . $license_data['status']
+					);
+				}
+			}
+		}
+
+		return $classes;
+	}
+
+	/**
 	 * Add the license key rows to the modules list table.
 	 *
 	 * @since 1.0.0
@@ -370,8 +435,9 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 		$channel_url = sanitize_title_with_dashes( $channel->url );
 
 		?>
-		<tr>
-			<td colspan="<?php echo (int) WordPoints_Modules_List_Table::instance()->get_column_count(); ?>" style="border-bottom: 1px solid #ddd;" class="colspanchange">
+		<tr class="wordpoints-module-license-tr plugin-update-tr <?php echo ( is_wordpoints_module_active( $module_file ) ) ? 'active' : 'inactive'; ?>">
+			<td colspan="<?php echo (int) WordPoints_Modules_List_Table::instance()->get_column_count(); ?>" class="colspanchange">
+				<div class="wordpoints-license-box">
 				<label class="description" for="license_key-<?php echo esc_attr( $channel_url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>">
 					<?php esc_html_e( 'License key', 'wordpointsorg' ); ?>
 				</label>
@@ -391,6 +457,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 					<?php wp_nonce_field( "wordpoints_activate_license_key-{$module_data['ID']}", "wordpoints_activate_license_key-{$module_data['ID']}" ); ?>
 					<input type="submit" name="edd-activate-license-<?php echo esc_attr( $module_data['ID'] ); ?>"  class="button-secondary" value="<?php esc_attr_e( 'Activate License', 'wordpointsorg' ); ?>" />
 				<?php endif; ?>
+				</div>
 			</td>
 		</tr>
 		<?php
