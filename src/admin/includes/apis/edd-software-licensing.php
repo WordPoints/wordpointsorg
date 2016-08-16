@@ -283,7 +283,19 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 
 			$url = sanitize_title_with_dashes( $channel->url );
 
-			if ( isset( $_POST[ "license_key-{$url}-{$module['ID']}" ] ) ) {
+			if (
+				isset(
+					$_POST[ "edd-activate-license-{$module['ID']}" ]
+					, $_POST[ "wordpoints_activate_license_key-{$module['ID']}" ]
+					, $_POST[ "license_key-{$url}-{$module['ID']}" ]
+				)
+				&& wordpoints_verify_nonce(
+					"wordpoints_activate_license_key-{$module['ID']}"
+					, "wordpoints_activate_license_key-{$module['ID']}"
+					, null
+					, 'post'
+				)
+			) {
 
 				$this->update_module_license_data(
 					$channel
@@ -291,12 +303,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 					, 'license'
 					, sanitize_key( $_POST[ "license_key-{$url}-{$module['ID']}" ] )
 				);
-			}
 
-			if (
-				isset( $_POST['edd-activate-license'], $_POST[ "wordpoints_activate_license_key-{$module['ID']}" ] )
-				&& wp_verify_nonce( $_POST[ "wordpoints_activate_license_key-{$module['ID']}" ], "wordpoints_activate_license_key-{$module['ID']}" )
-			) {
 				$result = $this->activate_license( $channel, $module );
 
 				if ( false === $result ) {
@@ -308,8 +315,16 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				}
 
 			} elseif (
-				isset( $_POST['edd-deactivate-license'], $_POST[ "wordpoints_deactivate_license_key-{$module['ID']}" ] )
-				&& wp_verify_nonce( $_POST[ "wordpoints_deactivate_license_key-{$module['ID']}" ], "wordpoints_deactivate_license_key-{$module['ID']}" )
+				isset(
+					$_POST[ "edd-deactivate-license-{$module['ID']}" ]
+					, $_POST[ "wordpoints_deactivate_license_key-{$module['ID']}" ]
+				)
+				&& wordpoints_verify_nonce(
+					"wordpoints_deactivate_license_key-{$module['ID']}"
+					, "wordpoints_deactivate_license_key-{$module['ID']}"
+					, null
+					, 'post'
+				)
 			) {
 
 				$result = $this->deactivate_license( $channel, $module );
@@ -371,10 +386,10 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				<?php if ( false !== $license_data['license'] && 'valid' === $license_data['status'] ) : ?>
 					<span style="color:green;"><?php esc_html_e( 'active', 'wordpointsorg' ); ?></span>
 					<?php wp_nonce_field( "wordpoints_deactivate_license_key-{$module_data['ID']}", "wordpoints_deactivate_license_key-{$module_data['ID']}" ); ?>
-					<input type="submit" name="edd-deactivate-license" class="button-secondary" value="<?php esc_attr_e( 'Deactivate License', 'wordpointsorg' ); ?>" />
+					<input type="submit" name="edd-deactivate-license-<?php echo esc_attr( $module_data['ID'] ); ?>" class="button-secondary" value="<?php esc_attr_e( 'Deactivate License', 'wordpointsorg' ); ?>" />
 				<?php else : ?>
 					<?php wp_nonce_field( "wordpoints_activate_license_key-{$module_data['ID']}", "wordpoints_activate_license_key-{$module_data['ID']}" ); ?>
-					<input type="submit" name="edd-activate-license"  class="button-secondary" value="<?php esc_attr_e( 'Activate License', 'wordpointsorg' ); ?>" />
+					<input type="submit" name="edd-activate-license-<?php echo esc_attr( $module_data['ID'] ); ?>"  class="button-secondary" value="<?php esc_attr_e( 'Activate License', 'wordpointsorg' ); ?>" />
 				<?php endif; ?>
 			</td>
 		</tr>
