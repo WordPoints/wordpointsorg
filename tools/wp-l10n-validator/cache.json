@@ -1,77 +1,75 @@
 {
-    "\/admin\/admin.php": {
-        "size": 862,
-        "hash": "b6db28f53d9dd1858a9aea1db1391e61",
-        "errors": false
+    "files": {
+        "\/admin\/admin.php": {
+            "size": 862,
+            "hash": "b6db28f53d9dd1858a9aea1db1391e61",
+            "errors": false
+        },
+        "\/admin\/includes\/apis\/edd-software-licensing-free.php": {
+            "size": 2204,
+            "hash": "21922711a058a8b669d049686daa40cb",
+            "errors": false
+        },
+        "\/admin\/includes\/apis\/edd-software-licensing.php": {
+            "size": 20115,
+            "hash": "1ee05936abf4bc4d05cd90d20be8e103",
+            "errors": false
+        },
+        "\/admin\/includes\/class-bulk-module-upgrader-skin.php": {
+            "size": 2503,
+            "hash": "f31fa6ef96e11c32cc5640e2f24a7353",
+            "errors": false
+        },
+        "\/admin\/includes\/class-module-api.php": {
+            "size": 4185,
+            "hash": "5bfa3c28115bd5bc8714baf0d93d39ef",
+            "errors": false
+        },
+        "\/admin\/includes\/class-module-channel.php": {
+            "size": 5893,
+            "hash": "a568d3667d2a8dcf86f985e26e54c138",
+            "errors": false
+        },
+        "\/admin\/includes\/class-module-upgrader-skin.php": {
+            "size": 3916,
+            "hash": "2cc0a388e79837d8eba3dac43c6ccdb9",
+            "errors": false
+        },
+        "\/admin\/includes\/class-module-upgrader.php": {
+            "size": 17966,
+            "hash": "2f15ecc716dae89f7241ed32f3a93e82",
+            "errors": false
+        },
+        "\/admin\/includes\/functions.php": {
+            "size": 23231,
+            "hash": "3faf45449bd7bbf36052ad1aa0668a20",
+            "errors": false
+        },
+        "\/includes\/class-item-container.php": {
+            "size": 3795,
+            "hash": "e424e9e7455af1a7a5f59b98774a18bd",
+            "errors": false
+        },
+        "\/includes\/class-un-installer.php": {
+            "size": 1973,
+            "hash": "87028268ac6e598a44c740e07fa3bfb3",
+            "errors": false
+        },
+        "\/includes\/constants.php": {
+            "size": 351,
+            "hash": "fc256e7a96c5c8a33fafcd8d2158f750",
+            "errors": false
+        },
+        "\/includes\/functions.php": {
+            "size": 5372,
+            "hash": "40b33b76f63564a64e02aaf7fbe4b390",
+            "errors": false
+        },
+        "\/wordpointsorg.php": {
+            "size": 1071,
+            "hash": "de21e74f5157c8089bc97470e8937e3f",
+            "errors": false
+        }
     },
-    "\/admin\/includes\/apis\/edd-software-licensing-free.php": {
-        "size": 2204,
-        "hash": "21922711a058a8b669d049686daa40cb",
-        "errors": false
-    },
-    "\/admin\/includes\/apis\/edd-software-licensing.php": {
-        "size": 17722,
-        "hash": "ec0226a8533acb437cba49a03e0d9511",
-        "errors": false
-    },
-    "\/admin\/includes\/class-bulk-module-upgrader-skin.php": {
-        "size": 2616,
-        "hash": "29ec41930944faadd4ce14ded5eb7716",
-        "errors": false
-    },
-    "\/admin\/includes\/class-module-api.php": {
-        "size": 4184,
-        "hash": "4f7ad24295660b0cdd311f3681567054",
-        "errors": false
-    },
-    "\/admin\/includes\/class-module-channel.php": {
-        "size": 5888,
-        "hash": "072225045e3a47deaf51dca5b5991dba",
-        "errors": false
-    },
-    "\/admin\/includes\/class-module-upgrader-skin.php": {
-        "size": 3915,
-        "hash": "18a0a0ed9352e0beb2ccf7c97dfa053c",
-        "errors": false
-    },
-    "\/admin\/includes\/class-module-upgrader.php": {
-        "size": 17966,
-        "hash": "2f15ecc716dae89f7241ed32f3a93e82",
-        "errors": false
-    },
-    "\/admin\/includes\/functions.php": {
-        "size": 22928,
-        "hash": "7eac51ff696905ab35fe2a0fb15467a2",
-        "errors": false
-    },
-    "\/includes\/class-item-container.php": {
-        "size": 3795,
-        "hash": "e424e9e7455af1a7a5f59b98774a18bd",
-        "errors": false
-    },
-    "\/includes\/class-un-installer.php": {
-        "size": 2335,
-        "hash": "041c22890c007594b68d7677906b9ee9",
-        "errors": false
-    },
-    "\/includes\/constants.php": {
-        "size": 351,
-        "hash": "04c44a2077eea4a1667be183b7034b7e",
-        "errors": false
-    },
-    "\/includes\/functions.php": {
-        "size": 5282,
-        "hash": "f29ee0f19b5e14dec2a3f31b93aa287a",
-        "errors": false
-    },
-    "\/uninstall.php": {
-        "size": 299,
-        "hash": "b81d4b1ae86b30d0a24b44cfdd487cdf",
-        "errors": false
-    },
-    "\/wordpointsorg.php": {
-        "size": 905,
-        "hash": "2ddae5579d9dc19114ea12f3892e65c9",
-        "errors": false
-    }
+    "config_signature": "50004c7a59d855e646f34b5aa3dfcf00"
 }

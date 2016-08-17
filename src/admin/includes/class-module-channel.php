@@ -193,7 +193,7 @@ final class WordPoints_Module_Channel {
 
 			if ( wp_http_supports( array( 'ssl' ) ) ) {
 
-				$response = wp_remote_get( 'https://' . $this->url );
+				$response = wp_safe_remote_get( 'https://' . $this->url );
 
 				if ( ! is_wp_error( $response ) ) {
 

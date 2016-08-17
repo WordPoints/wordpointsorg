@@ -124,7 +124,7 @@ class WordPointsOrg_Module_Upgrader_Skin extends WP_Upgrader_Skin {
 
 		$update_actions = array(
 			'activate_module' => '<a href="' . esc_attr( wp_nonce_url( 'admin.php?page=wordpoints_modules&action=activate&amp;module=' . urlencode( $this->module ), "activate-module_{$this->module}" ) ) . '" target="_parent">' . esc_html__( 'Activate Module', 'wordpointsorg' ) . '</a>',
-			'modules_page'    => '<a href="' . esc_attr( self_admin_url( 'admin.php?page=wordpoints_modules' ) ) . '" target="_parent">' . esc_html__( 'Return to Modules page', 'wordpointsorg' ) . '</a>'
+			'modules_page'    => '<a href="' . esc_attr( self_admin_url( 'admin.php?page=wordpoints_modules' ) ) . '" target="_parent">' . esc_html__( 'Return to Modules page', 'wordpointsorg' ) . '</a>',
 		);
 
 		if (

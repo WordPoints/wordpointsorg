@@ -12,6 +12,8 @@
  * todo:
  * channel:     wordpoints.org
  * ID:          7
+ *
+ * @package Module_7
  */
 
 // Code here.

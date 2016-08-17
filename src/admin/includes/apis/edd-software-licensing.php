@@ -77,7 +77,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 * @param WordPoints_Module_Channel $channel   The channel to get module licenses
 	 *                                             for.
 	 * @param string                    $module_id The module's unique ID.
-	 * @param string $key                          The key for the specific piece of
+	 * @param string                    $key       The key for the specific piece of
 	 *                                             data to get.
 	 *
 	 * @return string[] {
@@ -120,7 +120,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *         @type string $license The license key.
 	 *         @type string $status  The license key's status.
 	 * }
-	 * @param string $key        The key for the specific piece of data to update.
+	 * @param string                    $key The key for the specific piece of data to update.
 	 */
 	public function update_module_license_data( $channel, $module_id, $data, $key = null ) {
 
@@ -251,8 +251,32 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 */
 	public function hooks() {
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'wordpoints_modules_list_table_items', array( $this, 'wordpoints_modules_list_table_items' ) );
+		add_filter( 'wordpoints_module_list_row_class', array( $this, 'wordpoints_module_list_row_class' ), 10, 3 );
 		add_action( 'wordpoints_after_module_row', array( $this, 'wordpoints_after_module_row' ), 10, 2 );
+	}
+
+	/**
+	 * Enqueue admin scripts and styles.
+	 *
+	 * @since 1.1.4
+	 *
+	 * @WordPress\action admin_enqueue_scripts Added by self::hooks().
+	 */
+	public function admin_enqueue_scripts() {
+
+		if ( isset( $_GET['page'] ) && 'wordpoints_modules' === $_GET['page'] ) {
+			wp_enqueue_style(
+				'wordpointsorg-admin-modules'
+				, wordpoints_modules_url(
+					'/admin/assets/css/modules.css'
+					, WORDPOINTSORG_DIR . '/wordpointsorg.php'
+				)
+				, array()
+				, WORDPOINTSORG_VERSION
+			);
+		}
 	}
 
 	/**
@@ -283,20 +307,27 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 
 			$url = sanitize_title_with_dashes( $channel->url );
 
-			if ( isset( $_POST[ "license_key-{$url}-{$module['ID']}" ] ) ) {
+			if (
+				isset(
+					$_POST[ "edd-activate-license-{$module['ID']}" ]
+					, $_POST[ "wordpoints_activate_license_key-{$module['ID']}" ]
+					, $_POST[ "license_key-{$url}-{$module['ID']}" ]
+				)
+				&& wordpoints_verify_nonce(
+					"wordpoints_activate_license_key-{$module['ID']}"
+					, "wordpoints_activate_license_key-{$module['ID']}"
+					, null
+					, 'post'
+				)
+			) {
 
 				$this->update_module_license_data(
 					$channel
 					, $module['ID']
-					, 'license'
 					, sanitize_key( $_POST[ "license_key-{$url}-{$module['ID']}" ] )
+					, 'license'
 				);
-			}
 
-			if (
-				isset( $_POST['edd-activate-license'], $_POST[ "wordpoints_activate_license_key-{$module['ID']}" ] )
-				&& wp_verify_nonce( $_POST[ "wordpoints_activate_license_key-{$module['ID']}" ], "wordpoints_activate_license_key-{$module['ID']}" )
-			) {
 				$result = $this->activate_license( $channel, $module );
 
 				if ( false === $result ) {
@@ -308,8 +339,16 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				}
 
 			} elseif (
-				isset( $_POST['edd-deactivate-license'], $_POST[ "wordpoints_deactivate_license_key-{$module['ID']}" ] )
-				&& wp_verify_nonce( $_POST[ "wordpoints_deactivate_license_key-{$module['ID']}" ], "wordpoints_deactivate_license_key-{$module['ID']}" )
+				isset(
+					$_POST[ "edd-deactivate-license-{$module['ID']}" ]
+					, $_POST[ "wordpoints_deactivate_license_key-{$module['ID']}" ]
+				)
+				&& wordpoints_verify_nonce(
+					"wordpoints_deactivate_license_key-{$module['ID']}"
+					, "wordpoints_deactivate_license_key-{$module['ID']}"
+					, null
+					, 'post'
+				)
 			) {
 
 				$result = $this->deactivate_license( $channel, $module );
@@ -325,6 +364,47 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 		}
 
 		return $modules;
+	}
+
+	/**
+	 * Filter the classes for a row in the WordPoints modules list table.
+	 *
+	 * @since 1.1.4
+	 *
+	 * @WordPress\filter wordpoints_module_list_row_class Added by self::hooks().
+	 *
+	 * @param string $classes     The HTML classes for this module row.
+	 * @param string $module_file The module file.
+	 * @param array  $module_data The module data.
+	 *
+	 * @return string The filtered classes.
+	 */
+	public function wordpoints_module_list_row_class( $classes, $module_file, $module_data ) {
+
+		// Add license information if this user is allowed to see it.
+		if ( ! empty( $module_data['ID'] ) && current_user_can( 'update_wordpoints_modules' ) ) {
+
+			$channel = wordpoints_get_channel_for_module( $module_data );
+			$channel = WordPoints_Module_Channels::get( $channel );
+
+			if ( $channel && $this === $channel->get_api() ) {
+
+				$classes .= ' wordpoints-has-edd-license wordpoints-has-license';
+
+				$license_data = array_merge(
+					array( 'status' => false, 'license' => false )
+					, $this->get_module_license_data( $channel, $module_data['ID'] )
+				);
+
+				if ( $license_data['status'] ) {
+					$classes .= ' ' . sanitize_html_class(
+						'wordpoints-license-' . $license_data['status']
+					);
+				}
+			}
+		}
+
+		return $classes;
 	}
 
 	/**
@@ -355,8 +435,9 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 		$channel_url = sanitize_title_with_dashes( $channel->url );
 
 		?>
-		<tr>
-			<td colspan="<?php echo (int) WordPoints_Modules_List_Table::instance()->get_column_count(); ?>" style="border-bottom: 1px solid #ddd;" class="colspanchange">
+		<tr class="wordpoints-module-license-tr plugin-update-tr <?php echo ( is_wordpoints_module_active( $module_file ) ) ? 'active' : 'inactive'; ?>">
+			<td colspan="<?php echo (int) WordPoints_Modules_List_Table::instance()->get_column_count(); ?>" class="colspanchange">
+				<div class="wordpoints-license-box">
 				<label class="description" for="license_key-<?php echo esc_attr( $channel_url ); ?>-<?php echo esc_attr( $module_data['ID'] ); ?>">
 					<?php esc_html_e( 'License key', 'wordpointsorg' ); ?>
 				</label>
@@ -371,11 +452,12 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				<?php if ( false !== $license_data['license'] && 'valid' === $license_data['status'] ) : ?>
 					<span style="color:green;"><?php esc_html_e( 'active', 'wordpointsorg' ); ?></span>
 					<?php wp_nonce_field( "wordpoints_deactivate_license_key-{$module_data['ID']}", "wordpoints_deactivate_license_key-{$module_data['ID']}" ); ?>
-					<input type="submit" name="edd-deactivate-license" class="button-secondary" value="<?php esc_attr_e( 'Deactivate License', 'wordpointsorg' ); ?>" />
+					<input type="submit" name="edd-deactivate-license-<?php echo esc_attr( $module_data['ID'] ); ?>" class="button-secondary" value="<?php esc_attr_e( 'Deactivate License', 'wordpointsorg' ); ?>" />
 				<?php else : ?>
 					<?php wp_nonce_field( "wordpoints_activate_license_key-{$module_data['ID']}", "wordpoints_activate_license_key-{$module_data['ID']}" ); ?>
-					<input type="submit" name="edd-activate-license"  class="button-secondary" value="<?php esc_attr_e( 'Activate License', 'wordpointsorg' ); ?>" />
+					<input type="submit" name="edd-activate-license-<?php echo esc_attr( $module_data['ID'] ); ?>"  class="button-secondary" value="<?php esc_attr_e( 'Activate License', 'wordpointsorg' ); ?>" />
 				<?php endif; ?>
+				</div>
 			</td>
 		</tr>
 		<?php
@@ -584,7 +666,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 
 		$args = array( 'timeout' => 15, 'body' => $params );
 
-		$response = wp_remote_post( $channel->get_full_url(), $args );
+		$response = wp_safe_remote_post( $channel->get_full_url(), $args );
 
 		if ( is_wp_error( $response ) ) {
 			return false;
@@ -598,7 +680,9 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			&& is_string( $response['sections'] )
 			&& 1 !== preg_match( '~O:\d~', $response['sections'] ) // No object injection.
 		) {
+			// @codingStandardsIgnoreStart
 			$response['sections'] = maybe_unserialize( $response['sections'] );
+			// @codingStandardsIgnoreEnd
 		}
 
 		return $response;

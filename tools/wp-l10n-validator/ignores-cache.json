@@ -8,10 +8,19 @@
         "edd-software-licensing": {
             "20": false
         },
+        "wordpoints-has-edd-license wordpoints-has-license": {
+            "392": false
+        },
+        "active": {
+            "438": false
+        },
+        "inactive": {
+            "438": false
+        },
         "-": {
-            "360": false,
-            "364": false,
-            "365": false
+            "441": false,
+            "445": false,
+            "446": false
         }
     },
     "\/admin\/includes\/class-module-channel.php": {
@@ -41,7 +50,7 @@
     },
     "\/admin\/includes\/functions.php": {
         "bulk-update-modules": {
-            "286": {
+            "287": {
                 "name": "array",
                 "type": "unknown",
                 "args_started": true,
@@ -50,7 +59,7 @@
             }
         },
         "update.php?action=update-selected-wordpoints-modules&amp;modules=": {
-            "287": {
+            "288": {
                 "name": "array",
                 "type": "unknown",
                 "args_started": true,
@@ -59,7 +68,7 @@
             }
         },
         "update.php?action=wordpoints-upgrade-module&module=": {
-            "326": {
+            "329": {
                 "name": "array",
                 "type": "unknown",
                 "args_started": true,
@@ -68,21 +77,32 @@
             }
         },
         "channel": {
-            "390": false
+            "393": false
         },
         "upgrade": {
-            "407": false
+            "410": false
         },
         "update": {
-            "506": false
+            "509": false
+        },
+        "active": {
+            "589": false
+        },
+        "inactive": {
+            "589": false
         }
     },
     "\/includes\/functions.php": {
         "default": {
-            "130": false
+            "132": false
         },
         ",": {
-            "220": false
+            "223": false
+        }
+    },
+    "\/includes\/class-un-installer.php": {
+        "WordPointsOrg_Un_Installer": {
+            "109": false
         }
     }
 }

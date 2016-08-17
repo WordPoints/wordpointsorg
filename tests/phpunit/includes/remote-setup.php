@@ -120,7 +120,7 @@ abstract class WordPointsOrg_Tests_Remote_Simulator {
 	 *
 	 * @WordPress\action shutdown Added by the constructor.
 	 */
-	function shutdown () {
+	public function shutdown() {
 		$this->stop();
 	}
 }

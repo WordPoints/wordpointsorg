@@ -56,7 +56,7 @@ final class WordPoints_Module_APIs extends WordPoints_Container_Static {
 	 *
 	 * @see WordPoints_Container::_remove()
 	 */
-	public static function deregister( $slug) {
+	public static function deregister( $slug ) {
 		return self::$instance->_remove( $slug );
 	}
 

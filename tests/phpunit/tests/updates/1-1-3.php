@@ -41,6 +41,8 @@ class WordPointsOrg_Updates_1_1_3_Test extends WordPoints_PHPUnit_TestCase {
 	 */
 	public function test_imports_options() {
 
+		$this->markTestSkipped( 'See https://github.com/WordPoints/wordpointsorg/issues/55' );
+
 		update_site_option( 'wordpointsorg_installed_sites', array( 1, 5 ) );
 		update_site_option( 'wordpointsorg_network_installed', true );
 

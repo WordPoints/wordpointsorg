@@ -8,6 +8,8 @@
  * Version:     1.0.0
  * License:     GPLv2+
  * Description: Description.
+ *
+ * @package Module_8
  */
 
 // Code here.

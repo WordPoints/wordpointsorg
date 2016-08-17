@@ -195,7 +195,7 @@ add_filter( 'wp_kses_allowed_html', 'wordpointsorg_module_changelog_allowed_html
  *
  * @since 1.1.0
  *
- * @param array $update_data
+ * @param array $update_data The update data.
  *
  * @return array
  */
@@ -219,7 +219,11 @@ function wordpoints_module_update_counts( $update_data ) {
 				, $update_data['counts']['wordpoints_modules']
 			);
 
-			$update_data['title'] .= ', ' . esc_attr( $title );
+			if ( ! empty( $update_data['title'] ) ) {
+				$update_data['title'] .= ', ';
+			}
+
+			$update_data['title'] .= esc_attr( $title );
 		}
 	}
 

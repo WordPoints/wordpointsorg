@@ -69,6 +69,11 @@ class WordPoints_Check_For_Module_Updates_Test extends WordPointsOrg_HTTP_UnitTe
 		parent::tearDown();
 	}
 
+	/**
+	 * Returns the module API header for a request.
+	 *
+	 * @since 1.0.0
+	 */
 	public function respond_get_channel_api_header( $request, $url ) {
 
 		if ( false !== strpos( $url, 'wordpoints.org' ) ) {
@@ -163,8 +168,8 @@ class WordPoints_Check_For_Module_Updates_Test extends WordPointsOrg_HTTP_UnitTe
 			'wordpoints_edd_sl_module_licenses'
 			, array(
 				'wordpoints.org' => array(
-					'7' => array( 'license' => 'lkdjljlkj', 'status' => 'valid' )
-				)
+					'7' => array( 'license' => 'lkdjljlkj', 'status' => 'valid' ),
+				),
 			)
 		);
 
@@ -190,6 +195,11 @@ class WordPoints_Check_For_Module_Updates_Test extends WordPointsOrg_HTTP_UnitTe
 		$this->assertGreaterThanOrEqual( time() - 1, $cache['last_checked'] );
 	}
 
+	/**
+	 * Responds to a request with the version number.
+	 *
+	 * @since 1.0.0
+	 */
 	public function respond_get_version( $request, $url ) {
 
 		if (
@@ -198,7 +208,7 @@ class WordPoints_Check_For_Module_Updates_Test extends WordPointsOrg_HTTP_UnitTe
 		) {
 
 			return array(
-				'body' => json_encode( array( 'new_version' => '1.1.0' ) )
+				'body' => wp_json_encode( array( 'new_version' => '1.1.0' ) ),
 			);
 
 		} else {

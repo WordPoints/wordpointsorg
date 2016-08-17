@@ -78,6 +78,11 @@ class WordPoints_Register_Module_Channels_Test
 		$this->assertArrayHasKey( 'module-7/module-7.php', $modules );
 	}
 
+	/**
+	 * Responds to a request with the module API header.
+	 *
+	 * @since 1.0.0
+	 */
 	public function respond_get_module_supporting_updates( $request, $url ) {
 
 		if ( false !== strpos( $url, 'wordpoints.org' ) ) {
