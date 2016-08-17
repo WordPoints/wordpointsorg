@@ -397,7 +397,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				);
 
 				if ( $license_data['status'] ) {
-					$classes .= ' '. sanitize_html_class(
+					$classes .= ' ' . sanitize_html_class(
 						'wordpoints-license-' . $license_data['status']
 					);
 				}
