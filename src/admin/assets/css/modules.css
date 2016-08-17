@@ -4,6 +4,10 @@
  * @since 1.1.4
  */
 
+.plugins tr.active.plugin-update-tr + tr.inactive.wordpoints-has-edd-license th,
+.plugins tr.active.plugin-update-tr + tr.inactive.wordpoints-has-edd-license td,
+.plugins tr.active + tr.inactive.wordpoints-has-edd-license th,
+.plugins tr.active + tr.inactive.wordpoints-has-edd-license td,
 .plugins tr.update + .wordpoints-module-license-tr td,
 .modules .wordpoints-has-edd-license th,
 .modules .wordpoints-has-edd-license td {
