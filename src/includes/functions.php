@@ -195,7 +195,7 @@ add_filter( 'wp_kses_allowed_html', 'wordpointsorg_module_changelog_allowed_html
  *
  * @since 1.1.0
  *
- * @param array $update_data
+ * @param array $update_data The update data.
  *
  * @return array
  */

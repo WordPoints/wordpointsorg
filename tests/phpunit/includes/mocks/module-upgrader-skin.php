@@ -50,18 +50,30 @@ class WordPointsOrg_Tests_Module_Upgrader_Skin extends WordPointsOrg_Module_Upgr
 	 */
 	public $feedback;
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function header() {
 		$this->header_shown++;
 	}
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function footer() {
 		$this->footer_shown++;
 	}
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function error( $errors ) {
 		$this->errors[] = $errors;
 	}
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function feedback( $string ) {
 		$this->feedback[] = $string;
 	}

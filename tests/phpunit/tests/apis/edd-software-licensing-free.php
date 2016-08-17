@@ -51,7 +51,7 @@ class WordPointsOrg_EDD_Software_Licensing_Free_Module_API_Test
 		update_site_option(
 			'wordpoints_edd_sl_module_info'
 			, array(
-				$this->channel->url => array( '124' => array( 'is_free' => true ) )
+				$this->channel->url => array( '124' => array( 'is_free' => true ) ),
 			)
 		);
 
@@ -70,7 +70,7 @@ class WordPointsOrg_EDD_Software_Licensing_Free_Module_API_Test
 		update_site_option(
 			'wordpoints_edd_sl_module_info'
 			, array(
-				$this->channel->url => array( '123' => array( 'version' => '3' ) )
+				$this->channel->url => array( '123' => array( 'version' => '3' ) ),
 			)
 		);
 

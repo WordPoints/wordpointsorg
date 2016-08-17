@@ -94,7 +94,19 @@ class WordPoints_Container_Test extends WP_UnitTestCase {
 }
 
 if ( class_exists( 'WordPoints_Container_Object' ) ) {
+
+	/**
+	 * Mock for use in the object container tests.
+	 *
+	 * @since 1.0.0
+	 */
 	class WordPoints_Container_Object_Test extends WordPoints_Container_Object {}
+
+	/**
+	 * Mock for use in the object container tests.
+	 *
+	 * @since 1.0.0
+	 */
 	class WordPoints_Container_Static_Test extends WordPoints_Container_Static {}
 }
 

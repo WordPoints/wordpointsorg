@@ -34,14 +34,6 @@ class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 	//
 
 	/**
-	 * @since 1.0.0
-	 */
-	public function __construct( $args = array() ) {
-
-		parent::__construct( $args );
-	}
-
-	/**
 	 * Add the string's skins.
 	 *
 	 * @since 1.0.0
@@ -79,7 +71,7 @@ class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 
 		$update_actions = array(
 			'modules_page' => '<a href="' . esc_attr( esc_url( self_admin_url( 'admin.php?page=wordpoints_modules' ) ) ) . '" target="_parent">' . esc_html__( 'Return to Modules page', 'wordpointsorg' ) . '</a>',
-			'updates_page' => '<a href="' . esc_attr( esc_url( self_admin_url( 'update-core.php' ) ) ) . '" target="_parent">' . esc_html__( 'Return to WordPress Updates', 'wordpointsorg' ) . '</a>'
+			'updates_page' => '<a href="' . esc_attr( esc_url( self_admin_url( 'update-core.php' ) ) ) . '" target="_parent">' . esc_html__( 'Return to WordPress Updates', 'wordpointsorg' ) . '</a>',
 		);
 
 		if ( ! current_user_can( 'activate_wordpoints_modules' ) ) {

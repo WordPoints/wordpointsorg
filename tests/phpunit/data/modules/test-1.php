@@ -12,6 +12,8 @@
  * Channel:     github.com/WordPoints
  * channel:     github.com/WordPoints
  * ID:          test-1
+ *
+ * @package Module_1
  */
 
 // Code here.

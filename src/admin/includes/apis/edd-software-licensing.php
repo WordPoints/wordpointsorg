@@ -77,7 +77,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 * @param WordPoints_Module_Channel $channel   The channel to get module licenses
 	 *                                             for.
 	 * @param string                    $module_id The module's unique ID.
-	 * @param string $key                          The key for the specific piece of
+	 * @param string                    $key       The key for the specific piece of
 	 *                                             data to get.
 	 *
 	 * @return string[] {
@@ -120,7 +120,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 *         @type string $license The license key.
 	 *         @type string $status  The license key's status.
 	 * }
-	 * @param string $key        The key for the specific piece of data to update.
+	 * @param string                    $key The key for the specific piece of data to update.
 	 */
 	public function update_module_license_data( $channel, $module_id, $data, $key = null ) {
 
@@ -666,7 +666,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 
 		$args = array( 'timeout' => 15, 'body' => $params );
 
-		$response = wp_remote_post( $channel->get_full_url(), $args );
+		$response = wp_safe_remote_post( $channel->get_full_url(), $args );
 
 		if ( is_wp_error( $response ) ) {
 			return false;
@@ -680,7 +680,9 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 			&& is_string( $response['sections'] )
 			&& 1 !== preg_match( '~O:\d~', $response['sections'] ) // No object injection.
 		) {
+			// @codingStandardsIgnoreStart
 			$response['sections'] = maybe_unserialize( $response['sections'] );
+			// @codingStandardsIgnoreEnd
 		}
 
 		return $response;

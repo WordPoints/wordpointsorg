@@ -193,7 +193,8 @@ function wordpoints_check_for_module_updates( $timeout = null ) {
 
 	if ( isset( $current['last_checked'] ) && $timeout > ( time() - $current['last_checked'] ) ) {
 
-		/* We have checked recently, so let's see if any module versions have
+		/*
+		 * We have checked recently, so let's see if any module versions have
 		 * changed since the last check, and if not, we'll bail out.
 		 */
 
@@ -269,7 +270,7 @@ function wordpointsorg_update_modules() {
 	$modules = array();
 
 	if ( isset( $_GET['modules'] ) ) {
-		$modules = explode( ',', wp_unslash( sanitize_text_field( $_GET['modules'] ) ) );
+		$modules = explode( ',', sanitize_text_field( wp_unslash( $_GET['modules'] ) ) );
 	}
 
 	$modules = array_map( 'urldecode', $modules );
@@ -306,7 +307,9 @@ function wordpointsorg_upgrade_module() {
 		wp_die( esc_html__( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
 	}
 
-	$module = ( isset( $_REQUEST['module'] ) ) ? $_REQUEST['module'] : '';
+	$module = ( isset( $_REQUEST['module'] ) )
+		? sanitize_text_field( wp_unslash( $_REQUEST['module'] ) )
+		: '';
 
 	check_admin_referer( 'upgrade-module_' . $module );
 
@@ -349,9 +352,9 @@ function wordpointsorg_update_selected_modules() {
 	check_admin_referer( 'bulk-modules' );
 
 	if ( isset( $_GET['modules'] ) ) {
-		$modules = explode( ',', $_GET['modules'] );
+		$modules = explode( ',', sanitize_text_field( wp_unslash( $_GET['modules'] ) ) );
 	} elseif ( isset( $_POST['checked'] ) ) {
-		$modules = (array) $_POST['checked'];
+		$modules = array_map( 'sanitize_text_field', wp_unslash( (array) $_POST['checked'] ) );
 	} else {
 		$modules = array();
 	}
@@ -574,7 +577,7 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 			'acronym' => array( 'title' => array() ),
 			'code' => array(),
 			'em' => array(),
-			'strong' => array()
+			'strong' => array(),
 		);
 
 		$details_url = admin_url(
@@ -659,7 +662,7 @@ function wordpointsorg_iframe_module_changelog() {
 		wp_die( esc_html__( 'No module supplied.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
 	}
 
-	$module_file = sanitize_text_field( urldecode( $_GET['module'] ) );
+	$module_file = sanitize_text_field( urldecode( wp_unslash( $_GET['module'] ) ) ); // WPCS: sanitization OK.
 
 	$modules = wordpoints_get_modules();
 
@@ -789,7 +792,7 @@ function wordpoints_list_module_updates() {
 						<input type="checkbox" id="wordpoints-modules-select-all-2" />
 					</td>
 					<th scope="col" class="manage-column">
-						<label for="wordpoints-modules-select-all-2"><?php _e( 'Select All', 'wordpointsorg' ); ?></label>
+						<label for="wordpoints-modules-select-all-2"><?php esc_html_e( 'Select All', 'wordpointsorg' ); ?></label>
 					</th>
 				</tr>
 			</tfoot>

@@ -68,30 +68,54 @@ class WordPointsOrg_Tests_Module_Bulk_Upgrader_Skin extends WordPointsOrg_Bulk_M
 	 */
 	public $feedback;
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function header() {
 		$this->header_shown++;
 	}
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function bulk_header() {
 		$this->bulk_header_shown++;
 	}
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function footer() {
 		$this->footer_shown++;
 	}
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function bulk_footer() {
 		$this->bulk_footer_shown++;
 	}
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function before( $title = '' ) {}
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function after( $title = '' ) {}
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function error( $errors ) {
 		$this->errors[] = $errors;
 	}
 
+	/**
+	 * @since 1.0.0
+	 */
 	public function feedback( $string ) {
 		$this->feedback[] = $string;
 	}

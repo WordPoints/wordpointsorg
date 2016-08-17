@@ -39,7 +39,7 @@ class WordPointsOrg_Module_Upgrader_Install_Test extends WordPointsOrg_Module_Up
 		global $wp_filesystem;
 
 		if ( $wp_filesystem && $wp_filesystem->exists( wordpoints_modules_dir() . '/' . $this->package_name ) ) {
-			$wp_filesystem->delete( wordpoints_modules_dir() . '/' .  $this->package_name, true );
+			$wp_filesystem->delete( wordpoints_modules_dir() . '/' . $this->package_name, true );
 		}
 
 		parent::tearDown();

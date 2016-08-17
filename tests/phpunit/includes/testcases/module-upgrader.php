@@ -155,6 +155,16 @@ abstract class WordPointsOrg_Module_Upgrader_UnitTestCase extends WordPointsOrg_
 		return $package_name . '.zip';
 	}
 
+	/**
+	 * Responds to HTTP requests.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array  $request The request data.
+	 * @param string $url     The URL.
+	 *
+	 * @return array The response.
+	 */
 	public function http_responder( $request, $url ) {
 
 		if ( 'HEAD' === $request['method'] && 'https://wordpoints.org' === $url ) {
@@ -174,7 +184,7 @@ abstract class WordPointsOrg_Module_Upgrader_UnitTestCase extends WordPointsOrg_
 
 			return array(
 				'response' => array(
-					'body' => json_encode(
+					'body' => wp_json_encode(
 						array(
 							'new_version'   => '1.0.1',
 							'name'          => 'Module 7',
