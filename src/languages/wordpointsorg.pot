@@ -252,7 +252,7 @@ msgid "WordPoints"
 msgstr ""
 
 #. Author URI of the module
-msgid "http://wordpoints.org/"
+msgid "https://wordpoints.org/"
 msgstr ""
 
 #. Module Name of the module
@@ -260,5 +260,5 @@ msgid "WordPoints.org Modules"
 msgstr ""
 
 #. Module URI of the module
-msgid "http://wordpoints.org/modules/wordpoints-org/"
+msgid "https://wordpoints.org/modules/wordpoints-org/"
 msgstr ""

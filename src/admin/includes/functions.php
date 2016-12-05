@@ -640,7 +640,8 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 		</tr>
 
 		<?php
-	}
+
+	} // End if ( is_network_admin() || ! is_multisite() ).
 }
 
 /**

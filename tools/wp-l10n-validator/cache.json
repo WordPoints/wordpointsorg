@@ -11,8 +11,8 @@
             "errors": false
         },
         "\/admin\/includes\/apis\/edd-software-licensing.php": {
-            "size": 20115,
-            "hash": "1ee05936abf4bc4d05cd90d20be8e103",
+            "size": 20116,
+            "hash": "9b01bae6cc714691ed8c1f2d554e23e1",
             "errors": false
         },
         "\/admin\/includes\/class-bulk-module-upgrader-skin.php": {
@@ -71,5 +71,5 @@
             "errors": false
         }
     },
-    "config_signature": "50004c7a59d855e646f34b5aa3dfcf00"
+    "config_signature": "c3b6985eed6e2932c09bfa8dd0c1fb43"
 }

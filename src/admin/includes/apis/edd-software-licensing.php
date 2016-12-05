@@ -360,8 +360,10 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 				} else {
 					wordpoints_show_admin_message( esc_html__( 'License deactivated.', 'wordpointsorg' ) );
 				}
-			}
-		}
+
+			} // End if ( activating license ) elseif ( deactivating license ).
+
+		} // End foreach ( $modules['all'] as $module ).
 
 		return $modules;
 	}

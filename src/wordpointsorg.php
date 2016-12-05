@@ -12,8 +12,8 @@ WordPoints_Modules::register(
 	'
 		Module Name: WordPoints.org Modules
 		Author:      WordPoints
-		Author URI:  http://wordpoints.org/
-		Module URI:  http://wordpoints.org/modules/wordpoints-org/
+		Author URI:  https://wordpoints.org/
+		Module URI:  https://wordpoints.org/modules/wordpoints-org/
 		Version:     1.1.4
 		License:     GPLv2+
 		Description: Update modules from WordPoints.org through your admin panel.
