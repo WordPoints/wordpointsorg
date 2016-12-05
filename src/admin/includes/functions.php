@@ -262,7 +262,7 @@ add_action( 'wordpoints_check_for_module_updates', 'wordpoints_check_for_module_
 function wordpointsorg_update_modules() {
 
 	if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
-		wp_die( esc_html__( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
+		wp_die( esc_html__( 'Sorry, you are not allowed to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
 	}
 
 	check_admin_referer( 'bulk-update-modules' );
@@ -304,7 +304,7 @@ add_action( 'update-custom_update-selected-wordpoints-modules', 'wordpointsorg_u
 function wordpointsorg_upgrade_module() {
 
 	if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
-		wp_die( esc_html__( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
+		wp_die( esc_html__( 'Sorry, you are not allowed to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
 	}
 
 	$module = ( isset( $_REQUEST['module'] ) )
@@ -346,7 +346,7 @@ add_action( 'update-custom_wordpoints-upgrade-module', 'wordpointsorg_upgrade_mo
 function wordpointsorg_update_selected_modules() {
 
 	if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
-		wp_die( esc_html__( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
+		wp_die( esc_html__( 'Sorry, you are not allowed to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
 	}
 
 	check_admin_referer( 'bulk-modules' );
@@ -656,7 +656,7 @@ function wordpointsorg_iframe_module_changelog() {
 	}
 
 	if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
-		wp_die( esc_html__( 'You do not have sufficient permissions to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
+		wp_die( esc_html__( 'Sorry, you are not allowed to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
 	}
 
 	if ( empty( $_GET['module'] ) ) {
