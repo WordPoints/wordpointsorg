@@ -11,15 +11,8 @@
  * Test that the module installs and uninstalls itself properly.
  *
  * @since 1.0.0
- *
- * @group uninstall
  */
-class WordPointsOrg_Uninstall_Test extends WordPoints_Module_Uninstall_UnitTestCase {
-
-	/**
-	 * @since 1.1.3
-	 */
-	protected $module_file = 'wordpointsorg/wordpointsorg.php';
+class WordPointsOrg_Uninstall_Test extends WordPoints_Dev_Lib_PHPUnit_TestCase_Module_Uninstall {
 
 	/**
 	 * Test that install and uninstall work as expected.

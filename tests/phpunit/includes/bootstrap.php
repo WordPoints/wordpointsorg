@@ -7,15 +7,11 @@
  * @since 1.0.0
  */
 
-/**
- * The WP HTTP testcase bootstrap.
- *
- * @since 1.1.0
- */
-require_once WORDPOINTSORG_TESTS_DIR . '/../../vendor/jdgrimes/wp-http-testcase/wp-http-testcase.php';
+if ( ! WordPoints_PHPUnit_Bootstrap_Loader::instance()->running_uninstall_tests() ) {
 
-if ( ! running_wordpoints_module_uninstall_tests() ) {
 	WP_HTTP_TestCase::init();
+
+	add_filter( 'wordpoints_modules_dir', 'wordpointsorgtests_modules_dir', 20 );
 }
 
 /**

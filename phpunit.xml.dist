@@ -8,9 +8,4 @@
 			<directory suffix=".php">tests/phpunit/tests/</directory>
 		</testsuite>
 	</testsuites>
-	<groups>
-		<exclude>
-			<group>uninstall</group>
-		</exclude>
-	</groups>
 </phpunit>

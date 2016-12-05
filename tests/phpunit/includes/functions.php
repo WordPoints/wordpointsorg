@@ -19,11 +19,6 @@ define( 'WORDPOINTSORG_TESTS_DIR', dirname( dirname( __FILE__ ) ) );
 /**
  * @since 1.1.0
  */
-define( 'WORDPOINTS_TESTS_LOAD_MODULE_ADMIN', WORDPOINTSORG_TESTS_DIR . '/../../src/admin/admin.php' );
-
-/**
- * @since 1.1.0
- */
 define( 'WP_HTTP_TC_CACHE_DIR', WORDPOINTSORG_TESTS_DIR . '/cache/wp-http-tc' );
 
 /**
@@ -52,10 +47,6 @@ function wordpointsorgtests_manually_load_module() {
 function wordpointsorgtests_modules_dir() {
 
 	return WORDPOINTSORG_TESTS_DIR . '/data/modules/';
-}
-
-if ( ! running_wordpoints_module_uninstall_tests() ) {
-	tests_add_filter( 'wordpoints_modules_dir', 'wordpointsorgtests_modules_dir', 20 );
 }
 
 // EOF
