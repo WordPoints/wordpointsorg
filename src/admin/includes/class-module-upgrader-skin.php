@@ -101,7 +101,7 @@ class WordPointsOrg_Module_Upgrader_Skin extends WP_Upgrader_Skin {
 
 			?>
 
-			<iframe style="border: 0; overflow: hidden;" width="100%" height="170px" src="<?php echo esc_attr( $url ); ?>"></iframe>
+			<iframe style="border: 0; overflow: hidden;" width="100%" height="170px" src="<?php echo esc_url( $url ); ?>"></iframe>
 
 			<?php
 		}
@@ -123,8 +123,8 @@ class WordPointsOrg_Module_Upgrader_Skin extends WP_Upgrader_Skin {
 	public function get_module_update_actions() {
 
 		$update_actions = array(
-			'activate_module' => '<a href="' . esc_attr( wp_nonce_url( self_admin_url( 'admin.php?page=wordpoints_modules&action=activate&amp;module=' . urlencode( $this->module ) ), "activate-module_{$this->module}" ) ) . '" target="_parent">' . esc_html__( 'Activate Module', 'wordpointsorg' ) . '</a>',
-			'modules_page'    => '<a href="' . esc_attr( self_admin_url( 'admin.php?page=wordpoints_modules' ) ) . '" target="_parent">' . esc_html__( 'Return to Modules page', 'wordpointsorg' ) . '</a>',
+			'activate_module' => '<a href="' . esc_url( wp_nonce_url( self_admin_url( 'admin.php?page=wordpoints_modules&action=activate&amp;module=' . urlencode( $this->module ) ), "activate-module_{$this->module}" ) ) . '" target="_parent">' . esc_html__( 'Activate Module', 'wordpointsorg' ) . '</a>',
+			'modules_page'    => '<a href="' . esc_url( self_admin_url( 'admin.php?page=wordpoints_modules' ) ) . '" target="_parent">' . esc_html__( 'Return to Modules page', 'wordpointsorg' ) . '</a>',
 		);
 
 		if (

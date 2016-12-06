@@ -371,7 +371,7 @@ function wordpointsorg_update_selected_modules() {
 	<div class="wrap">
 		<h1><?php esc_html_e( 'Update Modules', 'wordpointsorg' ); ?></h1>
 
-		<iframe src="<?php echo esc_attr( $url ); ?>" style="width: 100%; height:100%; min-height:850px;"></iframe>
+		<iframe src="<?php echo esc_url( $url ); ?>" style="width: 100%; height:100%; min-height:850px;"></iframe>
 	</div>
 
 	<?php
@@ -600,7 +600,7 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 								, array( 'a' => array( 'href' => array(), 'class' => array(), 'title' => array() ) )
 							)
 							, wp_kses( $module_data['name'], $modules_allowed_tags )
-							, esc_attr( esc_url( $details_url ) )
+							, esc_url( $details_url )
 							, esc_attr( wp_kses( $module_data['name'], $modules_allowed_tags ) )
 							, esc_html( $new_version )
 						);
@@ -614,7 +614,7 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 							, esc_url( $details_url )
 							, esc_attr( wp_kses( $module_data['name'], $modules_allowed_tags ) )
 							, esc_html( $new_version )
-							, esc_attr( wp_nonce_url( self_admin_url( 'update.php?action=wordpoints-upgrade-module&module=' ) . $file, 'upgrade-module_' . $file ) )
+							, esc_url( wp_nonce_url( self_admin_url( 'update.php?action=wordpoints-upgrade-module&module=' ) . $file, 'upgrade-module_' . $file ) )
 						);
 					}
 
@@ -778,7 +778,7 @@ function wordpoints_list_module_updates() {
 								<strong><?php echo esc_html( $module_data['name'] ); ?></strong>
 								<br />
 								<?php echo esc_html( sprintf( __( 'You have version %1$s installed. Update to %2$s.', 'wordpointsorg' ), $module_data['version'], $module_data['new_version'] ) ); ?>
-								<a href="<?php echo esc_attr( self_admin_url( 'update.php?action=wordpoints-iframe-module-changelog&module=' . urlencode( $module_file ) . '&TB_iframe=true&width=640&height=662' ) ); ?>" class="thickbox" title="<?php echo esc_attr( $module_data['name'] ); ?>">
+								<a href="<?php echo esc_url( self_admin_url( 'update.php?action=wordpoints-iframe-module-changelog&module=' . urlencode( $module_file ) . '&TB_iframe=true&width=640&height=662' ) ); ?>" class="thickbox" title="<?php echo esc_attr( $module_data['name'] ); ?>">
 									<?php echo esc_html( sprintf( __( 'View version %1$s details.', 'wordpointsorg' ), $module_data['new_version'] ) ); ?>
 								</a>
 							</p>
