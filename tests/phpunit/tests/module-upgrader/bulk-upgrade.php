@@ -163,7 +163,12 @@ class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test
 
 		$this->assertSame( array( 'module-8/module-8.php' => true ), $result );
 		$this->assertCount( 0, $this->skin->errors );
-		$this->assertSame( 'up_to_date', $this->skin->feedback[0] );
+
+		if ( is_multisite() ) {
+			$this->assertSame( 'up_to_date', $this->skin->feedback[1] );
+		} else {
+			$this->assertSame( 'up_to_date', $this->skin->feedback[0] );
+		}
 	}
 
 	//
