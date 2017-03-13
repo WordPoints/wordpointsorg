@@ -62,7 +62,7 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 
 		$licenses = $this->add_module_licenses_option();
 
-		$this->assertEquals( $licenses, $this->api->get_licenses() );
+		$this->assertSame( $licenses, $this->api->get_licenses() );
 	}
 
 	/**
@@ -76,7 +76,7 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 
 		$licenses = $this->add_module_licenses_option();
 
-		$this->assertEquals(
+		$this->assertSame(
 			$licenses[ $this->channel->url ]
 			, $this->api->get_licenses( $this->channel )
 		);
@@ -91,7 +91,7 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 	 */
 	public function test_get_nonexistant_channel_licenses() {
 
-		$this->assertEquals( array(), $this->api->get_licenses( $this->channel ) );
+		$this->assertSame( array(), $this->api->get_licenses( $this->channel ) );
 	}
 
 	/**
@@ -107,12 +107,12 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 
 		$this->api->update_licenses( $this->channel, $licenses );
 
-		$this->assertEquals(
+		$this->assertSame(
 			array( $this->channel->url => $licenses )
 			, get_site_option( 'wordpoints_edd_sl_module_licenses' )
 		);
 
-		$this->assertEquals( $licenses, $this->api->get_licenses( $this->channel ) );
+		$this->assertSame( $licenses, $this->api->get_licenses( $this->channel ) );
 	}
 
 	/**
@@ -126,7 +126,7 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 
 		$licenses = $this->add_module_licenses_option();
 
-		$this->assertEquals(
+		$this->assertSame(
 			$licenses[ $this->channel->url ]['123']
 			, $this->api->get_module_license_data( $this->channel, '123' )
 		);
@@ -143,7 +143,7 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 
 		$this->add_module_licenses_option();
 
-		$this->assertEquals(
+		$this->assertSame(
 			array()
 			, $this->api->get_module_license_data( $this->channel, '545' )
 		);
@@ -160,7 +160,7 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 
 		$licenses = $this->add_module_licenses_option();
 
-		$this->assertEquals(
+		$this->assertSame(
 			$licenses[ $this->channel->url ]['123']['status']
 			, $this->api->get_module_license_data( $this->channel, '123', 'status' )
 		);
@@ -168,15 +168,15 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 
 	/**
 	 * Test that get_module_license_data() returns null when getting a piece of data
-	 * for a nonexistant module.
+	 * for a nonexistent module.
 	 *
 	 * @since 1.1.0
 	 *
 	 * @covers WordPoints_EDD_Software_Licensing_Module_API::get_module_license_data
 	 */
-	public function test_get_nonexistant_modules_license_data_by_key() {
+	public function test_get_nonexistent_modules_license_data_by_key() {
 
-		$this->assertEquals(
+		$this->assertSame(
 			null
 			, $this->api->get_module_license_data( $this->channel, '123', 'status' )
 		);
@@ -184,15 +184,15 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 
 	/**
 	 * Test that get_module_license_data() returns null when getting a piece of data
-	 * for a nonexistant key.
+	 * for a nonexistent key.
 	 *
 	 * @since 1.1.0
 	 *
 	 * @covers WordPoints_EDD_Software_Licensing_Module_API::get_module_license_data
 	 */
-	public function test_get_module_license_data_by_nonexistant_key() {
+	public function test_get_module_license_data_by_nonexistent_key() {
 
-		$this->assertEquals(
+		$this->assertSame(
 			null
 			, $this->api->get_module_license_data( $this->channel, '123', 'none' )
 		);
@@ -211,12 +211,12 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 
 		$this->api->update_module_license_data( $this->channel, '123', $data );
 
-		$this->assertEquals(
+		$this->assertSame(
 			array( $this->channel->url => array( '123' => $data ) )
 			, get_site_option( 'wordpoints_edd_sl_module_licenses' )
 		);
 
-		$this->assertEquals(
+		$this->assertSame(
 			$data
 			, $this->api->get_module_license_data( $this->channel, '123' )
 		);
@@ -242,12 +242,12 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 
 		$licenses = get_site_option( 'wordpoints_edd_sl_module_licenses' );
 
-		$this->assertEquals(
+		$this->assertSame(
 			__METHOD__
 			, $licenses[ $this->channel->url ]['123']['license']
 		);
 
-		$this->assertEquals(
+		$this->assertSame(
 			__METHOD__
 			, $this->api->get_module_license_data( $this->channel, '123', 'license' )
 		);
@@ -346,9 +346,9 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 			, array( 'ID' => '123', 'name' => '' )
 		);
 
-		$this->assertEquals( 'valid', $result );
+		$this->assertSame( 'valid', $result );
 
-		$this->assertEquals(
+		$this->assertSame(
 			'valid'
 			, $this->api->get_module_license_data( $this->channel, '123', 'status' )
 		);
@@ -368,9 +368,9 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 			, array( 'ID' => '123', 'name' => '' )
 		);
 
-		$this->assertEquals( 'invalid', $result );
+		$this->assertSame( 'invalid', $result );
 
-		$this->assertEquals(
+		$this->assertSame(
 			'invalid'
 			, $this->api->get_module_license_data( $this->channel, '123', 'status' )
 		);
@@ -397,9 +397,9 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 			, array( 'ID' => '123', 'name' => '' )
 		);
 
-		$this->assertEquals( 'deactivated', $result );
+		$this->assertSame( 'deactivated', $result );
 
-		$this->assertEquals(
+		$this->assertSame(
 			'deactivated'
 			, $this->api->get_module_license_data( $this->channel, '123', 'status' )
 		);
@@ -426,11 +426,10 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 			, array( 'ID' => '123', 'name' => '' )
 		);
 
-		$this->assertEquals( 'failed', $result );
+		$this->assertSame( 'failed', $result );
 
-		$this->assertEquals(
-			''
-			, $this->api->get_module_license_data( $this->channel, '123', 'status' )
+		$this->assertNull(
+			$this->api->get_module_license_data( $this->channel, '123', 'status' )
 		);
 	}
 
@@ -455,7 +454,7 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 			, array( 'ID' => '123', 'name' => '' )
 		);
 
-		$this->assertEquals( 'valid', $result );
+		$this->assertSame( 'valid', $result );
 	}
 
 	/**
@@ -479,7 +478,7 @@ class WordPointsOrg_EDD_Software_Licensing_Module_API_Test
 			, array( 'ID' => '123', 'name' => '' )
 		);
 
-		$this->assertEquals( 'inactive', $result );
+		$this->assertSame( 'inactive', $result );
 	}
 
 	//

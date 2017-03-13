@@ -41,7 +41,7 @@ class WordPointsOrg_Functions_Test extends WP_UnitTestCase {
 	 */
 	public function test_module_changelog_allowed_html_returns_first_param() {
 
-		$this->assertEquals(
+		$this->assertSame(
 			__METHOD__
 			, wordpointsorg_module_changelog_allowed_html( __METHOD__, 'other' )
 		);
@@ -59,7 +59,7 @@ class WordPointsOrg_Functions_Test extends WP_UnitTestCase {
 		$message = '<p>Hello world!</p><script>alert("ha!");</script>';
 
 		// Normally, the paragraph tags would be stripped.
-		$this->assertEquals(
+		$this->assertSame(
 			'<p>Hello world!</p>alert("ha!");'
 			, wp_kses( $message, 'wordpoints_module_changelog' )
 		);

@@ -41,6 +41,8 @@ class WordPointsOrg_Bulk_Module_Upgrader_Skin extends Bulk_Upgrader_Skin {
 	public function add_strings() {
 
 		parent::add_strings();
+
+		// translators: 1. Module Name; 2. Count of update; 3. Total number of updates being installed.
 		$this->upgrader->strings['skin_before_update_header'] = __( 'Updating Module %1$s (%2$d/%3$d)', 'wordpointsorg' );
 	}
 

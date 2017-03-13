@@ -15,7 +15,11 @@ php:
 env:
     - TRAVISCI_RUN=codesniff
     - TRAVISCI_RUN=phpunit WP_VERSION=master WORDPOINTS_VERSION=master
+    - TRAVISCI_RUN=phpunit WP_VERSION=master WORDPOINTS_VERSION=stable
+    - TRAVISCI_RUN=phpunit WP_VERSION=4.7 WORDPOINTS_VERSION=master
+    - TRAVISCI_RUN=phpunit WP_VERSION=4.7 WORDPOINTS_VERSION=stable
     - TRAVISCI_RUN=phpunit WP_VERSION=4.6 WORDPOINTS_VERSION=master
+    - TRAVISCI_RUN=phpunit WP_VERSION=4.6 WORDPOINTS_VERSION=stable
 
 sudo: false
 
@@ -70,6 +74,9 @@ script:
     - phpunit-uninstall
     - phpunit-ms-uninstall
     - phpunit-ms-network-uninstall
+    - WORDPOINTS_ONLY_UNINSTALL_MODULE=1 phpunit-uninstall
+    - WORDPOINTS_ONLY_UNINSTALL_MODULE=1 phpunit-ms-uninstall
+    - WORDPOINTS_ONLY_UNINSTALL_MODULE=1 phpunit-ms-network-uninstall
     - phpunit-ajax
     - phpunit-ms-ajax
     - phpunit-ms-network-ajax

@@ -285,7 +285,7 @@ function wordpointsorg_update_modules() {
 		new WordPointsOrg_Bulk_Module_Upgrader_Skin(
 			array(
 				'nonce' => 'bulk-update-modules',
-				'url'   => 'update.php?action=update-selected-wordpoints-modules&amp;modules=' . urlencode( implode( ',', $modules ) ),
+				'url'   => 'update.php?action=update-selected-wordpoints-modules&amp;modules=' . rawurlencode( implode( ',', $modules ) ),
 			)
 		)
 	);
@@ -308,7 +308,7 @@ function wordpointsorg_upgrade_module() {
 	}
 
 	$module = ( isset( $_REQUEST['module'] ) )
-		? sanitize_text_field( wp_unslash( $_REQUEST['module'] ) )
+		? sanitize_text_field( wp_unslash( $_REQUEST['module'] ) ) // WPCS: CSRF OK.
 		: '';
 
 	check_admin_referer( 'upgrade-module_' . $module );
@@ -326,7 +326,7 @@ function wordpointsorg_upgrade_module() {
 			array(
 				'title'  => $title,
 				'nonce'  => 'upgrade-module_' . $module,
-				'url'    => 'update.php?action=wordpoints-upgrade-module&module=' . urlencode( $module ),
+				'url'    => 'update.php?action=wordpoints-upgrade-module&module=' . rawurlencode( $module ),
 				'module' => $module,
 			)
 		)
@@ -359,7 +359,7 @@ function wordpointsorg_update_selected_modules() {
 		$modules = array();
 	}
 
-	$url = self_admin_url( 'update.php?action=update-selected-wordpoints-modules&amp;modules=' . urlencode( implode( ',', $modules ) ) );
+	$url = self_admin_url( 'update.php?action=update-selected-wordpoints-modules&amp;modules=' . rawurlencode( implode( ',', $modules ) ) );
 	$url = wp_nonce_url( $url, 'bulk-update-modules' );
 
 	$parent_file = 'admin.php';
@@ -468,6 +468,7 @@ add_filter( 'wordpoints_modules_list_table_items', 'wordpointsorg_add_upgrade_mo
  */
 function wordpointsorg_module_upgrades_filter_link( $text, $count ) {
 
+	// translators: Number of available updates.
 	return _n( 'Update Available <span class="count">(%s)</span>', 'Update Available <span class="count">(%s)</span>', (int) $count, 'wordpointsorg' );
 }
 add_filter( 'wordpoints_modules_status_link_text-upgrade', 'wordpointsorg_module_upgrades_filter_link', 10, 2 );
@@ -581,7 +582,7 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 		);
 
 		$details_url = admin_url(
-			'update.php?action=wordpoints-iframe-module-changelog&module=' . urlencode( $file )
+			'update.php?action=wordpoints-iframe-module-changelog&module=' . rawurlencode( $file )
 		);
 
 		?>
@@ -596,6 +597,7 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 					if ( ! current_user_can( 'update_wordpoints_modules' ) ) {
 						printf(
 							wp_kses(
+								// translators: 1. Module name; 2. Details URL; 3. Module name; 4. New version number.
 								__( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a>.', 'wordpointsorg' )
 								, array( 'a' => array( 'href' => array(), 'class' => array(), 'title' => array() ) )
 							)
@@ -607,6 +609,7 @@ function wordpointsorg_module_update_row( $file, $module_data ) {
 					} else {
 						printf(
 							wp_kses(
+								// translators: 1. Module name; 2. Details URL; 3. Module name; 4. New version number; 5. Update URL.
 								__( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a> or <a href="%5$s">update now</a>.', 'wordpointsorg' )
 								, array( 'a' => array( 'href' => array(), 'class' => array(), 'title' => array() ) )
 							)
@@ -659,11 +662,11 @@ function wordpointsorg_iframe_module_changelog() {
 		wp_die( esc_html__( 'Sorry, you are not allowed to update modules for this site.', 'wordpointsorg' ), '', array( 'response' => 403 ) );
 	}
 
-	if ( empty( $_GET['module'] ) ) {
+	if ( empty( $_GET['module'] ) ) { // WPCS: CSRF OK.
 		wp_die( esc_html__( 'No module supplied.', 'wordpointsorg' ), '', array( 'response' => 200 ) );
 	}
 
-	$module_file = sanitize_text_field( urldecode( wp_unslash( $_GET['module'] ) ) ); // WPCS: sanitization OK.
+	$module_file = sanitize_text_field( rawurldecode( wp_unslash( $_GET['module'] ) ) ); // WPCS: CSRF, sanitization OK.
 
 	$modules = wordpoints_get_modules();
 
@@ -777,9 +780,19 @@ function wordpoints_list_module_updates() {
 							<p>
 								<strong><?php echo esc_html( $module_data['name'] ); ?></strong>
 								<br />
-								<?php echo esc_html( sprintf( __( 'You have version %1$s installed. Update to %2$s.', 'wordpointsorg' ), $module_data['version'], $module_data['new_version'] ) ); ?>
-								<a href="<?php echo esc_url( self_admin_url( 'update.php?action=wordpoints-iframe-module-changelog&module=' . urlencode( $module_file ) . '&TB_iframe=true&width=640&height=662' ) ); ?>" class="thickbox" title="<?php echo esc_attr( $module_data['name'] ); ?>">
-									<?php echo esc_html( sprintf( __( 'View version %1$s details.', 'wordpointsorg' ), $module_data['new_version'] ) ); ?>
+								<?php
+
+								// translators: 1. Installed version number; 2. Update version number.
+								echo esc_html( sprintf( __( 'You have version %1$s installed. Update to %2$s.', 'wordpointsorg' ), $module_data['version'], $module_data['new_version'] ) );
+
+								?>
+								<a href="<?php echo esc_url( self_admin_url( 'update.php?action=wordpoints-iframe-module-changelog&module=' . rawurlencode( $module_file ) . '&TB_iframe=true&width=640&height=662' ) ); ?>" class="thickbox" title="<?php echo esc_attr( $module_data['name'] ); ?>">
+									<?php
+
+									// translators: Version number.
+									echo esc_html( sprintf( __( 'View version %1$s details.', 'wordpointsorg' ), $module_data['new_version'] ) );
+
+									?>
 								</a>
 							</p>
 						</td>

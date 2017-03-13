@@ -182,12 +182,12 @@ class WordPoints_Check_For_Module_Updates_Test extends WordPointsOrg_HTTP_UnitTe
 		$this->assertArrayHasKey( 'checked', $cache );
 		$this->assertInternalType( 'array', $cache['checked'] );
 		$this->assertArrayHasKey( 'module-7/module-7.php', $cache['checked'] );
-		$this->assertEquals( '1.0.0', $cache['checked']['module-7/module-7.php'] );
+		$this->assertSame( '1.0.0', $cache['checked']['module-7/module-7.php'] );
 
 		$this->assertArrayHasKey( 'response', $cache );
 		$this->assertInternalType( 'array', $cache['response'] );
 		$this->assertArrayHasKey( 'module-7/module-7.php', $cache['response'] );
-		$this->assertEquals( '1.1.0', $cache['response']['module-7/module-7.php'] );
+		$this->assertSame( '1.1.0', $cache['response']['module-7/module-7.php'] );
 
 		$this->assertArrayHasKey( 'last_checked', $cache );
 		$this->assertInternalType( 'int', $cache['last_checked'] );

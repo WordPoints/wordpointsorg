@@ -49,7 +49,7 @@ class WordPointsOrg_Iframe_Module_Changelog_Test extends WP_UnitTestCase {
 
 		wp_set_current_user( $user->ID );
 
-		$_GET['module'] = urlencode( 'module-7/module-7.php' );
+		$_GET['module'] = rawurlencode( 'module-7/module-7.php' );
 
 		// iframe_header() needs this.
 		global $current_screen, $wp_scripts, $_wp_admin_css_colors;

@@ -25,7 +25,7 @@ class WordPoints_Get_Channel_For_Module_Test extends WP_UnitTestCase {
 
 		$module = array( 'channel' => 'wordpoints.org' );
 
-		$this->assertEquals(
+		$this->assertSame(
 			$module['channel']
 			, wordpoints_get_channel_for_module( $module )
 		);
@@ -40,9 +40,9 @@ class WordPoints_Get_Channel_For_Module_Test extends WP_UnitTestCase {
 
 		add_filter( 'wordpoints_channel_for_module', array( $this, 'wordpoints_channel_for_module' ), 10, 2 );
 		$channel = wordpoints_get_channel_for_module( array( 'channel' => 'wordpoints.org' ) );
-		remove_filter( 'wordpoints_channel_for_module', array( $this, 'wordpoints_channel_for_module' ), 10, 2 );
+		remove_filter( 'wordpoints_channel_for_module', array( $this, 'wordpoints_channel_for_module' ), 10 );
 
-		$this->assertEquals( __CLASS__, $channel );
+		$this->assertSame( __CLASS__, $channel );
 	}
 
 	/**
@@ -52,8 +52,8 @@ class WordPoints_Get_Channel_For_Module_Test extends WP_UnitTestCase {
 	 */
 	public function wordpoints_channel_for_module( $channel, $module ) {
 
-		$this->assertEquals( 'wordpoints.org', $channel );
-		$this->assertEquals( array( 'channel' => 'wordpoints.org' ), $module );
+		$this->assertSame( 'wordpoints.org', $channel );
+		$this->assertSame( array( 'channel' => 'wordpoints.org' ), $module );
 
 		return __CLASS__;
 	}

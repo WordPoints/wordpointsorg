@@ -51,7 +51,7 @@ class WordPointsOrg_Updates_1_1_3_Test extends WordPoints_PHPUnit_TestCase {
 		$this->assertFalse( get_site_option( 'wordpointsorg_installed_sites' ) );
 		$this->assertFalse( get_site_option( 'wordpointsorg_network_installed' ) );
 
-		$this->assertEquals(
+		$this->assertSame(
 			array( 1, 5 )
 			, get_site_option( 'wordpoints_module_wordpointsorg_installed_sites' )
 		);

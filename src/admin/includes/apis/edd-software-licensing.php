@@ -266,7 +266,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 	 */
 	public function admin_enqueue_scripts() {
 
-		if ( isset( $_GET['page'] ) && 'wordpoints_modules' === $_GET['page'] ) {
+		if ( isset( $_GET['page'] ) && 'wordpoints_modules' === $_GET['page'] ) { // WPCS: CSRF OK.
 			wp_enqueue_style(
 				'wordpointsorg-admin-modules'
 				, wordpoints_modules_url(
@@ -363,7 +363,7 @@ class WordPoints_EDD_Software_Licensing_Module_API extends WordPoints_Module_API
 
 			} // End if ( activating license ) elseif ( deactivating license ).
 
-		} // End foreach ( $modules['all'] as $module ).
+		} // End foreach ( module ).
 
 		return $modules;
 	}

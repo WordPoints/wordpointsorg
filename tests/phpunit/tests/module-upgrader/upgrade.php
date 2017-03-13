@@ -75,8 +75,8 @@ class WordPointsOrg_Module_Upgrader_Upgrade_Test extends WordPointsOrg_Module_Up
 		$this->assertTrue( $result );
 
 		$this->assertCount( 0, $this->skin->errors );
-		$this->assertEquals( 1, $this->skin->header_shown );
-		$this->assertEquals( 1, $this->skin->footer_shown );
+		$this->assertSame( 1, $this->skin->header_shown );
+		$this->assertSame( 1, $this->skin->footer_shown );
 	}
 
 	/**
@@ -92,7 +92,7 @@ class WordPointsOrg_Module_Upgrader_Upgrade_Test extends WordPointsOrg_Module_Up
 		);
 
 		$this->assertWPError( $result );
-		$this->assertEquals( 'incompatible_archive_no_modules', $result->get_error_code() );
+		$this->assertSame( 'incompatible_archive_no_modules', $result->get_error_code() );
 
 		$this->assertCount( 1, $this->skin->errors );
 	}
@@ -135,7 +135,7 @@ class WordPointsOrg_Module_Upgrader_Upgrade_Test extends WordPointsOrg_Module_Up
 
 		$this->assertFalse( $result );
 		$this->assertCount( 1, $this->skin->errors );
-		$this->assertEquals( 'not_installed', $this->skin->errors[0] );
+		$this->assertSame( 'not_installed', $this->skin->errors[0] );
 	}
 
 	/**
@@ -154,7 +154,7 @@ class WordPointsOrg_Module_Upgrader_Upgrade_Test extends WordPointsOrg_Module_Up
 		$this->assertTrue( $result );
 		$this->assertCount( 0, $this->skin->errors );
 		$this->assertCount( 2, $this->skin->feedback );
-		$this->assertEquals( 'up_to_date', $this->skin->feedback[0] );
+		$this->assertSame( 'up_to_date', $this->skin->feedback[0] );
 	}
 
 	//

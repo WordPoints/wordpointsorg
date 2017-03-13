@@ -79,10 +79,10 @@ class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test
 		$this->assertInternalType( 'array', $result['module-7/module-7.php'] );
 
 		$this->assertCount( 0, $this->skin->errors );
-		$this->assertEquals( 1, $this->skin->header_shown );
-		$this->assertEquals( 1, $this->skin->footer_shown );
-		$this->assertEquals( 1, $this->skin->bulk_header_shown );
-		$this->assertEquals( 1, $this->skin->bulk_footer_shown );
+		$this->assertSame( 1, $this->skin->header_shown );
+		$this->assertSame( 1, $this->skin->footer_shown );
+		$this->assertSame( 1, $this->skin->bulk_header_shown );
+		$this->assertSame( 1, $this->skin->bulk_footer_shown );
 	}
 
 	/**
@@ -100,7 +100,7 @@ class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test
 		$this->assertInternalType( 'array', $result );
 		$this->assertArrayHasKey( 'module-7/module-7.php', $result );
 		$this->assertWPError( $result['module-7/module-7.php'] );
-		$this->assertEquals( 'incompatible_archive_no_modules', $result['module-7/module-7.php']->get_error_code() );
+		$this->assertSame( 'incompatible_archive_no_modules', $result['module-7/module-7.php']->get_error_code() );
 
 		$this->assertCount( 1, $this->skin->errors );
 	}
@@ -143,9 +143,9 @@ class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test
 			, array( 'ID' => 6 )
 		);
 
-		$this->assertEquals( array( 'module-6/module-6.php' => false ), $result );
+		$this->assertSame( array( 'module-6/module-6.php' => false ), $result );
 		$this->assertCount( 1, $this->skin->errors );
-		$this->assertEquals( 'not_installed', $this->skin->errors[0] );
+		$this->assertSame( 'not_installed', $this->skin->errors[0] );
 	}
 
 	/**
@@ -161,9 +161,9 @@ class WordPointsOrg_Module_Upgrader_Bulk_Upgrade_Test
 			, array( 'ID' => 8 )
 		);
 
-		$this->assertEquals( array( 'module-8/module-8.php' => true ), $result );
+		$this->assertSame( array( 'module-8/module-8.php' => true ), $result );
 		$this->assertCount( 0, $this->skin->errors );
-		$this->assertContains( 'up_to_date', $this->skin->feedback );
+		$this->assertSame( 'up_to_date', $this->skin->feedback[0] );
 	}
 
 	//

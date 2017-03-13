@@ -210,6 +210,7 @@ function wordpoints_module_update_counts( $update_data ) {
 			$update_data['counts']['wordpoints_modules'] = count( $module_updates['response'] );
 
 			$title = sprintf(
+				// translators: Number of updates.
 				_n(
 					'%d WordPoints Module Update'
 					, '%d WordPoints Module Updates'

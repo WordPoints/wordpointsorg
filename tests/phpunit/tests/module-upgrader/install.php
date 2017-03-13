@@ -63,8 +63,8 @@ class WordPointsOrg_Module_Upgrader_Install_Test extends WordPointsOrg_Module_Up
 		$this->assertFalse( wp_cache_get( 'wordpoints_modules', 'wordpoints_modules' ) );
 
 		$this->assertCount( 0, $this->skin->errors );
-		$this->assertEquals( 1, $this->skin->header_shown );
-		$this->assertEquals( 1, $this->skin->footer_shown );
+		$this->assertSame( 1, $this->skin->header_shown );
+		$this->assertSame( 1, $this->skin->footer_shown );
 	}
 
 	/**
@@ -84,7 +84,7 @@ class WordPointsOrg_Module_Upgrader_Install_Test extends WordPointsOrg_Module_Up
 		$this->assertFileExists( wordpoints_modules_dir() . '/module-6/module-6.php' );
 
 		// Check that the module updates cache is not cleared.
-		$this->assertEquals( array( 'test' ), get_site_transient( 'wordpoints_module_updates' ) );
+		$this->assertSame( array( 'test' ), get_site_transient( 'wordpoints_module_updates' ) );
 
 		// The modules cache is still cleared though.
 		$this->assertFalse( wp_cache_get( 'wordpoints_modules', 'wordpoints_modules' ) );
@@ -100,7 +100,7 @@ class WordPointsOrg_Module_Upgrader_Install_Test extends WordPointsOrg_Module_Up
 		$result = $this->install_test_package( 'no-module' );
 
 		$this->assertInstanceOf( 'WP_Error', $result );
-		$this->assertEquals( 'incompatible_archive_no_modules', $result->get_error_code() );
+		$this->assertSame( 'incompatible_archive_no_modules', $result->get_error_code() );
 
 		$this->assertFileNotExists( wordpoints_modules_dir() . '/on-module/plugin.php' );
 	}
@@ -115,7 +115,7 @@ class WordPointsOrg_Module_Upgrader_Install_Test extends WordPointsOrg_Module_Up
 		$result = $this->install_test_package( 'module-7' );
 
 		$this->assertInstanceOf( 'WP_Error', $result );
-		$this->assertEquals( 'folder_exists', $result->get_error_code() );
+		$this->assertSame( 'folder_exists', $result->get_error_code() );
 
 		$this->assertFileExists( wordpoints_modules_dir() . '/module-7/module-7.php' );
 
