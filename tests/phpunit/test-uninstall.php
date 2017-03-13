@@ -12,7 +12,8 @@
  *
  * @since 1.0.0
  */
-class WordPointsOrg_Uninstall_Test extends WordPoints_Dev_Lib_PHPUnit_TestCase_Module_Uninstall {
+class WordPointsOrg_Uninstall_Test
+	extends WordPoints_PHPUnit_TestCase_Module_Uninstall {
 
 	/**
 	 * Test that install and uninstall work as expected.
