@@ -3,6 +3,8 @@ WordPointsOrg [![Build Status](https://travis-ci.org/WordPoints/wordpointsorg.sv
 
 WordPoints module for installing modules from WordPoints.org
 
+**DEPRECATED NOTICE: This module is no longer maintained, as it was merged into WordPoints core in 2.4.0.**
+
 ## About
 
 This module started as an effort to create an installation and update experience for modules on WordPoints.org similar to that for plugins from WordPress.org. As work on it has progressed, the decision was made to produce something that would be more versatile than the plugin API of WordPress. Thus, this module has been designed in such a way that its use is by no means limited to WordPoints.org. It provides an extensible interface between the module consumer's site and the remote module repo. Its goal is to provide a consistent experience for the user (and developer) on the consumer end, while still giving the repo the freedom to design their API however they please.
